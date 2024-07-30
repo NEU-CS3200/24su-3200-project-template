@@ -38,7 +38,7 @@ def create_app():
     # Example: localhost:8001
     @app.route("/")
     def welcome():
-        return "<h1>Welcome to the Summer 2024 Belgium DoC Boilerplate App</h1>"
+        return "<h1>Welcome to the Summer 2024 CS 3200 Project Template Repo</h1>"
     
     # Example route for testing streamlit
     @app.route("/data")
