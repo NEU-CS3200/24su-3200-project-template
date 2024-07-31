@@ -43,19 +43,54 @@ def create_app():
     # Example route for testing streamlit
     @app.route("/data")
     def getData():
-        data = {              
-                "user1": {
+        data = {
+            "staff": [
+                {
                     "Name": "Mark Fontenot",
-                    "Course": "CS 3200",
+                    "role": "Instructor"
                 },
-                "user2": {
-                    "Name": "Eric Gerber",
-                    "Course": "DS 3000",
+                {
+                    "Name": "Ashley Davis",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Dylan Toplas",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Hazelyn Aroian",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Jared Lyon",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Khanh Nguyen",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Nathan Cheung",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Nicole Contreras",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Reid Chandler",
+                    "role": "TA"
+                },
+                {
+                    "Name": "Sai Kumar Reddy",
+                    "role": "TA"
                 }
-            }
+            ]
+        }
         return data
     
-    app.logger.info('current_app(): registering blueprints with app object.')
+    app.logger.info('current_app(): registering blueprints with Flask app object.')
+
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     app.register_blueprint(customers,   url_prefix='/c')
