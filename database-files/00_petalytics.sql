@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS managers (
 );
 
 CREATE TABLE IF NOT EXISTS pet_agencies (
-    petID     INTEGER      NOT NULL,
-    agencyID  INTEGER      NOT NULL,
-    housingID INTEGER      NOT NULL,
-    entryDate DATE         NOT NULL,
+    petID     INTEGER NOT NULL,
+    agencyID  INTEGER NOT NULL,
+    housingID INTEGER NOT NULL,
+    entryDate DATE NOT NULL,
     exitDate  DATE,
 
     PRIMARY KEY (housingID),
@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS adopters (
 
     PRIMARY KEY(adopterID)
 );
+
 CREATE TABLE IF NOT EXISTS adoptions (
     adoptionID INTEGER NOT NULL PRIMARY KEY,
     petID       INTEGER NOT NULL,
@@ -89,12 +90,11 @@ CREATE TABLE IF NOT EXISTS adoptions (
     CONSTRAINT fk_adoptions_agency FOREIGN KEY (adopterID) REFERENCES adopters (adopterID)
 );
 
-CREATE TABLE IF NOT EXISTS medical_record (
+CREATE TABLE IF NOT EXISTS medical_records (
     entryNumber INTEGER AUTO_INCREMENT,
     entry       VARCHAR(2000) NOT NULL,
     date        DATE          NOT NULL,
     petID       INTEGER       NOT NULL,
-
     PRIMARY KEY (entryNumber,
                 petID),
     FOREIGN KEY (petID)
