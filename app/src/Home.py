@@ -10,26 +10,26 @@ st.set_page_config(layout = 'wide')
 st.session_state['authenticated'] = False
 SideBarLinks(show_home=True)
 
-st.title('The Profs App')
+st.title('Home Finder')
 
 st.write('\n\n')
-st.write('### HI! As which user would you like to log in?')
+st.write('As which user would you like to log in?')
 
-if st.button("Act as John, a Political Strategy Advisor", 
+if st.button("Act as Bob Smith, Realtor", 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'pol_strat_advisor'
-    st.session_state['first_name'] = 'John'
-    st.switch_page('pages/00_Pol_Strat_Home.py')
+    st.session_state['role'] = 'realtor'
+    st.session_state['first_name'] = 'Bob'
+    st.switch_page('pages/00_Realtor_Home.py')
 
-if st.button('Act as Mohammad, an USAID worker', 
+if st.button('Act as Jayson Tatum, Home Buyer', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.session_state['role'] = 'user'
+    st.session_state['first_name'] = 'Jayson'
+    st.switch_page('pages/10_Home_Buyer_Home.py')
 
 if st.button('Act as System Administrator', 
             type = 'primary', 
