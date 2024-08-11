@@ -13,7 +13,7 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 # set the header of the page
-st.header('World Bank Data')
+st.header('Adoptable Pet Data')
 
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
