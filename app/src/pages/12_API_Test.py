@@ -4,6 +4,7 @@ import streamlit as st
 import requests
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+import os
 
 SideBarLinks()
 
@@ -18,6 +19,8 @@ should not totally die.
 data = {} 
 url = 'http://localhost:4000/u/users'
     
+database_name = os.getenv('DB_NAME')  
+print("Database Name:", database_name) 
 try:
     response = requests.get(url)
     # Check if the request was successful
