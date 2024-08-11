@@ -8,34 +8,49 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 from modules.nav import SideBarLinks
+import os
+import requests
+
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
-# set the header of the page
-st.header('World Bank Data')
+st.write("# View All Of Your Current Properties")
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+# Base URL for user data
+base_url = 'http://localhost:4000/u/users'
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# Display all users
+database_name = os.getenv('DB_NAME')  
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+url = 'http://localhost:4000/l/listings'
+try:
+    response = requests.get(url)
+    if response.status_code == 200:
+        all_data = response.json()
+        st.dataframe(all_data)  # Displaying all user data in a dataframe
+    else:
+        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error("An error occurred while trying to connect to the API to fetch all users:")
+    st.text(str(e))
 
-    st.pyplot(test_plot)
 
+listing_id = st.text_input("Enter Listings ID to fetch specific listings details", "")
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+# Conditionally make API request based on user input for specific user details
+if listing_id:
+    specific_url = f"{url}/{listing_id}"
+    try:
+        response = requests.get(specific_url)
+        if response.status_code == 200:
+            user_data = response.json()
+            st.write("Successfully fetched data listing ID:")
+            st.json(user_data)  # Displaying specific user data in JSON format for clarity
+        else:
+            st.error(f"Failed to retrieve data for listing ID {listing_id}. Status code: {response.status_code}")
+            st.text("Response:" + response.text)
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while trying to connect to the API to fetch listing ID {listing_id}:")
+        st.text(str(e))

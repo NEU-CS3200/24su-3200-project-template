@@ -3,6 +3,7 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 from modules.nav import SideBarLinks
 import requests
+import os
 
 st.set_page_config(layout = 'wide')
 
@@ -10,19 +11,24 @@ SideBarLinks()
 
 st.title('App Administration Page')
 
-st.write('\n\n')
-st.write('## Model 1 Maintenance')
+listing_id = st.text_input("Enter Listings ID to fetch specific listings details", "")
 
-st.button("Train Model 01", 
-            type = 'primary', 
-            use_container_width=True)
+database_name = os.getenv('DB_NAME')  
 
-st.button('Test Model 01', 
-            type = 'primary', 
-            use_container_width=True)
+url = 'http://localhost:4000/l/listings'
 
-if st.button('Model 1 - get predicted value for 10, 25', 
-             type = 'primary',
-             use_container_width=True):
-  results = requests.get('http://api:4000/c/prediction/10/25').json()
-  st.dataframe(results)
+# Conditionally make API request based on user input for specific user details
+if listing_id:
+    specific_url = f"{url}/{listing_id}"
+    try:
+        response = requests.get(specific_url)
+        if response.status_code == 200:
+            user_data = response.json()
+            st.write("Successfully fetched data listing ID:")
+            st.json(user_data)  # Displaying specific user data in JSON format for clarity
+        else:
+            st.error(f"Failed to retrieve data for listing ID {listing_id}. Status code: {response.status_code}")
+            st.text("Response:" + response.text)
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while trying to connect to the API to fetch listing ID {listing_id}:")
+        st.text(str(e))

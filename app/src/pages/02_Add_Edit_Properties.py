@@ -6,99 +6,120 @@ import pandas as pd
 import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
+import os
+import requests
 
 SideBarLinks()
+
+st.write("# Add, Edit, or Delete Yours Listings")
 
 # add the logo
 add_logo("assets/logo.png", height=400)
 
-# set up the page
-st.markdown("# Mapping Demo")
-st.sidebar.header("Mapping Demo")
-st.write(
-    """This Mapping Demo is from the Streamlit Documentation. It shows how to use
-[`st.pydeck_chart`](https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart)
-to display geospatial data."""
-)
-
-
-@st.cache_data
-def from_data_file(filename):
-    url = (
-        "http://raw.githubusercontent.com/streamlit/"
-        "example-data/master/hello/v1/%s" % filename
-    )
-    return pd.read_json(url)
-
-
+url = 'http://localhost:4000/l/listings'
 try:
-    ALL_LAYERS = {
-        "Bike Rentals": pdk.Layer(
-            "HexagonLayer",
-            data=from_data_file("bike_rental_stats.json"),
-            get_position=["lon", "lat"],
-            radius=200,
-            elevation_scale=4,
-            elevation_range=[0, 1000],
-            extruded=True,
-        ),
-        "Bart Stop Exits": pdk.Layer(
-            "ScatterplotLayer",
-            data=from_data_file("bart_stop_stats.json"),
-            get_position=["lon", "lat"],
-            get_color=[200, 30, 0, 160],
-            get_radius="[exits]",
-            radius_scale=0.05,
-        ),
-        "Bart Stop Names": pdk.Layer(
-            "TextLayer",
-            data=from_data_file("bart_stop_stats.json"),
-            get_position=["lon", "lat"],
-            get_text="name",
-            get_color=[0, 0, 0, 200],
-            get_size=15,
-            get_alignment_baseline="'bottom'",
-        ),
-        "Outbound Flow": pdk.Layer(
-            "ArcLayer",
-            data=from_data_file("bart_path_stats.json"),
-            get_source_position=["lon", "lat"],
-            get_target_position=["lon2", "lat2"],
-            get_source_color=[200, 30, 0, 160],
-            get_target_color=[200, 30, 0, 160],
-            auto_highlight=True,
-            width_scale=0.0001,
-            get_width="outbound",
-            width_min_pixels=3,
-            width_max_pixels=30,
-        ),
-    }
-    st.sidebar.markdown("### Map Layers")
-    selected_layers = [
-        layer
-        for layer_name, layer in ALL_LAYERS.items()
-        if st.sidebar.checkbox(layer_name, True)
-    ]
-    if selected_layers:
-        st.pydeck_chart(
-            pdk.Deck(
-                map_style="mapbox://styles/mapbox/light-v9",
-                initial_view_state={
-                    "latitude": 37.76,
-                    "longitude": -122.4,
-                    "zoom": 11,
-                    "pitch": 50,
-                },
-                layers=selected_layers,
-            )
-        )
+    response = requests.get(url)
+    if response.status_code == 200:
+        all_data = response.json()
     else:
-        st.error("Please choose at least one layer above.")
-except URLError as e:
-    st.error(
-        """
-        **This demo requires internet access.**
-        Connection error: %s
-    """
-        % e.reason
-    )
+        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error("An error occurred while trying to connect to the API to fetch all users:")
+    st.text(str(e))
+
+
+st.subheader("Create New Listing")
+# Form to input data for new listing
+with st.form(key='create_form'):
+    id = st.text_input("ID")
+    City = st.text_input("City")
+    ZipCode = st.text_input("ZipCode")
+    Street = st.text_input("Street")
+    HouseNum = st.text_input("House Number")
+    State = st.text_input("State")
+    CurrPriceData = st.text_input("Current Price")
+    PrevPriceData = st.text_input("Previous Price")
+    PredictedFuturePriceData = st.text_input("Predicted Future Price")
+    AreaId = st.text_input("Area ID")
+    RealtorId = st.text_input("Realtor ID")
+    Views = st.text_input("Views")
+    BeingRented = st.selectbox("Is Being Rented?", ["Yes", "No"])
+
+    submit_button = st.form_submit_button("Create Listing")
+
+    if submit_button:
+        new_listing = {
+            "id": int(id),
+            "BeingRented": BeingRented == "Yes",
+            "City": City,
+            "ZipCode": int(ZipCode),
+            "Street": Street,
+            "HouseNum": int(HouseNum),
+            "State": State,
+            "CurrPriceData": int(CurrPriceData),
+            "PrevPriceData": int(PrevPriceData),
+            "PredictedFuturePriceData": int(PredictedFuturePriceData),
+            "AreaId": int(AreaId),
+            "RealtorId": int(RealtorId),
+            "Views": int(Views)
+        }
+        response = requests.post('http://localhost:4000/l/listings', json=new_listing)
+        if response.status_code == 200:
+            st.success("Listing created successfully!")
+        else:
+            st.error(f"Failed to create listing. Status code: {response.status_code}")
+
+
+st.subheader("Update Existing Listing")
+
+
+# Form to input data for updating an existing listing
+with st.form(key='update_form'):
+    listing_id = st.text_input("Listing ID", key="update_listing_id")
+    new_price = st.text_input("New Price", key="update_price")
+    new_views = st.text_input("New Views", key="update_views")
+
+    submit_button = st.form_submit_button("Update Listing")
+
+    if submit_button and listing_id:
+        # Construct the dictionary with only the fields that are provided
+        updated_data = {}
+    if new_price.isdigit() and new_views.isdigit():
+        updated_data = {
+            "price": int(new_price),
+            "Views": int(new_views)
+        }
+
+        # Only make the API call if there is at least one field to update
+        if updated_data:
+            # Ensure the URL matches the correct endpoint for updating listings by ID
+            response = requests.put(f"http://localhost:4000/l/listings/{listing_id}", json=updated_data)
+            if response.status_code == 200:
+                st.success("Listing updated successfully!")
+            else:
+                st.error(f"Failed to update listing. Status code: {response.status_code}, Message: {response.text}")
+        else:
+            st.warning("No data provided to update. Please enter new values.")
+
+
+st.subheader("Delete a Listing")
+listing_id = st.text_input("Enter the Listing ID to delete:", key="delete_id")
+
+if st.button("Delete Listing"):
+    if listing_id:
+        try:
+            listing_id = int(listing_id)  # Convert to int to avoid invalid IDs
+            response = requests.delete(f"http://localhost:4000/l/listings//{listing_id}")
+            
+            if response.status_code == 200:
+                st.success("Listing deleted successfully!")
+            elif response.status_code == 404:
+                st.error("Listing not found. Please check the ID and try again.")
+            else:
+                st.error("Failed to delete listing. Please try again.")
+        except ValueError:
+            st.error("Please enter a valid integer ID.")
+    else:
+        st.warning("Please enter a Listing ID to delete.")
+
