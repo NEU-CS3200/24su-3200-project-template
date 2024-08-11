@@ -4,35 +4,40 @@ import streamlit as st
 
 #### ------------------------ General ------------------------
 def HomeNav():
-    st.sidebar.page_link("Home.py", label="Home", icon='🏠')
+    st.sidebar.page_link("Home.py", label="Home", icon='🐾')
 
 def AboutPageNav():
-    st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
+    st.sidebar.page_link("pages/30_About.py", label="About", icon="🐈‍⬛")
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
-def PolStratAdvHomeNav():
-    st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon='👤')
+#### ------------------------ Examples for Role of potential_adopter ------------------------
+def AdopterHomeNav():
+    st.sidebar.page_link("pages/00_Adopter_Home.py", label="Adopter Home", icon='🐶')
 
-def WorldBankVizNav():
-    st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon='🏦')
+def PetDataVizNav():
+    st.sidebar.page_link("pages/01_Pet_Data_Viz.py", label="Pet Data Visualization", icon='🐕')
 
-def MapDemoNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon='🗺️')
+def PetMedHistNav():
+    st.sidebar.page_link("pages/02_Pet_Medical_History.py", label="Pet Medical History", icon='📋')
 
-## ------------------------ Examples for Role of usaid_worker ------------------------
-def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon='🛜')
+def CloseRescueAgenciesNav():
+    st.sidebar.page_link("pages/05_Rescue_Agencies.py", label="Closest Rescue Agencies", icon='🏥')    
 
-def PredictionNav():
-    st.sidebar.page_link("pages/11_Prediction.py", label="Regression Prediction", icon='📈')
+## ------------------------ Examples for Role of rescue_manager ------------------------
+def AdoptionViewNav():
+    st.sidebar.page_link("pages/12_Manager_Adoption_View.py", label="Manager Adoption View", icon='🐱')
 
-def ClassificationNav():
-    st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
+def ManagerMedHistViewNav():
+    st.sidebar.page_link("pages/11_Manager_Med_His.py", label="Manager Update Medical History View", icon='📈')
 
-#### ------------------------ System Admin Role ------------------------
-def AdminPageNav():
-    st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
-    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
+def PendingAdoptionsNav():
+    st.sidebar.page_link("pages/13_Manager_Pending_Adoptions.py", label="View Pending Adoptions", icon='🙈')
+
+#### ------------------------ Researcher Role ------------------------
+def ResearcherPageNav():
+    st.sidebar.page_link("pages/20_Researcher_Home.py", label="Researcher Home", icon='🥼')
+    st.sidebar.page_link("pages/21_Least_Adoptions.py", label='Pets with Least Adoptions', icon='😿')
+    st.sidebar.page_link("pages/22_Least_Interest.py", label='Pets with Least Interest', icon='📉')
+    st.sidebar.page_link("pages/23_Most_Surrendered.py", label='Most Surrendered Pets', icon='📊')
 
 
 # --------------------------------Links Function -----------------------------------------------
