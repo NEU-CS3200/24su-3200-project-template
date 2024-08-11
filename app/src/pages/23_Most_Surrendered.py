@@ -8,7 +8,7 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title('App Administration Page')
+st.title('Most commonly surrendered pets')
 
 st.write('\n\n')
 st.write('## Model 1 Maintenance')

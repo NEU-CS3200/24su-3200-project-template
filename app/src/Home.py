@@ -35,9 +35,9 @@ if st.button('Act as Alex a Pet Researcher',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
+    st.session_state['role'] = 'researcher'
     st.session_state['first_name'] = 'Alex'
-    st.switch_page('pages/20_Admin_Home.py')
+    st.switch_page('pages/20_Researcher_Home.py')
 
 
 
