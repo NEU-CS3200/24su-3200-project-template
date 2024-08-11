@@ -9,30 +9,30 @@ def HomeNav():
 def AboutPageNav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
-def PolStratAdvHomeNav():
-    st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon='👤')
+#### ------------------------ Examples for Role of Realtor ------------------------
+def RealtorHomeNav():
+    st.sidebar.page_link("pages/00_Realtor_Home.py", label="Realtor Home", icon='👤')
 
-def WorldBankVizNav():
-    st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon='🏦')
+def ViewPropertiesNav():
+    st.sidebar.page_link("pages/01_View_Properties.py", label="View Properties", icon='🏠')
 
-def MapDemoNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon='🗺️')
+def EditPropertiesNav():
+    st.sidebar.page_link("pages/02_Add_Edit_Properties.py", label="Add/Edit Properties", icon='🔧')
 
 ## ------------------------ Examples for Role of usaid_worker ------------------------
-def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon='🛜')
+def AreaPriceNav():
+    st.sidebar.page_link("pages/11_Area_Price.py", label="View Area Pricing", icon='🏙️')
 
-def PredictionNav():
-    st.sidebar.page_link("pages/11_Prediction.py", label="Regression Prediction", icon='📈')
+def FuturePriceNav():
+    st.sidebar.page_link("pages/12_Future_Outcomes.py", label="Predict Future Prices", icon='📈')
 
-def ClassificationNav():
-    st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
+def PreviousDataNav():
+    st.sidebar.page_link("pages/13_Previous_Data.py", label="Previous Data", icon='🌆')
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
-    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
+    st.sidebar.page_link("pages/21_Data_View.py", label='View Data', icon='🏢')
 
 
 # --------------------------------Links Function -----------------------------------------------
@@ -56,17 +56,17 @@ def SideBarLinks(show_home=False):
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
-        if st.session_state['role'] == 'pol_strat_advisor':
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
+        # Show pages for realtor role
+        if st.session_state['role'] == 'realtor':
+            RealtorHomeNav()
+            ViewPropertiesNav()
+            EditPropertiesNav()
 
-        # If the user role is usaid worker, show the Api Testing page
-        if st.session_state['role'] == 'usaid_worker':
-            PredictionNav()
-            ApiTestNav() 
-            ClassificationNav()
+        # If the user role is user, show the Api Testing page
+        if st.session_state['role'] == 'user':
+            AreaPriceNav()
+            FuturePriceNav()
+            PreviousDataNav()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':
