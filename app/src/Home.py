@@ -20,7 +20,7 @@ if st.button("Act as Clark, a Potential Adopter",
             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'pol_strat_advisor'
-    st.session_state['first_name'] = 'John'
+    st.session_state['first_name'] = 'Clark'
     st.switch_page('pages/00_Pol_Strat_Home.py')
 
 if st.button('Act as Janet, an Agency Rescue Manager', 
@@ -28,7 +28,7 @@ if st.button('Act as Janet, an Agency Rescue Manager',
             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
+    st.session_state['first_name'] = 'Janet'
     st.switch_page('pages/10_USAID_Worker_Home.py')
 
 if st.button('Act as Alex a Pet Researcher', 
@@ -36,7 +36,7 @@ if st.button('Act as Alex a Pet Researcher',
             use_container_width=True):
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'administrator'
-    st.session_state['first_name'] = 'SysAdmin'
+    st.session_state['first_name'] = 'Alex'
     st.switch_page('pages/20_Admin_Home.py')
 
 
