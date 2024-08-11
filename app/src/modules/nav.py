@@ -36,7 +36,7 @@ def AdminPageNav():
 
 
 # --------------------------------Links Function -----------------------------------------------
-def SideBarLinks(show_home=False):
+def SideBarLinks():
     """
     This function handles adding links to the sidebar of the app based upon the logged-in user's role, which was put in the streamlit session_state object when logging in. 
     """    
@@ -48,10 +48,6 @@ def SideBarLinks(show_home=False):
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
         st.switch_page('Home.py')
-        
-    if show_home:
-        # Show the Home page link (the landing page)
-        HomeNav()
 
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
@@ -72,6 +68,9 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'administrator':
             AdminPageNav()
 
+    if not st.session_state["authenticated"]:
+        HomeNav()
+
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
 
@@ -81,4 +80,3 @@ def SideBarLinks(show_home=False):
             del st.session_state['role']
             del st.session_state['authenticated']
             st.switch_page('Home.py')
-
