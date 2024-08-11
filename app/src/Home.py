@@ -27,9 +27,9 @@ if st.button('Act as Janet, an Agency Rescue Manager',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
+    st.session_state['role'] = 'rescue_manager'
     st.session_state['first_name'] = 'Janet'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.switch_page('pages/10_Rescue_Manager_Home.py')
 
 if st.button('Act as Alex a Pet Researcher', 
             type = 'primary', 

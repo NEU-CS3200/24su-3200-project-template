@@ -7,7 +7,7 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# Accessing a REST API from Within Streamlit")
+st.write("# Put up a Pet for Adoption")
 
 """
 Simply retrieving data from a REST api running in a separate Docker Container.
