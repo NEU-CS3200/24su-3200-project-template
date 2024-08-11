@@ -135,62 +135,7 @@ INSERT INTO `Viewed Listing` (`UserId`, `ListingId`) VALUES
 (3, 3),
 (4, 4);
 
-SELECT id, Price, CurrPriceData, PrevPriceData
-FROM Listings
-GROUP BY id
-ORDER BY Price;
 
-SELECT AreaId, AveragePrice, AVG((PredictedFuturePriceData-Price)/(Price * 100)) AS ROI
-FROM Listings
-JOIN area a ON Listings.AreaId = a.id
-GROUP BY AreaId
-ORDER BY ROI desc;
-
-
-INSERT INTO `Listings` (`BeingRented`, `price`, `City`, `ZipCode`, `Street`, `HouseNum`, `State`, `PrevPriceData`, `CurrPriceData`, `PredictedFuturePriceData`, `id`, `AreaId`, `RealtorId`, `Views`) VALUES
-(TRUE, 290000, 'Phoenix', '85001', 'Cedar Blvd', 567, 'AZ', 270000, 290000, 310000, 5, 5, 5, 14);
-
-
-UPDATE Listings
-SET price = 442000, PrevPriceData = 478000, CurrPriceData = 442000, PredictedFuturePriceData = 623000
-WHERE id = 5;
-
-SELECT id, price, PrevPriceData, PredictedFuturePriceData
-FROM Listings
-GROUP BY id
-ORDER BY PredictedFuturePriceData;
-
-
-SELECT AreaId, State, City, AveragePrice
-FROM Listings
-JOIN area a ON Listings.AreaId = a.id
-GROUP BY AreaId, State, City,AveragePrice
-ORDER BY AveragePrice;
-
-SELECT City, Count(Id) AS NumInCity
-FROM users
-GROUP BY City
-ORDER BY Count(Id) DESC;
-
-SELECT ListingID, Count(UserId) AS NumUniqueViews
-FROM `Viewed Listing`
-GROUP BY ListingID
-ORDER BY Count(UserId) DESC;
-
-SELECT Age, Count(Id) AS NumUniqueUsers
-FROM users
-GROUP BY Age
-ORDER BY Count(Id) ASC;
-
-SELECT Gender, Count(Id) AS NumUniqueUsers
-FROM users
-GROUP BY Gender
-ORDER BY Count(Id) ASC;
-
-
-SELECT BeingRented, Count(id) As NumListings
-FROM Listings
-GROUP BY BeingRented;
 
 
 

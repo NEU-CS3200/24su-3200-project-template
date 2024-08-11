@@ -17,7 +17,7 @@ def get_listings():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings')
+    cursor.execute('SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -32,14 +32,15 @@ def get_listings():
     # for each of the rows, zip the data elements together with
     # the column headers. 
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        current_app.logger.info(row)
+        json_data.append(row)
 
     return jsonify(json_data)
 
 @listings.route('/listings/<id>', methods=['GET'])
 def get_listing_detail (id):
 
-    query = 'SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
+    query = 'SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -48,7 +49,7 @@ def get_listing_detail (id):
     json_data = []
     the_data = cursor.fetchall()
     for row in the_data:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)
     return jsonify(json_data)
     
 
@@ -76,7 +77,7 @@ def get_most_pop_listings():
     # for each of the rows, zip the data elements together with
     # the column headers. 
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)
 
     return jsonify(json_data)
 
@@ -106,7 +107,7 @@ def get_10_most_expensive_listings():
     # for each of the rows, zip the data elements together with
     # the column headers. 
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)
     
     return jsonify(json_data)
 
@@ -136,70 +137,90 @@ def get_10_least_expensive_listings():
     # for each of the rows, zip the data elements together with
     # the column headers. 
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)
     
     return jsonify(json_data)
 
 
 @listings.route('/tenLeastExpensive/<State>', methods=['GET'])
 def get_10_most_expensive_listings_in_state(State):
-    
+    # Prepare a parameterized SQL query to avoid SQL injection
     query = '''
-        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
-        FROM Listings WHERE State = State 
+        SELECT id, City, ZipCode, Street, HouseNum, State, CurrPriceData
+        FROM Listings
+        WHERE State = %s
         ORDER BY CurrPriceData ASC
         LIMIT 10
     '''
 
+    # Get a cursor from the database connection
     cursor = db.get_db().cursor()
-    cursor.execute(query)
 
+    # Execute the SQL query, passing the State parameter to fill in the placeholder %s
+    cursor.execute(query, (State,))  # Make sure to pass State as a tuple
+
+    # Fetch column headers from the cursor description
     column_headers = [x[0] for x in cursor.description]
 
-    # create an empty dictionary object to use in 
-    # putting column headers together with data
+    # Initialize a list to store JSON formatted data
     json_data = []
 
-    # fetch all the data from the cursor
+    # Fetch all the data from the cursor
     theData = cursor.fetchall()
 
-    # for each of the rows, zip the data elements together with
-    # the column headers. 
+    # Combine each row with the column headers to create a dictionary
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)  # Use dict to format rows with headers
     
+    # Return the data as JSON
     return jsonify(json_data)
 
 @listings.route('/listings', methods=['POST'])
 def add_new_listing():
-    
-    # collecting data from the request object 
+    # Collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
-    name = the_data['BeingRented']
-    description = the_data['product_description']
-    price = the_data['product_price']
-    category = the_data['product_category']
+    # Extracting variables from JSON and converting boolean to integer for SQL
+    # Convert and validate data types
+    BeingRented = bool(the_data['BeingRented'])  # Convert to boolean
+    City = the_data['City']
+    PrevPriceData = int(the_data['PrevPriceData'])
+    price = int(the_data['CurrPriceData'])
+    ZipCode = int(the_data['ZipCode'])
+    Street = the_data['Street']
+    HouseNum = int(the_data['HouseNum'])
+    State = the_data['State']
+    CurrPriceData = int(the_data['CurrPriceData'])
+    PredictedFuturePriceData = int(the_data['PredictedFuturePriceData'])
+    AreaId = int(the_data['AreaId'])
+    RealtorId = int(the_data['RealtorId'])
+    Views = int(the_data['Views'])
+    id = int(the_data['id'])
 
-    # Constructing the query
-    query = 'insert into products (product_name, description, category, list_price) values ("'
-    query += name + '", "'
-    query += description + '", "'
-    query += category + '", '
-    query += str(price) + ')'
-    current_app.logger.info(query)
+    # Constructing the parameterized query
+    query = '''
+        INSERT INTO Listings 
+        (BeingRented, City, PrevPriceData, price, ZipCode, Street, HouseNum, State, CurrPriceData, PredictedFuturePriceData, AreaId, RealtorId, Views,id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
+    '''
+    # Tuple for parameters to ensure safe SQL execution
+    values = (
+        BeingRented, City, PrevPriceData, price, ZipCode, Street, HouseNum, State, CurrPriceData,
+        PredictedFuturePriceData, AreaId, RealtorId, Views,id
+    )
 
-    # executing and committing the insert statement 
+    # Executing and committing the insert statement 
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, values)
     db.get_db().commit()
     
-    return 'Success!'
+    return jsonify({"success": True, "message": "New listing added successfully"}), 201
+
+
 
 ### Get all product categories
-@listings.route('/listings', methods = ['GET'])
+@listings.route('/listingStates', methods = ['GET'])
 def get_all_states():
     query = '''
         SELECT DISTINCT State AS state
@@ -217,13 +238,57 @@ def get_all_states():
     theData = cursor.fetchall()
     # zip headers and data together into dictionary and then append to json data dict.
     for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+        json_data.append(row)
     
     return jsonify(json_data)
 
-@listings.route('/listings', methods = ['PUT'])
-def update_listings():
+@listings.route('/listings/<int:listing_id>', methods=['PUT'])
+def update_listings(listing_id):
     listings_info = request.json
     current_app.logger.info(listings_info)
 
-    return "Success"
+    update_parts = []
+    values = []
+
+    # Construct the query dynamically based on the provided JSON fields
+    for key, value in listings_info.items():
+        update_parts.append(f"{key} = %s")
+        values.append(value)
+
+    # Combine parts to form a full SQL query only if there are parts to update
+    if update_parts:
+        query = "UPDATE Listings SET " + ", ".join(update_parts) + " WHERE id = %s"
+        values.append(listing_id)  # Ensure the listing ID is added as the last parameter
+
+        try:
+            cursor = db.get_db().cursor()
+            # Make sure the number of placeholders matches the number of parameters
+            cursor.execute(query, values)
+            db.get_db().commit()
+            return jsonify({"success": True, "message": "Listing updated successfully"}), 200
+        except Exception as e:
+            current_app.logger.error(f"Failed to update listing: {e}")
+            return jsonify({"success": False, "message": str(e)}), 500
+    else:
+        return jsonify({"success": False, "message": "No data provided for update"}), 400
+
+
+
+@listings.route('/listings/<int:listing_id>', methods=['DELETE'])
+def delete_listing(listing_id):
+    cursor = db.get_db().cursor()
+    try:
+        # Execute the delete query
+        query = "DELETE FROM Listings WHERE id = %s"
+        cursor.execute(query, (listing_id,))
+        db.get_db().commit()
+        
+        if cursor.rowcount == 0:
+            # No rows deleted, likely because the item did not exist
+            return jsonify({"error": "Listing not found"}), 404
+        
+        return jsonify({"success": True, "message": "Listing deleted successfully"}), 200
+
+    except Exception as e:
+        current_app.logger.error(f"Failed to delete listing: {e}")
+        return jsonify({"error": "Failed to delete listing"}), 500
