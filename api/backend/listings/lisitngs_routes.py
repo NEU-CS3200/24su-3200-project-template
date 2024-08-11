@@ -37,7 +37,7 @@ def get_listings():
     return jsonify(json_data)
 
 @listings.route('/listings/<id>', methods=['GET'])
-def get_product_detail (id):
+def get_listing_detail (id):
 
     query = 'SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
     current_app.logger.info(query)
@@ -82,7 +82,7 @@ def get_most_pop_listings():
 
 
 @listings.route('/tenMostExpensive', methods=['GET'])
-def get_10_most_expensive_products():
+def get_10_most_expensive_listings():
     
     query = '''
         SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
@@ -112,7 +112,7 @@ def get_10_most_expensive_products():
 
 
 @listings.route('/tenLeastExpensive', methods=['GET'])
-def get_10_most_expensive_products():
+def get_10_least_expensive_listings():
     
     query = '''
         SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
@@ -142,7 +142,7 @@ def get_10_most_expensive_products():
 
 
 @listings.route('/tenLeastExpensive/<State>', methods=['GET'])
-def get_10_most_expensive_products(State):
+def get_10_most_expensive_listings_in_state(State):
     
     query = '''
         SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
@@ -171,14 +171,14 @@ def get_10_most_expensive_products(State):
     return jsonify(json_data)
 
 @listings.route('/listings', methods=['POST'])
-def add_new_product():
+def add_new_listing():
     
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
 
     #extracting the variable
-    name = the_data['product_name']
+    name = the_data['BeingRented']
     description = the_data['product_description']
     price = the_data['product_price']
     category = the_data['product_category']
