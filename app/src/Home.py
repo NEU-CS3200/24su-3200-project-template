@@ -10,12 +10,12 @@ st.set_page_config(layout = 'wide')
 st.session_state['authenticated'] = False
 SideBarLinks(show_home=True)
 
-st.title('The Profs App')
+st.title('PetFetch - A Petalytics Application')
 
 st.write('\n\n')
-st.write('### HI! As which user would you like to log in?')
+st.write('### Hi! Which user would you like to log in as?')
 
-if st.button("Act as John, a Political Strategy Advisor", 
+if st.button("Act as Clark, a Potential Adopter", 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
@@ -23,7 +23,7 @@ if st.button("Act as John, a Political Strategy Advisor",
     st.session_state['first_name'] = 'John'
     st.switch_page('pages/00_Pol_Strat_Home.py')
 
-if st.button('Act as Mohammad, an USAID worker', 
+if st.button('Act as Janet, an Agency Rescue Manager', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
@@ -31,7 +31,7 @@ if st.button('Act as Mohammad, an USAID worker',
     st.session_state['first_name'] = 'Mohammad'
     st.switch_page('pages/10_USAID_Worker_Home.py')
 
-if st.button('Act as System Administrator', 
+if st.button('Act as Alex a Pet Researcher', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
