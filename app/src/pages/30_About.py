@@ -6,7 +6,7 @@ SideBarLinks()
 
 st.write("# About this App")
 
-st.markdown (
+st.markdown(
     """
     This is a demo app for CS 3200 Course Project.  
 
@@ -15,4 +15,4 @@ st.markdown (
 
     Stay tuned for more information and features to come!
     """
-        )
+)
