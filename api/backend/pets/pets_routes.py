@@ -22,8 +22,22 @@ def get_pets():
     the_response.mimetype = 'application/json'
     return the_response
 
+# Get all avilable Pets for potention adopter viewing
+@pets.route('/pets/available', methods=['GET'])
+def get_available_pets():
+    current_app.logger.info('pets_routes.py: GET /pets/available')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT petID, name,\
+        species, breed, age FROM pets WHERE is_alive = 1 AND adoption_status = 0')
+
+    theData = cursor.fetchall()
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 @pets.route('/pets', methods=['PUT'])
-def update_customer():
+def update_pets():
     current_app.logger.info('PUT /pets route')
     pet_info = request.json
     # current_app.logger.info(pet_info)
