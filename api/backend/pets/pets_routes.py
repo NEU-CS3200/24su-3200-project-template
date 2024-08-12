@@ -22,29 +22,8 @@ def get_pets():
     the_response.mimetype = 'application/json'
     return the_response
 
-# Add a new pet to the DB
-@pets.route('/pets', methods=['POST'])
-def add_pet():
-    current_app.logger.info('POST /pets route')
-    pet_info = request.json
-    petID = pet_info['petID']
-    name = pet_info['name']
-    status = pet_info['adoption_status']
-    species = pet_info['species']
-    breed = pet_info['breed']
-    birthday = pet_info['birthday']
-    age = pet_info['age']
-    alive = pet_info['is_alive']
-
-    query = 'INSERT INTO pets (petID, name, adoption_status, species, breed, birthday, age, is_alive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
-    data = (petID, name, status, species, breed, birthday, age, alive)
-    cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
-    db.get_db().commit()
-    return 'pet added!'    
-
 @pets.route('/pets', methods=['PUT'])
-def update_customer():
+def update_pets():
     current_app.logger.info('PUT /pets route')
     pet_info = request.json
     # current_app.logger.info(pet_info)
