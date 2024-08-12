@@ -17,12 +17,14 @@ SideBarLinks()
 st.header('Adoptable Pet Data')
 
 # You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write(f"### Hi, {st.session_state['first_name']}!")
+st.write('This is a list of pets that are alive and available for adoption.')
 
 # get the pets from the database
 pets = requests.get('http://localhost:4000/p/pets').json()
 
 try: 
+    # filter the pets to only show those that are adoptable and alive
     pets = [pet for pet in pets if pet['adoption_status'] == 0 and pet['is_alive'] == 1]
     st.dataframe(pets)
 except: 
