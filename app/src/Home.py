@@ -32,7 +32,7 @@ st.title('Home Finder')
 
 # set the title of the page and provide a simple prompt. 
 logger.info("Loading the Home page of the app")
-st.title('The Profs App')
+st.title('Where you can find your future home')
 st.write('\n\n')
 st.write('As which user would you like to log in?')
 

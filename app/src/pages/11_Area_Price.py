@@ -24,7 +24,7 @@ if listing_state:
         if response.status_code == 200:
             user_data = response.json()
             st.write("Successfully fetched data listing state:")
-            st.json(user_data)  # Displaying specific user data in JSON format for clarity
+            st.dataframe(user_data)  # Displaying specific user data in JSON format for clarity
         else:
             st.error(f"Failed to retrieve data for listing ID {listing_state}. Status code: {response.status_code}")
             st.text("Response:" + response.text)
@@ -32,4 +32,35 @@ if listing_state:
         st.error(f"An error occurred while trying to connect to the API to fetch listing ID {listing_state}:")
         st.text(str(e))
 
-        
+url = 'http://localhost:4000/a/areasname'
+listing_area = st.text_input("Enter Listings area to fetch specific listings details", "")
+# Conditionally make API request based on user input for specific area
+if listing_area:
+    specific_url = f"{url}/{listing_area}"
+    try:
+        response = requests.get(specific_url)
+        if response.status_code == 200:
+            user_data = response.json()
+            st.write("Successfully fetched data listing area:")
+            st.dataframe(user_data)  # Displaying specific user data in JSON format for clarity
+        else:
+            st.error(f"Failed to retrieve data for listing ID {listing_area}. Status code: {response.status_code}")
+            st.text("Response:" + response.text)
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while trying to connect to the API to fetch listing ID {listing_state}:")
+        st.text(str(e))
+
+url = 'http://localhost:4000/a/areas'
+# Conditionally make API request based on user input for specific area
+try:
+    response = requests.get(url)
+    if response.status_code == 200:
+        user_data = response.json()
+        st.write("Successfully fetched data listing area:")
+        st.dataframe(user_data)  # Displaying specific user data in JSON format for clarity
+    else:
+        st.error(f"Failed to retrieve data for listing ID {listing_area}. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error(f"An error occurred while trying to connect to the API to fetch listing ID {listing_state}:")
+    st.text(str(e))
