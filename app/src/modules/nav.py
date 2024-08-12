@@ -30,7 +30,7 @@ def AdoptionViewNav():
     st.sidebar.page_link("pages/12_Manager_Adoption_View.py", label="Manager Adoption View", icon='🐱')
 
 def ManagerMedHistViewNav():
-    st.sidebar.page_link("pages/11_Manager_Med_His.py", label="Manager Update Medical History View", icon='📈')
+    st.sidebar.page_link("pages/11_Manager_Med_His_View.py", label="Manager Update Medical History View", icon='📈')
 
 def PendingAdoptionsNav():
     st.sidebar.page_link("pages/13_Manager_Pending_Adoptions.py", label="View Pending Adoptions", icon='🙈')
