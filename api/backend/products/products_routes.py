@@ -3,8 +3,7 @@
 # Remove this file if you are not using it in your project
 ########################################################
 
-from flask import Blueprint, request, jsonify, make_response, current_app
-import json
+from flask import Blueprint, request, jsonify, current_app
 from backend.db_connection import db
 
 
@@ -145,7 +144,7 @@ def add_new_product():
     return "Success!"
 
 
-### Get all product categories
+# Get all product categories
 @products.route("/categories", methods=["GET"])
 def get_all_categories():
     query = """
