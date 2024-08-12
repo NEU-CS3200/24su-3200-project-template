@@ -34,5 +34,5 @@ with st.form("Add pet for adoption"):
       data['is_alive'] = pet_alive
       st.write(data)
 
-      requests.post('http://localhost:4000/p/pets', json=data)
+      requests.post('http://localhost:4000/p/pets', json=data) 
 
