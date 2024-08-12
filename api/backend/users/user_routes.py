@@ -20,7 +20,13 @@ def get_users():
     json_data = []
     theData = cursor.fetchall()
     for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
+        current_app.logger.info(f"Rows: {row}")
+        #current_app.logger.info(f"Headers: {row_headers}")
+        #combined_data = dict(zip(row_headers, row))
+        #current_app.logger.info("Combined Data:", combined_data)
+        #json_data.append(combined_data)
+        #current_app.logger.info(combined_data)
+        json_data.append(row)
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
@@ -53,7 +59,7 @@ def get_user(userID):
     json_data = []
     theData = cursor.fetchall()
     for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
+        json_data.append(row)
     the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
