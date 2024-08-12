@@ -3,16 +3,16 @@ import json
 from backend.db_connection import db
 
 
-areas = Blueprint('areas', __name__)
+realtors = Blueprint('realtors', __name__)
 
-# Get all the areas from the database
-@areas.route('/areas', methods=['GET'])
-def get_areas():
+# Get all the realtors from the database
+@realtors.route('/realtors', methods=['GET'])
+def get_realtors():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
-    # use cursor to query the database for a list of areas
-    cursor.execute('SELECT id, AveragePrice, SchoolQuality, name FROM areas')
+    # use cursor to query the database for a list of realtors
+    cursor.execute('SELECT id, FName, LName, City FROM realtors')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -31,10 +31,10 @@ def get_areas():
 
     return jsonify(json_data)
 
-@areas.route('/areas/<id>', methods=['GET'])
-def get_area_name (id):
+@realtors.route('/realtors/<id>', methods=['GET'])
+def get_realtor_name (id):
 
-    query = 'SELECT id, name FROM areas WHERE id = ' + str(id)
+    query = 'SELECT id, FName, LName FROM realtors WHERE id = ' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -49,25 +49,24 @@ def get_area_name (id):
 
 
     
-@areas.route('/add_area', methods=['POST'])
-def add_new_area():
+@realtors.route('/add_realtor', methods=['POST'])
+def add_new_realtor():
     
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
 
     #extracting the variable
-    name = the_data['name']
-    avg_price = the_data['AveragePrice']
-    school_quality = the_data['SchoolQuality']
+    FName = the_data['FName']
+    LName = the_data['LName']
+    City = the_data['City']
     id = the_data['id']
 
     # Constructing the query
-    query = 'insert into areas (name, AveragePrice, SchoolQuality, id) values ("'
-    query += name + '", "'
-    query += id + '", "'
-    query += str(school_quality) + '", '
-    query += str(avg_price) + ')'
+    query = '''
+    INSERT INTO realtors (FName, LName, City, id) 
+    VALUES (%s, %s, %s, %s)
+    '''
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -76,16 +75,33 @@ def add_new_area():
     db.get_db().commit()
     
     return 'Success!'
-@areas.route('/update_area/<id>', methods = ['PUT'])
-def update_area():
-    area_info = request.json
-    current_app.logger.info(area_info)
-
+@realtors.route('/update_realtor/<id>', methods = ['PUT'])
+def update_realtor():
+    realtor_info = request.json
+    current_app.logger.info(realtor_info)
+    #Get values to change
+    FName = realtor_info.get('FName')
+    LName = realtor_info.get('LName')
+    City = realtor_info.get('City')
+    # SQL query
+    query = f"""
+        UPDATE realtors
+        SET FName = '{Fname}', LName = {LName}, City = {City}
+        WHERE id = {id}
+    """
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    current_app.logger.info(f"Updated realtor with ID: {id}")
     return "Success"
-@areas.route('/delete_area/<id>', methods = ['DELETE']
-def delete_area():
-    area_info = request.json
-    current.app.logger.info(area_info)
-
+@realtors.route('/delete_realtor/<id>', methods = ['DELETE'])
+def delete_realtor():
+    realtor_info = request.json
+    current_app.logger.info(realtor_info)
+    cursor = db.get_db().cursor()
+    query = f"DELETE FROM realtors WHERE id = {id}"
+    cursor.execute(query)
+    db.get_db().commit()
+    current_app.logger.info(f"Deleted realtor with ID: {id}")
     return "Success"
 
