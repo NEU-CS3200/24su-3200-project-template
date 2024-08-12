@@ -7,10 +7,10 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# Put up a Pet for Adoption")
+st.write("# Add a New Pet to the Database")
 
 # Create a form to add a pet for adoption
-with st.form("Add pet for adoption"):
+with st.form("Input New Pet Information"):
     pet_id = st.number_input("Input New Pet's ID:", step=1)
     pet_name = st.text_input("Input New Pet's Name:")
     pet_status = st.checkbox("Is the pet available for adoption?")
