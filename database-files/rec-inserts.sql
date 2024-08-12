@@ -59,4 +59,4 @@ VALUES
 (3, 17, 22, 'Perfect place for brunch, loved the pancakes', TRUE, '2024-08-13 11:30:00'),
 (3, 18, 23, 'Great for a quick bite, excellent coffee', FALSE, '2024-08-14 14:00:00'),
 (3, 19, 24, 'Delicious gluten-free choices in a relaxed setting', TRUE, '2024-08-15 18:15:00'),
-(3, 20, 15, 'Amazing cocktails and tapas, perfect for evenings', TRUE, '2024-08-16 20:45:00')
+(3, 20, 15, 'Amazing cocktails and tapas, perfect for evenings', TRUE, '2024-08-16 20:45:00');
