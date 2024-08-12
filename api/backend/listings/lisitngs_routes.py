@@ -17,7 +17,7 @@ def get_listings():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings')
+    cursor.execute('SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -40,7 +40,7 @@ def get_listings():
 @listings.route('/listings/<id>', methods=['GET'])
 def get_listing_detail (id):
 
-    query = 'SELECT id, BeingRented, price, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
+    query = 'SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -186,7 +186,6 @@ def add_new_listing():
     BeingRented = bool(the_data['BeingRented'])  # Convert to boolean
     City = the_data['City']
     PrevPriceData = int(the_data['PrevPriceData'])
-    price = int(the_data['CurrPriceData'])
     ZipCode = int(the_data['ZipCode'])
     Street = the_data['Street']
     HouseNum = int(the_data['HouseNum'])
@@ -201,12 +200,12 @@ def add_new_listing():
     # Constructing the parameterized query
     query = '''
         INSERT INTO Listings 
-        (BeingRented, City, PrevPriceData, price, ZipCode, Street, HouseNum, State, CurrPriceData, PredictedFuturePriceData, AreaId, RealtorId, Views,id)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
+        (BeingRented, City, PrevPriceData, ZipCode, Street, HouseNum, State, CurrPriceData, PredictedFuturePriceData, AreaId, RealtorId, Views,id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
     '''
     # Tuple for parameters to ensure safe SQL execution
     values = (
-        BeingRented, City, PrevPriceData, price, ZipCode, Street, HouseNum, State, CurrPriceData,
+        BeingRented, City, PrevPriceData, ZipCode, Street, HouseNum, State, CurrPriceData,
         PredictedFuturePriceData, AreaId, RealtorId, Views,id
     )
 

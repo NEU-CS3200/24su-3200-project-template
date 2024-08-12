@@ -46,7 +46,6 @@ Create TABLE `Realtor` (
 
 Create Table `Listings` (
     `BeingRented` boolean Not Null,
-    `price` integer Not Null,
     `City` varchar(255)  NOT NULL,
     `ZipCode`varchar(255)  NOT NULL,
     `Street` varchar(255)  NOT NULL,
@@ -79,61 +78,6 @@ CREATE TABLE `Viewed Listing` (
     CONSTRAINT FK_ViewedListing_Listings FOREIGN KEY (ListingId) REFERENCES Listings(id) ON UPDATE CASCADE,
     CONSTRAINT PK_ViewedListing PRIMARY KEY (`UserId`,`ListingId`)
 );
-
-
-INSERT INTO `users` (`FName`, `LName`, `Gender`, `id`, `age`, `city`) VALUES
-('Brooke', 'Doe', 'Male', 1, 25, 'New York'),
-('Jane', 'Smith', 'Female', 2, 30, 'Los Angeles'),
-('Sam', 'Johnson', 'Other', 3, 22, 'Chicago'),
-('Alice', 'Williams', 'Female', 4, 28, 'Houston'),
-('Bob', 'Brown', 'Male', 5, 35, 'Phoenix');
-
-INSERT INTO `area` (`id`, `AveragePrice`, `SchoolQuality`,`Name`) VALUES
-(1, 250000, 8,'West Coast'),
-(2, 300000, 7, 'NorthEast'),
-(3, 180000, 9, 'Midwest'),
-(4, 450000, 6,'South'),
-(5, 220000, 8,'SouthWest');
-
-INSERT INTO `offer` (`Amount`, `OfereeId`, `id`) VALUES
-(200000, 1, 1),
-(310000, 2, 2),
-(185000, 3, 3),
-(400000, 4, 4),
-(210000, 5, 5);
-
-INSERT INTO `Viewed Area` (`UserId`, `AreaId`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
-
-
-INSERT INTO `Realtor` (`FName`, `LName`,`City`, `id`) VALUES
-('Michael', 'Los Angeles','Clark', 1),
-('Linda', 'New York' ,'Wright', 2),
-('Robert','Chicago','Taylor', 3),
-('Patricia', 'Chicago','Anderson', 4),
-('David', 'Houston','Moore', 5);
-
-INSERT INTO `Listings` (`BeingRented`, `price`, `City`, `ZipCode`, `Street`, `HouseNum`, `State`, `PrevPriceData`, `CurrPriceData`, `PredictedFuturePriceData`, `id`, `AreaId`, `RealtorId`, `Views`) VALUES
-(TRUE, 300000, 'Los Angeles', '90001', 'Palm St', 123, 'CA', 280000, 300000, 320000, 1, 1, 1, 15),
-(FALSE, 450000, 'New York', '10001', 'Oak St', 234, 'NY', 400000, 450000, 470000, 2, 2, 2, 12),
-(TRUE, 235000, 'Chicago', '60007', 'Maple Ave', 345, 'IL', 220000, 235000, 240000, 3, 3, 3, 9),
-(FALSE, 520000, 'Houston', '77001', 'Elm Rd', 456, 'TX', 510000, 520000, 540000, 4, 4, 4, 8);
-
-INSERT INTO `Listing Offer` (`OfferId`, `ListingId`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
-
-INSERT INTO `Viewed Listing` (`UserId`, `ListingId`) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4);
 
 
 INSERT INTO `users` (fname, lname, gender, age, city, id) VALUES ('Matias', 'MacShane', 'other', '74', 'Jacksonville', '3');
@@ -718,3 +662,7 @@ INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('97', '61');
 INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('98', '65');
 INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('99', '75');
 INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('100', '40');
+
+
+
+
