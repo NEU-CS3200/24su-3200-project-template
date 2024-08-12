@@ -131,6 +131,13 @@ CREATE TABLE Cust_Price
     FOREIGN KEY (priceId) REFERENCES Price (id)
 );
 
+CREATE TABLE Dining_Group
+(
+    id          INT PRIMARY KEY AUTO_INCREMENT,
+    name        varchar(255) NOT NULL,
+    description varchar(255) NOT NULL DEFAULT ''
+);
+
 CREATE TABLE Recommendation
 (
     seqNum      INT,
@@ -139,9 +146,11 @@ CREATE TABLE Recommendation
     explanation varchar(255) NOT NULL DEFAULT '',
     accepted    BOOL         NOT NULL DEFAULT FALSE,
     dateGiven   DATETIME              DEFAULT CURRENT_TIMESTAMP,
+    groupId     INT,
     PRIMARY KEY (custId, seqNum),
     FOREIGN KEY (restId) REFERENCES Restaurant (id),
-    FOREIGN KEY (custId) REFERENCES Customer (id)
+    FOREIGN KEY (custId) REFERENCES Customer (id),
+    FOREIGN KEY (groupId) REFERENCES Dining_Group (id)
 );
 
 CREATE TABLE Cust_Formality
@@ -166,13 +175,6 @@ CREATE TABLE Recommendation_Review
     locationScore  INT,
     PRIMARY KEY (seqNum, custId),
     FOREIGN KEY (custId, seqNum) REFERENCES Recommendation (custId, seqNum)
-);
-
-CREATE TABLE Dining_Group
-(
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    name        varchar(255) NOT NULL,
-    description varchar(255) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE Cust_Group
