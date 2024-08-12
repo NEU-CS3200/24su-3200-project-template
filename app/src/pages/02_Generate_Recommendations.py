@@ -1,4 +1,5 @@
 import logging
+
 logger = logging.getLogger(__name__)
 import streamlit as st
 from streamlit_extras.app_logo import add_logo
@@ -24,10 +25,7 @@ to display geospatial data."""
 
 @st.cache_data
 def from_data_file(filename):
-    url = (
-        "http://raw.githubusercontent.com/streamlit/"
-        "example-data/master/hello/v1/%s" % filename
-    )
+    url = "http://raw.githubusercontent.com/streamlit/" "example-data/master/hello/v1/%s" % filename
     return pd.read_json(url)
 
 
@@ -75,9 +73,7 @@ try:
     }
     st.sidebar.markdown("### Map Layers")
     selected_layers = [
-        layer
-        for layer_name, layer in ALL_LAYERS.items()
-        if st.sidebar.checkbox(layer_name, True)
+        layer for layer_name, layer in ALL_LAYERS.items() if st.sidebar.checkbox(layer_name, True)
     ]
     if selected_layers:
         st.pydeck_chart(

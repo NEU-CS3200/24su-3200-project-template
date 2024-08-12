@@ -1,13 +1,16 @@
 import logging
+
 logging.basicConfig(level=logging.DEBUG)
 
-from flask import Flask
-
-from backend.db_connection import db
-from backend.customers.customer_routes import customers
-from backend.products.products_routes import products
+import atexit
 import os
 from dotenv import load_dotenv
+from flask import Flask
+
+from backend.db_connection import init_db, cleanup_db
+from backend.customers.customer_routes import customers
+from backend.preferences.preference_routes import preferences
+
 
 def create_app():
     app = Flask(__name__)
@@ -15,87 +18,30 @@ def create_app():
     # Load environment variables
     load_dotenv()
 
-    # secret key that will be used for securely signing the session 
-    # cookie and can be used for any other security related needs by 
+    # secret key that will be used for securely signing the session
+    # cookie and can be used for any other security related needs by
     # extensions or your application
     # app.config['SECRET_KEY'] = 'someCrazyS3cR3T!Key.!'
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
-    # # these are for the DB object to be able to connect to MySQL. 
-    # app.config['MYSQL_DATABASE_USER'] = 'root'
-    app.config['MYSQL_DATABASE_USER'] = os.getenv('DB_USER')
-    app.config['MYSQL_DATABASE_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
-    app.config['MYSQL_DATABASE_HOST'] = os.getenv('DB_HOST')
-    app.config['MYSQL_DATABASE_PORT'] = int(os.getenv('DB_PORT'))
-    app.config['MYSQL_DATABASE_DB'] = os.getenv('DB_NAME')  # Change this to your DB name
+    init_db(
+        os.getenv("DB_HOST"),
+        int(os.getenv("DB_PORT")),
+        os.getenv("DB_USER"),
+        os.getenv("MYSQL_ROOT_PASSWORD"),
+        os.getenv("DB_NAME"),
+    )
 
-    # Initialize the database object with the settings above. 
-    db.init_app(app)
+    def close_db():
+        app.logger.info("Server stopping, closing db")
+        cleanup_db()
 
-    # Add the default route
-    # Can be accessed from a web browser
-    # http://ip_address:port/
-    # Example: localhost:8001
-    @app.route("/")
-    def welcome():
-        return "<h1>Welcome to the Summer 2024 CS 3200 Project Template Repo</h1>"
-    
-    # Example route for testing streamlit
-    @app.route("/data")
-    def getData():
-        data = {
-            "staff": [
-                {
-                    "Name": "Mark Fontenot",
-                    "role": "Instructor"
-                },
-                {
-                    "Name": "Ashley Davis",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Dylan Toplas",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Hazelyn Aroian",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Jared Lyon",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Khanh Nguyen",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Nathan Cheung",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Nicole Contreras",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Reid Chandler",
-                    "role": "TA"
-                },
-                {
-                    "Name": "Sai Kumar Reddy",
-                    "role": "TA"
-                }
-            ]
-        }
-        return data
-    
-    app.logger.info('current_app(): registering blueprints with Flask app object.')
+    atexit.register(close_db)
 
-    # Register the routes from each Blueprint with the app object
-    # and give a url prefix to each
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
+    app.logger.info("current_app(): registering blueprints with Flask app object.")
+
+    app.register_blueprint(customers)
+    app.register_blueprint(preferences)
 
     # Don't forget to return the app object
     return app
-
