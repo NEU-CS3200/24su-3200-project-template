@@ -19,6 +19,13 @@ st.header('Adoptable Pet Data d')
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
+response = request.get('http://api:4000/p/pets').json()
+
+pet_data = response.json()
+
+st.write(pet_data)
+
+'''
 # get the countries from the world bank data
 with st.echo(code_location='above'):
     countries:pd.DataFrame = wb.get_countries()
@@ -51,3 +58,4 @@ if st.button('See agencies',
              use_container_width=True):
   results = requests.get('http://api:4000/a/agencies').json()
   st.dataframe(results)
+  '''

@@ -23,6 +23,9 @@ def CloseRescueAgenciesNav():
     st.sidebar.page_link("pages/05_Rescue_Agencies.py", label="Closest Rescue Agencies", icon='🏥')    
 
 ## ------------------------ Examples for Role of rescue_manager ------------------------
+def RescueManagerHomeNav():
+    st.sidebar.page_link("pages/10_Rescue_Manager_Home.py", label="Rescue Manager Home", icon='💼')
+
 def AdoptionViewNav():
     st.sidebar.page_link("pages/12_Manager_Adoption_View.py", label="Manager Adoption View", icon='🐱')
 
@@ -60,25 +63,23 @@ def SideBarLinks(show_home=False):
 
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
-
-        # TODO: Add the appropriate links for the user's role
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
+        # Show the Adopter links if the user is a potential adopter
         if st.session_state['role'] == 'potential_adopter':
-            PolStratAdvHomeNav() 
-            WorldBankVizNav()
-            MapDemoNav()
+            AdopterHomeNav()
+            PetDataVizNav()
+            PetMedHistNav()
+            CloseRescueAgenciesNav()
 
-        # TODO: Add the appropriate links for the user's role
-        # If the user role is usaid worker, show the Api Testing page
+        # Show the Rescue Manager links if the user is a rescue manager
         if st.session_state['role'] == 'rescue_manager':
-            PredictionNav()
-            ApiTestNav() 
-            ClassificationNav()
+            RescueManagerHomeNav()
+            AdoptionViewNav()
+            ManagerMedHistViewNav()
+            PendingAdoptionsNav()
         
-        # TODO: Add the appropriate links for the user's role
-        # If the user is an administrator, give them access to the administrator pages
+        # Show the Researcher links if the user is a researcher
         if st.session_state['role'] == 'researcher':
-            AdminPageNav()
+            ResearcherPageNav()
 
     # Always show the About page at the bottom of the list of links
     AboutPageNav()
