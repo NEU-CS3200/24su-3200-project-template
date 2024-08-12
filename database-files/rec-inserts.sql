@@ -49,4 +49,14 @@ VALUES
 (3, 7, 4, 'Best vegan tacos', FALSE, '2024-04-20 18:00:00'),
 (3, 8, 2, 'Amazing vegetarian dishes', TRUE, '2024-03-30 13:15:00'),
 (3, 9, 8, 'Great sushi platters', TRUE, '2024-07-22 19:45:00'),
-(3, 10, 14, 'Top-rated pasta dishes', FALSE, '2024-05-07 20:15:00');
+(3, 10, 14, 'Top-rated pasta dishes', FALSE, '2024-05-07 20:15:00'),
+(3, 11, 16, 'Charming atmosphere with delightful desserts', TRUE, '2024-07-30 16:00:00'),
+(3, 12, 17, 'Vibrant location with a diverse menu', FALSE, '2024-08-02 13:00:00'),
+(3, 13, 23, 'Exceptional service and delicious seafood', TRUE, '2024-08-05 18:00:00'),
+(3, 14, 21, 'Cozy dining with a focus on local ingredients', TRUE, '2024-08-08 19:30:00'),
+(3, 15, 10, 'Elegant dining with a unique menu', FALSE, '2024-08-10 20:00:00'),
+(3, 16, 11, 'Casual spot with great vegan options', TRUE, '2024-08-12 12:00:00'),
+(3, 17, 22, 'Perfect place for brunch, loved the pancakes', TRUE, '2024-08-13 11:30:00'),
+(3, 18, 23, 'Great for a quick bite, excellent coffee', FALSE, '2024-08-14 14:00:00'),
+(3, 19, 24, 'Delicious gluten-free choices in a relaxed setting', TRUE, '2024-08-15 18:15:00'),
+(3, 20, 15, 'Amazing cocktails and tapas, perfect for evenings', TRUE, '2024-08-16 20:45:00');
