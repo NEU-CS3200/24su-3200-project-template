@@ -19,17 +19,8 @@ st.header('Adoptable Pet Data')
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}!")
 st.write('This is a list of pets that are alive and available for adoption.')
+pets = requests.get('http://api:4000/p/pets/available').json()
+st.dataframe(pets)
 
-try:
-    # Get the pets from the database
-    pets = requests.get('http://localhost:4000/p/pets').json()
-
-    # Filter the pets where adoption_status = 0 and is_alive = 1
-    pets = [pet for pet in pets if pet['adoption_status'] == 0 and pet['is_alive'] == 1]
-
-    st.dataframe(pets)
-except requests.exceptions.RequestException as e:
-    st.write('Could not connect to database to retrieve pet data')
-    st.write(str(e))
 
     
