@@ -1,30 +1,31 @@
 ########################################################
-# Sample pets blueprint of endpoints
+# Sample agency blueprint of endpoints
 # Remove this file if you are not using it in your project
 ########################################################
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
 
-pets = Blueprint('pets', __name__)
+agencies = Blueprint('agencies', __name__)
 
-# Get all pets from the DB
-@pets.route('/pets', methods=['GET'])
-def get_pets():
-    current_app.logger.info('pets_routes.py: GET /pets')
+# Get all agencies from the DB
+@agencies.route('/agencies', methods=['GET'])
+def get_agencies():
+    current_app.logger.info('agencies_routes.py: GET /agencies')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT petID, name, adoption_status,\
-        species, breed, birthday, age, is_alive FROM pets')
+    cursor.execute('SELECT agencyID, agencyName, phone, email, street,\
+        city, state, zip FROM agencies')
 
     theData = cursor.fetchall()
+
     the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
 
-@pets.route('/pets', methods=['PUT'])
+@agencies.route('/agencies', methods=['PUT'])
 def update_customer():
-    current_app.logger.info('PUT /pets route')
+    current_app.logger.info('PUT /agencies route')
     pet_info = request.json
     # current_app.logger.info(pet_info)
     petID = pet_info['petID']
@@ -37,7 +38,7 @@ def update_customer():
     alive = pet_info['is_alive']
 
 
-    query = 'UPDATE pets SET name = %s, adoption_status = %s, species = %s, breed = %s, birthday = %s,\
+    query = 'UPDATE agencies SET name = %s, adoption_status = %s, species = %s, breed = %s, birthday = %s,\
              age = %s, is_alive = %s WHERE petID = %s'
     data = (petID, name, status, species, breed, birthday, age, alive)
     cursor = db.get_db().cursor()
@@ -45,16 +46,19 @@ def update_customer():
     db.get_db().commit()
     return 'customer updated!'
 
-# Get pet detail for a pet with particular petID
-@pets.route('/pets/<petID>', methods=['GET'])
-def get_pet(petID):
-    current_app.logger.info('GET /pets/<petID> route')
+# Get pet detail for a agency with particular petID
+@agencies.route('/agencies/<petID>', methods=['GET'])
+def get_agency(petID):
+    current_app.logger.info('GET /agencies/<petID> route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT name, adoption_status, species, breed, birthday, age, is_alive FROM pets WHERE petID = ' + str(petID))
-
+    cursor.execute('SELECT name, adoption_status, species, breed, birthday, age, is_alive FROM agencies WHERE petID = ' + str(petID))
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
     theData = cursor.fetchall()
 
-    the_response = make_response(theData)
+    for row in theData:
+        json_data.append(dict(zip(row_headers, row)))
+    the_response = make_response(jsonify(json_data))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response

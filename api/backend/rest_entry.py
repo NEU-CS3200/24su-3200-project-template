@@ -5,6 +5,7 @@ from flask import Flask
 
 from backend.db_connection import db
 from backend.pets.pets_routes import pets
+from backend.agencies.agencies_routes import agencies
 import os
 from dotenv import load_dotenv
 
@@ -93,6 +94,8 @@ def create_app():
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
     app.register_blueprint(pets,   url_prefix='/p')
+    app.register_blueprint(agencies,   url_prefix='/a')
+
 
     # Don't forget to return the app object
     return app
