@@ -46,3 +46,8 @@ if st.button('See aniamals',
              use_container_width=True):
   results = requests.get('http://api:4000/p/pets').json()
   st.dataframe(results)
+if st.button('See agencies',
+             type='primary',
+             use_container_width=True):
+  results = requests.get('http://api:4000/a/agencies').json()
+  st.dataframe(results)
