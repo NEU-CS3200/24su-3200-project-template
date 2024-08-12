@@ -9,17 +9,30 @@ SideBarLinks()
 
 st.write("# Put up a Pet for Adoption")
 
-"""
-Simply retrieving data from a REST api running in a separate Docker Container.
+# Create a form to add a pet for adoption
+with st.form("Add pet for adoption"):
+    pet_id = st.number_input("Input New Pet's ID:", step=1)
+    pet_name = st.text_input("Input New Pet's Name:")
+    pet_status = st.checkbox("Is the pet available for adoption?")
+    pet_species = st.text_input("Input New Pet's Species:")
+    pet_breed = st.text_input("Input New Pet's Breed:")
+    pet_birthday = st.date_input("Input New Pet's Birthday:")
+    pet_age = st.number_input("Input New Pet's Age:", step=1)
+    pet_alive = st.checkbox("Is the pet alive?")
 
-If the container isn't running, this will be very unhappy.  But the Streamlit app 
-should not totally die. 
-"""
-data = {} 
-try:
-  data = requests.get('http://api:4000/data').json()
-except:
-  st.write("**Important**: Could not connect to sample api, so using dummy data.")
-  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
+    submitted = st.form_submit_button("Submit")
 
-st.dataframe(data)
+    if submitted:
+      data = {}
+      data['petID'] = pet_id
+      data['name'] = pet_name
+      data['adoption_status'] = pet_status
+      data['species'] = pet_species
+      data['breed'] = pet_breed
+      data['birthday'] = pet_birthday.isoformat()
+      data['age'] = pet_age
+      data['is_alive'] = pet_alive
+      st.write(data)
+
+      requests.post('http://localhost:4000/p/pets', json=data)
+
