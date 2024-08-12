@@ -46,7 +46,6 @@ if listing_id:
         response = requests.get(specific_url)
         if response.status_code == 200:
             user_data = response.json()
-            st.write("Successfully fetched data listing ID:")
             st.json(user_data)  # Displaying specific user data in JSON format for clarity
         else:
             st.error(f"Failed to retrieve data for listing ID {listing_id}. Status code: {response.status_code}")
