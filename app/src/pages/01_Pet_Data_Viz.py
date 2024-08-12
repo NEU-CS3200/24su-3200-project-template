@@ -8,12 +8,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 from modules.nav import SideBarLinks
+import requests
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
 # set the header of the page
-st.header('Adoptable Pet Data')
+st.header('Adoptable Pet Data d')
 
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
@@ -39,3 +40,9 @@ with st.echo(code_location='above'):
                                 slim_countries['incomeLevel'],  
                                 margins = False) 
     st.table(data_crosstab)
+
+if st.button('See aniamals',
+             type='primary',
+             use_container_width=True):
+  results = requests.get('http://api:4000/p/pets').json()
+  st.dataframe(results)
