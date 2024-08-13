@@ -6,6 +6,7 @@ import pandas as pd
 import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
+import requests
 
 SideBarLinks()
 
@@ -14,6 +15,13 @@ add_logo("assets/logo.png", height=400)
 
 # set up the page
 st.markdown("# Pet Agencies Near 02284")
+
+# You can access the session state to make a more customized/personalized app experience
+st.write(f"### Hi, {st.session_state['first_name']}!")
+st.write('This is a list of pets that are alive and available for adoption.')
+agencies = requests.get('http://api:4000/a/agencies').json()
+st.dataframe(agencies)
+
 st.sidebar.header("Mapping Demo")
 st.write(
     """This Mapping Demo is from the Streamlit Documentation. It shows how to use
