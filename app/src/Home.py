@@ -28,10 +28,10 @@ st.session_state['authenticated'] = False
 # showSidebarNavigation = false in the [client] section
 SideBarLinks(show_home=True)
 
-st.title('The Profs App')
+st.title('Getaway Guru')
 
 st.write('\n\n')
-st.write('### HI! As which user would you like to log in?')
+st.write('### Select the user you would like to login as:')
 
 if st.button("Act as Alice, a Student", 
             type = 'primary', 
