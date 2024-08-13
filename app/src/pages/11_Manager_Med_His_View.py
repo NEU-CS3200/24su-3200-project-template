@@ -12,27 +12,9 @@ SideBarLinks()
 
 st.title('Update Pet Medical History')
 
-# create a 2 column layout
-col1, col2 = st.columns(2)
+# Get the list of pets from the API
+pets = requests.get('http://api:4000/p/pets').json()
 
-# add one number input for variable 1 into column 1
-with col1:
-  var_01 = st.number_input('Variable 01:',
-                           step=1)
-
-# add another number input for variable 2 into column 2
-with col2:
-  var_02 = st.number_input('Variable 02:',
-                           step=1)
-
-logger.info(f'var_01 = {var_01}')
-logger.info(f'var_02 = {var_02}')
-
-# add a button to use the values entered into the number field to send to the 
-# prediction function via the REST API
-if st.button('Calculate Prediction',
-             type='primary',
-             use_container_width=True):
-  results = requests.get(f'http://api:4000/p/pets/{var_01}').json()
-  st.dataframe(results)
+# Create a dropdown to select a pet based on the pet's id to update the medical history
+pet_id = st.selectbox("Select a Pet ID to Update Medical History", [pet['petID'] for pet in pets])
   
