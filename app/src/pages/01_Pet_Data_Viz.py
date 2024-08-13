@@ -19,7 +19,7 @@ st.header('Adoptable Pet Data')
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}!")
 st.write('This is a list of pets that are alive and available for adoption.')
-pets = requests.get('http://api:4000/p/pets/available').json()
+pets = requests.get('http://localhost:4000/p/pets/available').json()
 st.dataframe(pets)
 
 
