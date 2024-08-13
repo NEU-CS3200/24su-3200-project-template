@@ -7,6 +7,9 @@ import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
 import requests
+import numpy
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
 
 SideBarLinks()
 
@@ -21,6 +24,29 @@ st.write(f"### Hi, {st.session_state['first_name']}!")
 st.write('This is a list of pets that are alive and available for adoption.')
 agencies = requests.get('http://api:4000/a/agencies').json()
 st.dataframe(agencies)
+
+geocoder = Nominatim(user_agent="your_app_name")
+
+zip_from = st.text_input(label = "zip: ")
+
+def get_location(zip_code):
+    location = geocoder.geocode(zip_code)
+    return (location.latitude, location.longitude)
+
+def find_distance_between(zip1, zip2):
+    distance = geodesic(get_location(zip1), get_location(zip2)).miles
+    return distance
+
+def handleClick():
+    df = pd.DataFrame(agencies)
+    distances = []
+    for index, row in df.iterrows():
+        distances.append(find_distance_between(zip_from, row['zip']))
+    df['distance'] = distances
+    df.sort_values('distance', axis = 0)
+    st.dataframe(df)
+
+btn = st.button('next', key='next', on_click=handleClick)
 
 st.sidebar.header("Mapping Demo")
 st.write(
