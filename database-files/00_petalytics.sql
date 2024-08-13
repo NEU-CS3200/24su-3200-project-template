@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS agencies (
 );
 
 CREATE TABLE IF NOT EXISTS pets (
-    petID           INTEGER PRIMARY KEY,
+    petID           INTEGER PRIMARY KEY AUTO_INCREMENT,
     name            VARCHAR(25) NOT NULL,
     adoption_status BOOLEAN NOT NULL DEFAULT 0,
     is_alive        BOOLEAN NOT NULL DEFAULT 1,
