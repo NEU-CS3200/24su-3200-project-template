@@ -11,7 +11,7 @@ import os
 
 SideBarLinks()
 
-st.write("# View Previous Data on Homes")
+st.write("# View 10 Most Expensive and 10 Least Expensive Homes")
 
 # Base URL for user data
 base_url = 'http://localhost:4000/u/users'
@@ -26,7 +26,7 @@ try:
     if response.status_code == 200:
         all_data = response.json()
     else:
-        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.error(f"Failed to retrieve all listings. Status code: {response.status_code}")
         st.text("Response:" + response.text)
 except requests.exceptions.RequestException as e:
     st.error("An error occurred while trying to connect to the API to fetch all users:")
@@ -40,7 +40,7 @@ try:
         st.write("ten least expensive listings:")
         st.dataframe(all_data)  # Displaying all user data in a dataframe
     else:
-        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.error(f"Failed to retrieve all listings. Status code: {response.status_code}")
         st.text("Response:" + response.text)
 except requests.exceptions.RequestException as e:
     st.error("An error occurred while trying to connect to the API to fetch all users:")
@@ -55,7 +55,7 @@ try:
         st.write("ten most expensive listings:")
         st.dataframe(all_data)  # Displaying all user data in a dataframe
     else:
-        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.error(f"Failed to retrieve all listings. Status code: {response.status_code}")
         st.text("Response:" + response.text)
 except requests.exceptions.RequestException as e:
     st.error("An error occurred while trying to connect to the API to fetch all users:")

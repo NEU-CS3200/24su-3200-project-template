@@ -4,10 +4,10 @@ logging.basicConfig(level=logging.DEBUG)
 from flask import Flask
 
 from backend.db_connection import db
-from backend.products.products_routes import products
-from backend.customers.customer_routes import customers
 from backend.listings.lisitngs_routes import listings
 from backend.users.user_routes import users
+from backend.areas.areas_routes import areas
+from backend.realtors.realtor_routes import realtors
 import os
 from dotenv import load_dotenv
 
@@ -97,8 +97,9 @@ def create_app():
     # and give a url prefix to each
     app.register_blueprint(users,   url_prefix='/u')
     app.register_blueprint(listings,    url_prefix='/l')
-    app.register_blueprint(products,    url_prefix='/p')
-    app.register_blueprint(customers,    url_prefix='/c')
+    app.register_blueprint(areas, url_prefix='/a')
+    app.register_blueprint(realtors, url_prefix='/r')
+
 
     # Don't forget to return the app object
     return app

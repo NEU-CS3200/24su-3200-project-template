@@ -32,7 +32,7 @@ except requests.exceptions.RequestException as e:
 st.subheader("Create New Listing")
 # Form to input data for new listing
 with st.form(key='create_form'):
-    id = st.text_input("ID")
+    id = 1
     City = st.text_input("City")
     ZipCode = st.text_input("ZipCode")
     Street = st.text_input("Street")
@@ -50,7 +50,7 @@ with st.form(key='create_form'):
 
     if submit_button:
         new_listing = {
-            "id": int(id),
+            "id": 1,
             "BeingRented": BeingRented == "Yes",
             "City": City,
             "ZipCode": int(ZipCode),

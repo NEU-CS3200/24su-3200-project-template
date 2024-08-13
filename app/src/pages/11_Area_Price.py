@@ -33,7 +33,7 @@ if listing_state:
         st.text(str(e))
 
 url = 'http://localhost:4000/a/areasname'
-listing_area = st.text_input("Enter Listings area to fetch specific listings details", "")
+listing_area = st.text_input("Enter Listings area to fetch specific area details", "")
 # Conditionally make API request based on user input for specific area
 if listing_area:
     specific_url = f"{url}/{listing_area}"
