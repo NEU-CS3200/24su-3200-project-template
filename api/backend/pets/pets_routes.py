@@ -27,7 +27,7 @@ def get_pets():
 def add_pet():
     current_app.logger.info('POST /pets route')
     pet_info = request.json
-    # petID = pet_info['petID']
+    petID = pet_info['petID']
     name = pet_info['name']
     status = pet_info['adoption_status']
     species = pet_info['species']
@@ -36,8 +36,8 @@ def add_pet():
     age = pet_info['age']
     alive = pet_info['is_alive']
 
-    query = 'INSERT INTO pets (name, adoption_status, species, breed, birthday, age, is_alive) VALUES (%s, %s, %s, %s, %s, %s, %s)'
-    data = (name, status, species, breed, birthday, age, alive)
+    query = 'INSERT INTO pets (petID, name, adoption_status, species, breed, birthday, age, is_alive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)'
+    data = (petID, name, status, species, breed, birthday, age, alive)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
@@ -79,7 +79,6 @@ def get_pet(petID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-
 # Get all avilable Pets for potention adopter viewing
 @pets.route('/pets/available', methods=['GET'])
 def get_available_pets():
@@ -87,6 +86,18 @@ def get_available_pets():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT petID, name,\
         species, breed, age FROM pets WHERE is_alive = 1 AND adoption_status = 0')
+
+    theData = cursor.fetchall()
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+@pets.route('pets/contact', methods=['Get'])
+def get_pet_contacts():
+    current_app.logger.info('pets_routes.py: GET /pets/contact')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT * FROM pets NATURAL JOIN pet_agencies NATURAL JOIN agencies')
 
     theData = cursor.fetchall()
     the_response = make_response(theData)
