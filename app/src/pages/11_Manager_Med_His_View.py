@@ -36,7 +36,7 @@ if submitted:
     data['entry'] = entry
     data['date'] = date.isoformat()
 
-    response = requests.post(f'http://api:4000/med/{selected_pet_id}', json=data)
+    response = requests.post(f'http://api:4000/m/med/{selected_pet_id}', json=data)
 
     if response.status_code == 200:
         st.success('Medical entry added successfully!')

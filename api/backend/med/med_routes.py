@@ -23,14 +23,13 @@ def med_pets(petID):
 
 # Add a new entry in the pet medical record
 @med.route('/med/<petID>', methods=['POST'])
-def add_entry():
+def add_entry(petID):
     current_app.logger.info('POST /med route')
     med_info = request.json
     entry = med_info['entry']
-    petID = med_info['petID']
     date = med_info['date']
 
-    query = 'INSERT INTO medical_record (entry, petID, date) VALUES (%s, %s, %s)'
+    query = 'INSERT INTO medical_records (entry, petID, date) VALUES (%s, %s, %s)'
     data = (entry, petID, date)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
