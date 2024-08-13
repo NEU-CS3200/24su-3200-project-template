@@ -14,7 +14,7 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('See student groups', 
+if st.button('View Regression Prediction', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/11_Prediction.py')

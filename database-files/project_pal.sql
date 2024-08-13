@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS TA (
     ta_id INT AUTO_INCREMENT UNIQUE,
     first_name VARCHAR(75) NOT NULL,
     last_name VARCHAR(75) NOT NULL,
-    email VARCHAR(75),
+    email VARCHAR(75) UNIQUE,
     section_num INT NOT NULL,
     semester_year varchar(25) NOT NULL,
     course_id INT NOT NULL,

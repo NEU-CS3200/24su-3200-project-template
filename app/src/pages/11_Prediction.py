@@ -10,35 +10,22 @@ st.set_page_config(layout = 'wide')
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
-st.title('Prediction with Regression')
+st.title('Find students with my availability')
 
-# create a 2 column layout
-col1, col2 = st.columns(2)
+with st.form("Find students with my availabilty"):
+  ta_fname = st.text_input('First Name: ')
+  ta_lname = st.text_input('Last Name: ')
+  ta_email = st.text_input('Email: ')
 
-# add one number input for variable 1 into column 1
-with col1:
-  var_01 = st.number_input('Variable 01:',
-                           step=1)
+  submitted = st.form_submit_button('Submit')
 
-# add another number input for variable 2 into column 2
-with col2:
-  var_02 = st.number_input('Variable 02:',
-                           step=1)
+if submitted:
+  st.write(f"First Name: {ta_fname}")
+  st.write(f"Last Name: {ta_lname}")
+  st.write(f"Email: {ta_email}")
 
-logger.info(f'var_01 = {var_01}')
-logger.info(f'var_02 = {var_02}')
-
-# add a button to use the values entered into the number field to send to the 
-# prediction function via the REST API
-if st.button('Calculate Prediction',
-             type='primary',
-             use_container_width=True):
-  results = requests.get(f'http://api:4000/c/prediction/{var_01}/{var_02}').json()
-  st.dataframe(results)
-
-# ---- need to edit this!
-# --- need to find students with my availability! 
-ta_data = requests.get('http://api:4000/t/ta').json()
+  # --- still need to connect id to api!
+ta_data = requests.get('http://api:4000/t/ta/1').json()
 try:
   st.dataframe(ta_data)
 except:
