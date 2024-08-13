@@ -31,7 +31,7 @@ SideBarLinks(show_home=True)
 st.title('Getaway Guru')
 
 st.write('\n\n')
-st.write('Choose which user you would like to log in as:')
+st.write('Choose which user to log in as')
 
 if st.button("Act as Alice, a Student", 
             type = 'primary', 
