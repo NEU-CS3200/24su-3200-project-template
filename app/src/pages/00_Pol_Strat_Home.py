@@ -4,6 +4,9 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 from modules.nav import SideBarLinks
 
+import requests
+
+
 st.set_page_config(layout = 'wide')
 
 # Show appropriate sidebar links for the role of the currently logged in user
@@ -23,3 +26,9 @@ if st.button('View World Map Demo',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/02_Map_Demo.py')
+
+student_data = requests.get('http://api:4000/s/students').json()
+try:
+  st.dataframe(student_data)
+except:
+  st.write("Could not connect to db to retrive students!")
