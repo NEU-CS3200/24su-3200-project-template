@@ -11,7 +11,7 @@ st.write("# Add a New Pet to the Database")
 
 # Create a form to add a pet for adoption
 with st.form("Input New Pet Information"):
-    pet_id = st.number_input("Input New Pet's ID:", step=1)
+    # pet_id = st.number_input("Input New Pet's ID:", step=1)
     pet_name = st.text_input("Input New Pet's Name:")
     pet_status = st.checkbox("Is the pet available for adoption?")
     pet_species = st.text_input("Input New Pet's Species:")
@@ -24,7 +24,7 @@ with st.form("Input New Pet Information"):
 
     if submitted:
       data = {}
-      data['petID'] = pet_id
+      # data['petID'] = pet_id
       data['name'] = pet_name
       data['adoption_status'] = pet_status
       data['species'] = pet_species
