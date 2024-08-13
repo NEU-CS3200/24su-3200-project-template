@@ -35,4 +35,11 @@ if st.button('Calculate Prediction',
              use_container_width=True):
   results = requests.get(f'http://api:4000/c/prediction/{var_01}/{var_02}').json()
   st.dataframe(results)
-  
+
+# ---- need to edit this!
+# --- need to find students with my availability! 
+ta_data = requests.get('http://api:4000/t/ta').json()
+try:
+  st.dataframe(ta_data)
+except:
+  st.write("Could not connect to db to retrive ta data!")
