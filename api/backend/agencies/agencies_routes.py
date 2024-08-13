@@ -47,11 +47,12 @@ def update_customer():
     return 'customer updated!'
 
 # Get pet detail for a agency with particular petID
-@agencies.route('/agencies/<petID>', methods=['GET'])
-def get_agency(petID):
-    current_app.logger.info('GET /agencies/<petID> route')
+@agencies.route('/agencies/<zip>', methods=['GET'])
+def get_agency(zip):
+    current_app.logger.info('GET /agencies/<zip> route')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT name, adoption_status, species, breed, birthday, age, is_alive FROM agencies WHERE petID = ' + str(petID))
+    cursor.execute('SELECT agencyID, agencyName, phone, email, street,\
+        city, state, zip FROM agencies WHERE zip = ' + str(zip))
     row_headers = [x[0] for x in cursor.description]
     json_data = []
     theData = cursor.fetchall()
