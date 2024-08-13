@@ -662,6 +662,16 @@ INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('98', '65');
 INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('99', '75');
 INSERT INTO `Listing Offer` (OfferId, ListingId) VALUES ('100', '40');
 
-
+SELECT
+    CASE
+        WHEN BeingRented = 0 THEN 'Not Rented'
+        WHEN BeingRented = 1 THEN 'Rented'
+        ELSE 'Other' -- Optional: for handling unexpected values
+    END AS Rental_Status,
+    COUNT(*) AS Total_Count
+FROM
+    Listings
+GROUP BY
+    BeingRented;
 
 

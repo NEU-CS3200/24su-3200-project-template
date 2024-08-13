@@ -17,7 +17,7 @@ def get_listings():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of products
-    cursor.execute('SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings')
+    cursor.execute('SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId FROM Listings')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -40,7 +40,7 @@ def get_listings():
 @listings.route('/listings/<id>', methods=['GET'])
 def get_listing_detail (id):
 
-    query = 'SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId,Views FROM Listings WHERE id = ' + str(id)
+    query = 'SELECT id, BeingRented, City, ZipCode,Street,HouseNum,State,PrevPriceData,CurrPriceData,PredictedFuturePriceData,AreaId,RealtorId FROM Listings WHERE id = ' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
@@ -63,6 +63,7 @@ def get_most_pop_listings():
         ORDER BY CurrPriceData DESC
         LIMIT 5
     '''
+    
     cursor.execute(query)
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -79,6 +80,42 @@ def get_most_pop_listings():
     for row in theData:
         json_data.append(row)
 
+    return jsonify(json_data)
+
+@listings.route('/listingsBeingRented', methods=['GET'])
+def get_listings_Being_Rented():
+    
+    query = '''
+        SELECT
+            CASE
+                WHEN BeingRented = 0 THEN 'Not Rented'
+                WHEN BeingRented = 1 THEN 'Rented'
+                ELSE 'Other'
+            END AS Rental_Status,
+            COUNT(*) AS Total_Count
+        FROM
+            Listings
+        GROUP BY
+            BeingRented;
+    '''
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(row)
+    
     return jsonify(json_data)
 
 
@@ -194,19 +231,18 @@ def add_new_listing():
     PredictedFuturePriceData = int(the_data['PredictedFuturePriceData'])
     AreaId = int(the_data['AreaId'])
     RealtorId = int(the_data['RealtorId'])
-    Views = int(the_data['Views'])
     id = int(the_data['id'])
 
     # Constructing the parameterized query
     query = '''
         INSERT INTO Listings 
-        (BeingRented, City, PrevPriceData, ZipCode, Street, HouseNum, State, CurrPriceData, PredictedFuturePriceData, AreaId, RealtorId, Views,id)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
+        (BeingRented, City, PrevPriceData, ZipCode, Street, HouseNum, State, CurrPriceData, PredictedFuturePriceData, AreaId, RealtorId,id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)
     '''
     # Tuple for parameters to ensure safe SQL execution
     values = (
         BeingRented, City, PrevPriceData, ZipCode, Street, HouseNum, State, CurrPriceData,
-        PredictedFuturePriceData, AreaId, RealtorId, Views,id
+        PredictedFuturePriceData, AreaId, RealtorId,id
     )
 
     # Executing and committing the insert statement 
@@ -291,3 +327,37 @@ def delete_listing(listing_id):
     except Exception as e:
         current_app.logger.error(f"Failed to delete listing: {e}")
         return jsonify({"error": "Failed to delete listing"}), 500
+
+
+@listings.route('/listingsViews', methods=['GET'])
+def get_views_of_listing():
+    
+    query = '''
+        SELECT City, ZipCode, Street, HouseNum, State, count(userid) AS `Number Of Views`
+        FROM `Viewed Listing` join homeFinderTables.Listings L on L.id = `Viewed Listing`.ListingId
+        GROUP BY City, ZipCode, Street, HouseNum, State
+        ORDER BY `Number Of Views` DESC
+        LIMIT 10;
+        '''
+
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+
+    column_headers = [x[0] for x in cursor.description]
+
+    # create an empty dictionary object to use in 
+    # putting column headers together with data
+    json_data = []
+
+    # fetch all the data from the cursor
+    theData = cursor.fetchall()
+
+    # for each of the rows, zip the data elements together with
+    # the column headers. 
+    for row in theData:
+        json_data.append(row)
+    
+    return jsonify(json_data)               
+
+
+

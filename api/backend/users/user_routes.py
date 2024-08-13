@@ -63,3 +63,29 @@ def get_user(userID):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+
+
+
+@users.route('/usersgenders', methods=['GET'])
+def usersgenders():
+    current_app.logger.info('user_routes.py: GET /users')
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT Gender, Count(Id) AS NumUniqueUsers FROM users \
+                    GROUP BY Gender ORDER BY Count(Id) ASC;')
+    row_headers = [x[0] for x in cursor.description]
+    json_data = []
+    theData = cursor.fetchall()
+    for row in theData:
+        current_app.logger.info(f"Rows: {row}")
+        #current_app.logger.info(f"Headers: {row_headers}")
+        #combined_data = dict(zip(row_headers, row))
+        #current_app.logger.info("Combined Data:", combined_data)
+        #json_data.append(combined_data)
+        #current_app.logger.info(combined_data)
+        json_data.append(row)
+    the_response = make_response(jsonify(json_data))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+

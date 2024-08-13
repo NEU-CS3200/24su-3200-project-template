@@ -83,6 +83,38 @@ except requests.exceptions.RequestException as e:
     st.text(str(e))
 
 
+url = 'http://localhost:4000/l/listingsBeingRented'
+try:
+    response = requests.get(url)
+    if response.status_code == 200:
+        all_data = response.json()
+        st.write("Successfully connected to the API.")
+        st.write("All listings:")
+        st.dataframe(all_data)  # Displaying all user data in a dataframe
+    else:
+        st.error(f"Failed to retrieve all listings. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error("An error occurred while trying to connect to the API to fetch all users:")
+    st.text(str(e))
+
+
+url = 'http://localhost:4000/l/listingsViews'
+try:
+    response = requests.get(url)
+    if response.status_code == 200:
+        all_data = response.json()
+        st.write("Successfully connected to the API.")
+        st.write("All listings Views:")
+        st.dataframe(all_data)  # Displaying all user data in a dataframe
+    else:
+        st.error(f"Failed to retrieve all listings. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error("An error occurred while trying to connect to the API to fetch all users:")
+    st.text(str(e))
+
+url = 'http://localhost:4000/l/listings'
 listing_id = st.text_input("Enter Listings ID to fetch specific listings details", "")
 
 # Conditionally make API request based on user input for specific user details
