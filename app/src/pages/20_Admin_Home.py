@@ -9,7 +9,7 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title('System Admin Home Page')
+st.title('Professor Home Page')
 
 if st.button('Update ML Models', 
              type='primary',

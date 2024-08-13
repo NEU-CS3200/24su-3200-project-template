@@ -45,7 +45,7 @@ st.write('### HI! As which user would you like to log in?')
 # Professor Mark 
 # TA Timmy 
 
-if st.button("Act as Sam, a NEU Student", 
+if st.button("Act as Sam, a NEU student", 
             type = 'primary', 
             use_container_width=True):
     # when user clicks the button, they are now considered authenticated
@@ -60,20 +60,20 @@ if st.button("Act as Sam, a NEU Student",
     logger.info("Logging in as Student Persona")
     st.switch_page('pages/00_Pol_Strat_Home.py') # --- need to change this
 
-if st.button('Act as Mohammad, an USAID worker', 
+if st.button('Act as Timmy, a NEU teaching assistant', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
+    st.session_state['role'] = 'ta'
+    st.session_state['first_name'] = 'Timmy'
     st.switch_page('pages/10_USAID_Worker_Home.py')
 
-if st.button('Act as System Administrator', 
+if st.button('Act as Mark, a NEU professor', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
-    st.session_state['first_name'] = 'SysAdmin'
+    st.session_state['role'] = 'professor'
+    st.session_state['first_name'] = 'Mark'
     st.switch_page('pages/20_Admin_Home.py')
 
 
