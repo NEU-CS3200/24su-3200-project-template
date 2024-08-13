@@ -13,7 +13,7 @@ med = Blueprint('med', __name__)
 def med_pets(petID):
     current_app.logger.info('med_routes.py: GET /med')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT petID, entryNumber, entry, date FROM medical_record WHERE petID = ' + str(petID))
+    cursor.execute('SELECT petID, entryNumber, entry, date FROM medical_records WHERE petID = ' + str(petID))
 
     theData = cursor.fetchall()
     the_response = make_response(theData)
