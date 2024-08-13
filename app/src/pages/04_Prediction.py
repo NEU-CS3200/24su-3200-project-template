@@ -35,4 +35,8 @@ if st.button('Calculate Prediction',
              use_container_width=True):
   results = requests.get(f'http://api:4000/c/prediction/{var_01}/{var_02}').json()
   st.dataframe(results)
+
+# testing out the get statement
+hey = requests.get('http://api:4000/c/users').json()
+st.dataframe(hey)
   

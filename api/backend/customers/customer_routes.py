@@ -9,6 +9,20 @@ from backend.ml_models.model01 import predict
 
 customers = Blueprint('customers', __name__)
 
+# Testing out pulling users
+@customers.route('/users', methods =['GET'])
+def get_users():
+    current_app.logger.info('customer_routes.py: GET /users')
+    cursor = db.get_db().cursor()
+    cursor.execute('select id, address from users')
+    
+    theData = cursor.fetchall()
+    
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
 @customers.route('/prediction/<var01>/<var02>', methods=['GET'])
 def predict_value(var01, var02):
     current_app.logger.info(f'var01 = {var01}')

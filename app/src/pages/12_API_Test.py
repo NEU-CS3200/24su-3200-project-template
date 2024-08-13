@@ -7,13 +7,25 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# Accessing a REST API from Within Streamlit")
-products = requests.get('http:appi:4000/p/products').json()
+# st.write("# Accessing a REST API from Within Streamlit")
+# products = requests.get('http:appi:4000/p/products').json()
 
-try: 
-  st.dataframe(products)
-except: 
-  st.write("Could not connect to database to retrieve products.")
+# try: 
+#   st.dataframe(products)
+# except: 
+#   st.write("Could not connect to database to retrieve products.")
+
+try:
+  hey = requests.get('http://api:4000/c/users').json()
+  st.dataframe(hey)
+except:
+  st.write("Error!")
+
+try:
+  hey = requests.get('http://api:4000/h/hotel').json()
+  st.dataframe(hey)
+except:
+  st.write("Error!")
 
 """
 Simply retrieving data from a REST api running in a separate Docker Container.
@@ -29,3 +41,4 @@ should not totally die.
 #  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
 
 #st.dataframe(data)
+
