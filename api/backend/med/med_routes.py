@@ -30,7 +30,7 @@ def add_entry():
     petID = med_info['petID']
     date = med_info['date']
 
-    query = 'INSERT INTO medical_record (entry, petID, date) VALUES (%s, %s, %s)'
+    query = 'INSERT INTO medical_records (entry, petID, date) VALUES (%s, %s, %s)'
     data = (entry, petID, date)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
