@@ -14,7 +14,7 @@ Currently, there are three major components:
 ## Getting Started for Personal Exploration
 1. Clone the repo to your computer. 
 1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-  1. To set up `.env` file, please copy and paste the `.env.template` file and rename it `.env`. In this new `.env` please insert a password in the "MYSQL_ROOT_PASSWORD=" section. 
+    - To set up `.env` file, please copy and paste the `.env.template` file and rename it `.env`. In this new `.env` please insert a password in the "MYSQL_ROOT_PASSWORD=" section. 
 1. Start the docker containers. 
  
 
