@@ -14,7 +14,7 @@ def med_pets():
     current_app.logger.info('adoptions_routes.py: GET /med')
     cursor = db.get_db().cursor()
     cursor.execute('SELECT name, petID, firstName, lastName, adopterID, email, phone, adoption_date,\
-                    adoptionID FROM adopters NATURAL JOIN adoptions NATURAL JOIN pets')
+                    adoptionID, adoptionStatus FROM adopters NATURAL JOIN adoptions NATURAL JOIN pets')
 
     theData = cursor.fetchall()
     the_response = make_response(theData)
