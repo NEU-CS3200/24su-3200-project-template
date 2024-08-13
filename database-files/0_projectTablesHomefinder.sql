@@ -57,7 +57,6 @@ Create Table `Listings` (
     `id` integer UNIQUE PRIMARY KEY,
     `AreaId` integer NOT NULL,
     `RealtorId` integer NOT NULL,
-    `Views` integer,
     CONSTRAINT FK_Listings_Area FOREIGN KEY (Areaid) REFERENCES area(id) ON UPDATE CASCADE,
     CONSTRAINT FK_Listings_Realtor FOREIGN KEY (RealtorId) REFERENCES Realtor(id) ON UPDATE CASCADE on DELETE CASCADE
 );
