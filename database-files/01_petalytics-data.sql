@@ -50,7 +50,7 @@ INSERT INTO agencies VALUES
 -- Data for table 'pets'
 -- 
 
-INSERT INTO pets VALUES (name, adoption_status, is_alive, species, breed, birthday, age)
+INSERT INTO pets (name, adoption_status, is_alive, species, breed, birthday, age) VALUES
 	('Bendicty', '0', '0', 'cat', 'Siamese', '2018-01-01', '6'),
 	('Meagan', '0', '0', 'cat', 'Siamese', '2009-01-01', '15'),
 	('Ursola', '1', '0', 'cat', 'Sphynx', '2019-01-01', '5'),
