@@ -22,9 +22,9 @@ if st.button('Update Pet Medical History',
 if st.button('Put up a Pet for Adoption', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/12_Manager_Adoption_View.py')
+  st.switch_page('pages/12_Manager_Adoption_Add.py')
 
 if st.button("View Status of Pending Adoptions",
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Manager_Pending_Adoptions.py')
+  st.switch_page('pages/13_Manager_Adoption_View.py')

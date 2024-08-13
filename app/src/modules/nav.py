@@ -20,8 +20,8 @@ def AdopterPageNav():
 def RescueManagerPageNav():
     st.sidebar.page_link("pages/10_Rescue_Manager_Home.py", label="Rescue Manager Home", icon='💼')
     st.sidebar.page_link("pages/11_Manager_Med_His_View.py", label="Manager Update Medical History View", icon='📈')
-    st.sidebar.page_link("pages/12_Manager_Adoption_View.py", label="Manager Adoption View", icon='🐱')
-    st.sidebar.page_link("pages/13_Manager_Pending_Adoptions.py", label="View Pending Adoptions", icon='🙈')
+    st.sidebar.page_link("pages/12_Manager_Adoption_Add.py", label="Manager Add Adoption", icon='🐱')
+    st.sidebar.page_link("pages/13_Manager_Adoption_View.py", label="View Adoption Data", icon='🙈')
 
 #### ------------------------ researcher Role ------------------------
 def ResearcherPageNav():

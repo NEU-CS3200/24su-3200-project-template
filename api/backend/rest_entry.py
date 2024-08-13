@@ -7,6 +7,7 @@ from backend.db_connection import db
 from backend.pets.pets_routes import pets
 from backend.agencies.agencies_routes import agencies
 from backend.med.med_routes import med
+from backend.adoptions.adoptions_routes import adoptions
 import os
 from dotenv import load_dotenv
 
@@ -97,6 +98,8 @@ def create_app():
     app.register_blueprint(pets,   url_prefix='/p')
     app.register_blueprint(agencies,   url_prefix='/a')
     app.register_blueprint(med,   url_prefix='/m')
+    app.register_blueprint(adoptions,   url_prefix='/adp')
+
 
 
     # Don't forget to return the app object
