@@ -6,6 +6,7 @@ from flask import Flask
 from backend.db_connection import db
 from backend.customers.customer_routes import customers
 from backend.products.products_routes import products
+from backend.hotels.hotel_routes import hotel
 import os
 from dotenv import load_dotenv
 

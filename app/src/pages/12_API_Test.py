@@ -21,6 +21,12 @@ try:
 except:
   st.write("Error!")
 
+try:
+  hey = requests.get('http://api:4000/h/hotel').json()
+  st.dataframe(hey)
+except:
+  st.write("Error!")
+
 """
 Simply retrieving data from a REST api running in a separate Docker Container.
 
@@ -35,3 +41,4 @@ should not totally die.
 #  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
 
 #st.dataframe(data)
+
