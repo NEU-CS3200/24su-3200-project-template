@@ -13,11 +13,11 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 st.write('')
 st.write('')
 
-if st.buttone('Plan your next trip',
+if st.button('Plan your next trip',
               type = 'primary',
               use_container_width = True):
    st.switch_page('pages/trip.py')
 
-if st.button('Update your Primary Address', 
-             type = 'primary',
-             use_container_width = True):
+address = st.columns(1)
+with address:
+    address = st.input('Address:')
