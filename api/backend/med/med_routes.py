@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
 
-pets = Blueprint('med', __name__)
+med = Blueprint('med', __name__)
 
 # Get all medical history entries from a specific pet
 @med.route('/med/<petID>', methods=['GET'])
