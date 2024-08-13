@@ -8,8 +8,6 @@ from urllib.error import URLError
 from modules.nav import SideBarLinks
 import requests
 import numpy
-from geopy.geocoders import Nominatim
-from geopy.distance import geodesic
 
 SideBarLinks()
 
