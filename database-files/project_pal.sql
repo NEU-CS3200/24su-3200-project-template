@@ -197,9 +197,21 @@ CREATE TABLE IF NOT EXISTS TAAvailability (
 
 -- Department Data
 INSERT INTO Department (deptName)
-VALUES ('Computer Sciences'),
+VALUES ('Computer Science'),
        ('Finance'),
-       ('Chemistry');
+       ('Chemistry'),
+       ('Marketing'),
+       ('Public Relations'),
+       ('Physics'),
+       ('International Business'),
+       ('Information Science'),
+       ('Bioengineering'),
+       ('Chemical Engineering'),
+       ('Civil Engineering'),
+       ('Industrial Engineering'),
+       ('Nursing'),
+       ('Hisotry'),
+       ('Communications');
 
 -- Professor Data
 INSERT INTO Professor(first_name, last_name, email, dept_id, office_location)
@@ -207,13 +219,45 @@ VALUES ('Mark', 'Fontenot', 'm.fontenot@northeastern.edu', 1, 'WVH 115'),
        ('Sally', 'Fields', 'fields.sa@northeastern.edu', 2, 'Hayden 302'),
        ('Patrick', 'Thompson', 'pa.thompson@northeastern.edu', 3, 'Mugar 112'),
        ('Sara', 'Klein', 's.klein@northeastern.edu', 3, 'Mugar 223'),
-       ('Matt', 'James', 'm.james@northestern.edu', 3, 'Churchill 102');
+       ('Matt', 'James', 'm.james@northestern.edu', 3, 'Churchill 102'),
+       ('Normie', 'Hollyer', 'nhollyer0@paypal.com', 25, 'Adams Building'),
+       ('Holt', 'Anderton', 'handerton1@mac.com', 9, 'Dodge Hall'),
+       ('Marne', 'Swainsbury', 'mswainsbury2@skype.com', 26, 'Adams Building'),
+       ('Brear', 'Roberds', 'broberds3@squidoo.com', 3, 'Dodge Hall'),
+       ('Ileana', 'Scarr', 'iscarr4@guardian.co.uk', 1, 'Dodge Hall'),
+       ('Nan', 'Tully', 'ntully5@trellian.com', 27, 'Wilson Hall'),
+       ('Janeta', 'Banbury', 'jbanbury6@naver.com', 18, 'Parker Center'),
+       ('Kippie', 'Redsull', 'kredsull7@flavors.me', 20, 'Wilson Hall'),
+       ('Clim', 'Frid', 'cfrid8@blogspot.com', 20, 'Johnson Center'),
+       ('Jonas', 'Swigger', 'jswigger9@e-recht24.de', 1, 'Johnson Center'),
+       ('Berty', 'Pittle', 'bpittlea@pcworld.com', 27, 'Grant Hall'),
+       ('Winifred', 'Comizzoli', 'wcomizzolib@drupal.org', 11, 'Adams Building'),
+       ('Michelina', 'Boulton', 'mboultonc@dailymail.co.uk', 18, 'Grant Hall'),
+       ('Philippine', 'Binnion', 'pbinniond@nbcnews.com', 27, 'Clark Hall'),
+       ('Margo', 'Van Waadenburg', 'mvanwaadenburge@hp.com', 24, 'Smith Building'),
+       ('Lorraine', 'Chesterfield', 'lchesterfieldf@marketwatch.com', 2, 'Parker Center'),
+       ('Adella', 'Fannin', 'afanning@house.gov', 8, 'Parker Center'),
+       ('Yolane', 'Caldero', 'ycalderoh@hhs.gov', 11, 'Forsyth Hall'),
+       ('Francyne', 'Wartonby', 'fwartonbyi@ibm.com', 20, 'Johnson Center'),
+       ('Izaak', 'Meadowcroft', 'imeadowcroftj@google.it', 15, 'Dodge Hall');
 
 -- Class Data
 INSERT INTO Class(course_name, dept_id)
 VALUES ('Database Design', 1),
        ('Organic Chemistry', 3),
-       ('Investments', 2);
+       ('Investments', 2),
+       ('Introduction to Psychology', 1),
+       ('Advanced Calculus', 2),
+       ('History of Art', 3),
+       ('Digital Marketing Strategies', 4),
+       ('Creative Writing Workshop', 5),
+       ('Environmental Science and Sustainability', 6),
+       ('Introduction to Astrophysics', 7),
+       ('Fashion Design Fundamentals', 8),
+       ('Music Theory and Composition', 9),
+       ('Entrepreneurship and Innovation', 10)
+;
+# --- need to change department ids
 
 -- Section Data
 INSERT INTO Section(course_id, semester_year, section_num, professor_id)
