@@ -30,12 +30,13 @@ def get_customers():
     cursor = db.get_db().cursor()
     cursor.execute('select id, company, last_name,\
         first_name, job_title, business_phone from customers')
-    row_headers = [x[0] for x in cursor.description]
-    json_data = []
+    #row_headers = [x[0] for x in cursor.description]
+    #json_data = []
     theData = cursor.fetchall()
-    for row in theData:
-        json_data.append(dict(zip(row_headers, row)))
-    the_response = make_response(jsonify(json_data))
+    #for row in theData:
+        #json_data.append(dict(zip(row_headers, row)))
+    #the_response = make_response(jsonify(json_data))
+    the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
@@ -69,6 +70,7 @@ def get_customer(userID):
     for row in theData:
         json_data.append(dict(zip(row_headers, row)))
     the_response = make_response(jsonify(json_data))
+    the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
