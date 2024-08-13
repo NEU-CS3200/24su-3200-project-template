@@ -58,7 +58,7 @@ def get_listing_detail (id):
 def get_most_pop_listings():
     cursor = db.get_db().cursor()
     query = '''
-        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
+        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData,PrevPriceData,PredictedFuturePriceData
         FROM Listings
         ORDER BY CurrPriceData DESC
         LIMIT 5
@@ -86,7 +86,7 @@ def get_most_pop_listings():
 def get_10_most_expensive_listings():
     
     query = '''
-        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
+        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData,PrevPriceData,PredictedFuturePriceData
         FROM Listings
         ORDER BY CurrPriceData DESC
         LIMIT 10
@@ -116,7 +116,7 @@ def get_10_most_expensive_listings():
 def get_10_least_expensive_listings():
     
     query = '''
-        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData
+        SELECT id, City,ZipCode,Street,HouseNum,State,CurrPriceData,PrevPriceData,PredictedFuturePriceData
         FROM Listings 
         ORDER BY CurrPriceData ASC
         LIMIT 10

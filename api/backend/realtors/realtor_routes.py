@@ -34,7 +34,7 @@ def get_realtors():
 @realtors.route('/realtors/<id>', methods=['GET'])
 def get_realtor_name (id):
 
-    query = 'SELECT City, ZipCode, Street, HouseNum, State, RealtorId, Views FROM Listings WHERE RealtorId = ' + str(id)
+    query = 'SELECT City, ZipCode, Street, HouseNum, State, RealtorId, id, Views FROM Listings WHERE RealtorId = ' + str(id)
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()

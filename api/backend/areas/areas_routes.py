@@ -12,7 +12,7 @@ def get_areas():
     cursor = db.get_db().cursor()
 
     # use cursor to query the database for a list of areas
-    cursor.execute('SELECT id, AveragePrice, SchoolQuality, name FROM area')
+    cursor.execute('SELECT id, name FROM area')
 
     # grab the column headers from the returned data
     column_headers = [x[0] for x in cursor.description]
@@ -49,7 +49,7 @@ def get_area_name (id):
 @areas.route('/areasname/<name>', methods=['GET'])
 def get_area_home(name):
 
-    query = 'SELECT id, name FROM area WHERE name = "' + str(name + '"')
+    query = 'SELECT id, name, AveragePrice, SchoolQuality FROM area WHERE name = "' + str(name + '"')
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
