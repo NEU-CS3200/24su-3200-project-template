@@ -8,15 +8,6 @@ import os
 
 SideBarLinks()
 
-st.write("# Accessing a REST API from Within Streamlit")
-
-"""
-Simply retrieving data from a REST API running in a separate Docker Container.
-
-If the container isn't running, this will be very unhappy. But the Streamlit app 
-should not totally die.
-"""
-
 # Base URL for user data
 base_url = 'http://localhost:4000/u/users'
 
@@ -37,6 +28,22 @@ except requests.exceptions.RequestException as e:
     st.error("An error occurred while trying to connect to the API to fetch all users:")
     st.text(str(e))
 
+
+base_url = 'http://localhost:4000/u/usersgenders'
+
+try:
+    response = requests.get(base_url)
+    if response.status_code == 200:
+        all_data = response.json()
+        st.write("Successfully connected to the API.")
+        st.write("All Genders:")
+        st.dataframe(all_data)  # Displaying all user data in a dataframe
+    else:
+        st.error(f"Failed to retrieve all users. Status code: {response.status_code}")
+        st.text("Response:" + response.text)
+except requests.exceptions.RequestException as e:
+    st.error("An error occurred while trying to connect to the API to fetch all users:")
+    st.text(str(e))
 # Ask the user to input a User ID
 user_id = st.text_input("Enter User ID to fetch specific user details", "")
 
