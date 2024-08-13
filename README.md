@@ -1,8 +1,8 @@
-# Summer 2024 CS 3200 Project Template Repository
+# CS 3200 Summer 2 2024 Final Project
 
 ## About
 
-This example project explores some features of Streamlit & Flask to build a comprehensive web app for your project.  You won't necessarily have to use all of the features in this example in your course project 
+This is BarkFontenot's Team project called PetFetch! PetFetch is a Petalytics application that allows you to view pets and agencies around the area. 
 
 ## Current Project Components
 
@@ -14,14 +14,9 @@ Currently, there are three major components:
 ## Getting Started for Personal Exploration
 1. Clone the repo to your computer. 
 1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
+  1. To set up `.env` file, please copy and paste the `.env.template` file and rename it `.env`. In this new `.env` please insert a password in the "MYSQL_ROOT_PASSWORD=" section. 
 1. Start the docker containers. 
-
-## Getting Started For Team Project
-1. Each team member should make a GitHub account if you don't already have one.  This should be for the public GitHub, not Khoury's enterprise server. 
-1. One team member should fork this repository. They will be the repo owner. 
-1. Add your team members as Collaborators on the repository.  You can find Collaborators under the Settings tab in the repository.
-1. Each team member needs to accept the invitation to collaborate
-1. Each team member (including the repo owner) needs to clone the repository to their laptops. 
+ 
 
 ## Handling User Role Access and Control
 
