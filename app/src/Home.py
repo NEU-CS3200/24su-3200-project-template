@@ -41,13 +41,9 @@ if st.button("Act as Alice, a Student",
     # we set the role of the current user
     st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Alice'
-<<<<<<< HEAD
     st.switch_page('pages/trip.py')
     st.session_state['first_name'] = 'Alice'
     st.switch_page('pages/trip.py')
-=======
-    st.switch_page('pages/users.py')
->>>>>>> 2dbc7765ac074f52e2c8cd845bcb3ae281028fcd
 
 if st.button('Act as Thomas, an Marketing Analyst', 
             type = 'primary', 
