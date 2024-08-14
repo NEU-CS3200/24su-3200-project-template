@@ -26,3 +26,18 @@ def get_all_stuAvailability():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+@stuAvailability.route('/stuAvailability', methods=['PUT'])
+def update_customer():
+    current_app.logger.info('PUT /students route')
+    student_aval = request.json
+    # current_app.logger.info(cust_info)
+    time = student_aval['time']
+    days = student_aval['days']
+
+    query = 'UPDATE students SET time = %s, days = %s where id = %s'
+    data = (time,days)
+    cursor = db.get_db().cursor()
+    r = cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Student updated!'

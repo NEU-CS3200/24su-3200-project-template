@@ -27,7 +27,11 @@ if st.button('Join A Group and Schedule Meetings',
              use_container_width=True):
   st.switch_page('pages/02_Map_Demo.py')
 
-student_data = requests.get('http://api:4000/sa/students').json()
+if st.button('Scheduling and Task List',
+             type='primary',use_container_width=True):
+  st.switch_page('pages/Scheduler_Tracker.py')
+
+student_data = requests.get('http://api:4000/sa/stuAvailability').json()
 try:
   st.dataframe(student_data)
 except:

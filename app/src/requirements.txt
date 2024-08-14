@@ -13,5 +13,5 @@ plotly
 seaborn
 scikit-learn
 shap
-streamlit-calendar
-streamlit-awesome-table
+streamlit_calendar
+streamlit_awesome_table
