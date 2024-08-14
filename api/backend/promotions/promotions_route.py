@@ -44,11 +44,7 @@ def add_new_promotion():
     return 'Success'
 
 # Updates a promotion
-<<<<<<< HEAD
-@promotions.route ('/promotion', methods = ['PUT'])
-=======
 @promotions.route ('/update_promotion', methods = ['PUT'])
->>>>>>> 43754c996b5fef89549680c99205868dc6c2a5f5
 def update_promotion():
     promotion_info = request.json
     code = promotion_info['code']
