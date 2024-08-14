@@ -28,7 +28,7 @@ def get_all_ta():
     the_response.mimetype = 'application/json'
     return the_response
 
-@ta.route('/ta/<first_name>/<last_name>/<email>', methods = ['POST', 'GET'])
+@ta.route('/ta/<first_name>/<last_name>/<email>', methods=['POST', 'GET'])
 def get_taId(first_name, last_name, email):
     current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>')
 
@@ -37,49 +37,27 @@ def get_taId(first_name, last_name, email):
     cursor = connection.cursor()
 
     # Use parameterized query to prevent SQL injection
-    query = ''' SELECT ta_id
-                FROM TA
-                WHERE first_name = %s AND last_name = %s AND email = %s'''
+    query_id = '''SELECT ta_id FROM TA WHERE first_name = %s AND last_name = %s AND email = %s'''
+    cursor.execute(query_id, (first_name, last_name, email))
+    theData = cursor.fetchone()
 
-    # Execute the query with parameter
-    cursor.execute(query, (first_name, last_name, email))
-    theData = cursor.fetchall()
-    the_response = make_response(theData)
-    the_response.status_code = 200
+    if theData:
+        ta_id = theData["ta_id"]
+
+        query_avail = '''SELECT d.day, t.time
+                         FROM TAAvailability ta
+                         JOIN Availability a ON ta.availability_id = a.availability_id
+                         JOIN Days d ON a.day_id = d.day_id
+                         JOIN Time t ON a.time_id = t.time_id
+                         WHERE ta.ta_id = %s'''
+        
+        cursor.execute(query_avail, (ta_id,))
+        avail_data = cursor.fetchall()
+        the_response = make_response(jsonify(avail_data))
+    else:
+        # Return an error if the TA is not found
+        the_response = make_response(jsonify({'error': 'TA not found'}), 404)
+    
     the_response.mimetype = 'application/json'
     return the_response
 
-# ------ need to change the naming of this route!
-@ta.route('/ta/<first_name>/<last_name>/<email>/availability', methods = ['GET'])
-# ------ need to connect the get_taID to get_taAvailability
-def get_taAvailability(first_name, last_name, email):
-    current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>/availability')
-
-    # Establish database connection
-    connection = db.get_db()
-    cursor = connection.cursor()
-
-# Get the TA ID using the helper function
-    taID = get_taId(first_name, last_name, email)
-
-    if taID is None:
-        return make_response({"error": "TA not found"}, 404)
-
-    # Use parameterized query to prevent SQL injection
-    query = '''SELECT d.day, t.time
-                FROM TAAvailability ta
-                JOIN Availability a ON ta.availability_id = a.availability_id
-                JOIN Days d ON a.day_id = d.day_id
-                JOIN Time t ON a.time_id = t.time_id
-                WHERE ta.ta_id = %s'''
-
-    # Execute the query with the taID parameter
-    cursor.execute(query, (taID,))
-    theData = cursor.fetchall()
-
-    # Convert the data to JSON format
-    theData = cursor.fetchall()
-    the_response = make_response(theData)
-    the_response.status_code = 200
-    the_response.mimetype = 'application/json'
-    return the_response

@@ -419,15 +419,15 @@ VALUES (1, 2),
        (8, 2),
        (7, 1);
 
--- example query of getting ta and student emails who are available on the same day, time, & location
+-- example query of getting ta and student emails who are available on the same day, time
 SELECT t.ta_id, t.email, s.student_id, s.email
 FROM (
     SELECT ta.ta_id, sa.student_id
     FROM TAAvailability ta
     JOIN StudentAvailability sa ON ta.availability_id = sa.availability_id
-) AS availability_data
-JOIN TA t ON t.ta_id = availability_data.ta_id
-JOIN Student s ON s.student_id = availability_data.student_id;
+) AS ad
+JOIN TA t ON t.ta_id = ad.ta_id
+JOIN Student s ON s.student_id = ad.student_id;
 
 -- find group mates in my section who live on campus
 SELECT s.student_id, email AS potential_groupmates
