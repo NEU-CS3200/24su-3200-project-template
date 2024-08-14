@@ -46,6 +46,28 @@ def update_customer():
     db.get_db().commit()
     return 'customer updated!'
 
+@agencies.route('/petagencies', methods=['GET'])
+def pet_agencies():
+    current_app.logger.info('agencies_routes.py: GET /petagencies')
+
+    cursor = db.get_db().cursor()
+    theQuery = '''
+      SELECT ag.agencyName, COUNT(ad.adoptionID) AS Total_Adoptions
+      FROM agencies ag
+        LEFT JOIN pet_agencies pa on ag.agencyID = pa.agencyID
+        LEFT JOIN adoptions ad on pa.petID = ad.petID
+      GROUP BY ag.agencyID
+      ORDER BY Total_Adoptions
+    '''
+    cursor.execute(theQuery)
+    theData = cursor.fetchall()
+
+    theResponse = make_response(theData)
+    theResponse.status_code = 200
+    theResponse.mimetype = 'application/json'
+
+    return theResponse
+
 # Get pet detail for a agency with particular petID
 @agencies.route('/agencies/<zip>', methods=['GET'])
 def get_agency(zip):
