@@ -20,7 +20,7 @@ def get_campaigns():
     return the_response
 
 # Adding a new marketing campaign 
-@marketing_campaign.route('/marketing_campaign', methods=['POST'])
+@marketing_campaign.route('/add_marketing_campaign', methods=['POST'])
 def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -40,7 +40,7 @@ def add_new_campaign():
     return 'Success'
 
 # Updates a marketing campaign 
-@marketing_campaign.route ('/marketing_campaign', methods = ['PUT'])
+@marketing_campaign.route ('/update_marketing_campaign', methods = ['PUT'])
 def update_campaign():
     campaign_info = request.json
     name = campaign_info['name']
