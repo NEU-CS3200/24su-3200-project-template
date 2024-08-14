@@ -56,7 +56,7 @@ def update_ad():
     marketing_campaign_id = ads_info['marketing_campaign_id']
     
 
-    query = 'UPDATE ads SET description = %s, types %s, terms_and_conditions = %s, budget = %s, marketing_campaign_id = %s, where id = %s'
+    query = 'UPDATE ads SET description = %s, types %s, terms_and_conditions = %s, budget = %s, marketing_campaign_id = %s where id = %s'
     data = (description, types, terms_and_conditions, budget, marketing_campaign_id, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
