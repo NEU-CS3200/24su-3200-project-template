@@ -9,7 +9,7 @@ users = Blueprint("users", __name__)
 def get_users():
     current_app.logger.info('users_route.py: GET /users')
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT username, address FROM users')
+    cursor.execute('SELECT * FROM users')
     
     theData = cursor.fetchall()
     
@@ -52,8 +52,10 @@ def update_account():
     username = the_data['username']
 
     query = 'UPDATE customers SET email = %s, address = %s, username = %s where id = %s'
-    data = (email, address, username, user_id)x
+    data = (email, address, username, user_id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'customer updated!'
+
+# to delete a user, just set everything to null
