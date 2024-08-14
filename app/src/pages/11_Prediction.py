@@ -10,7 +10,8 @@ st.set_page_config(layout = 'wide')
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
 
-st.title('Find students with my availability')
+st.title('My Availability')
+st.write('Let us find students in your section with your availability!')
 st.write('Enter your information in the form below:')
 
 with st.form("Find students with my availabilty"):

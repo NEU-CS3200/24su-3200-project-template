@@ -7,19 +7,26 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# Accessing a REST API from Within Streamlit")
+st.title('My Specialty')
+st.write('Let us find students in your section that need help with your specialty!')
+#st.write('Enter your information in the form below:')
 
-"""
-Simply retrieving data from a REST api running in a separate Docker Container.
+with st.form("Find students with my availabilty"):
+  ta_fname = st.text_input('First Name: ')
+  ta_lname = st.text_input('Last Name: ')
+  ta_email = st.text_input('Email: ')
 
-If the container isn't running, this will be very unhappy.  But the Streamlit app 
-should not totally die. 
-"""
-data = {} 
-try:
-  data = requests.get('http://api:4000/data').json()
-except:
-  st.write("**Important**: Could not connect to sample api, so using dummy data.")
-  data = {"a":{"b": "123", "c": "hello"}, "z": {"b": "456", "c": "goodbye"}}
+  submitted = st.form_submit_button('Submit')
 
-st.dataframe(data)
+if submitted:
+    st.write(f"First Name: {ta_fname}")
+    st.write(f"Last Name: {ta_lname}")
+    st.write(f"Email: {ta_email}")
+    # --- need to get this to return the specfic TA's availability 
+    try:
+        # ---- turn this into a header 
+        st.write("This is your specialty description:")
+        ta_data = requests.get(f'http://api:4000/t/ta/{ta_fname}/{ta_lname}/{ta_email}/special').json()
+        st.dataframe(ta_data)
+    except:
+        st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")

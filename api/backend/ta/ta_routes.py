@@ -61,8 +61,38 @@ def get_taAvail(first_name, last_name, email):
         the_response = make_response(jsonify(avail_data))
     else:
         # Return an error if the TA is not found
-        the_response = make_response(jsonify({'error': 'TA not found'}), 404)
+        the_response = make_response(jsonify({'error': 'No available students'}), 404)
     
     the_response.mimetype = 'application/json'
     return the_response
 
+@ta.route('/ta/<first_name>/<last_name>/<email>/special', methods=['POST', 'GET'])
+def get_taSpecial(first_name, last_name, email):
+    current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>/special')
+
+    # Establish database connection
+    connection = db.get_db()
+    cursor = connection.cursor()
+
+    # Use parameterized query to prevent SQL injection
+    query_id = '''SELECT ta_id FROM TA WHERE first_name = %s AND last_name = %s AND email = %s'''
+    cursor.execute(query_id, (first_name, last_name, email))
+    theData = cursor.fetchone()
+
+    if theData:
+        ta_id = theData["ta_id"]
+        
+        # long select query to find students in the same section and same availability
+        query_special = '''SELECT speciality_description
+                            FROM TASpeciality
+                            WHERE ta_id=%s;'''
+        
+        cursor.execute(query_special, (ta_id))
+        special_data = cursor.fetchall()
+        the_response = make_response(jsonify(special_data))
+    else:
+        # Return an error if the TA is not found
+        the_response = make_response(jsonify({'error': 'TA NOT found'}), 404)
+    
+    the_response.mimetype = 'application/json'
+    return the_response
