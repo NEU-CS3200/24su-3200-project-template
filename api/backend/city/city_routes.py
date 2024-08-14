@@ -31,7 +31,7 @@ def add_new_city_rating(name):
 
     #extracting the variable
     name = the_data['name']
-    rating = the_date['rating']
+    rating = the_data['rating']
 
     # Constructing the query
     query = 'insert into city (name, rating) ("'

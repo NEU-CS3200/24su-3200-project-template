@@ -7,7 +7,7 @@ from backend.ml_models.model01 import predict
 city_clicks = Blueprint('city_clicks/<city_name>', __name__)
 
 # Getting city_clicks count
-@city.route('/city_clicks/<city>', methods =['GET'])
+@city_clicks.route('/city_clicks/<city>', methods =['GET'])
 def get_city_clicks():
     current_app.logger.info('city_clicks.py: GET /city_clicks')
     cursor = db.get_db().cursor()

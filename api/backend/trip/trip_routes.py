@@ -60,7 +60,7 @@ def add_new_trip():
     
     return 'Success!'
 
-@trips.route('/trips/<trip_name>', methods=['DELETE'])
+@trip.route('/trips/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
     trip = trip.query.filter_by(name=name)
     if trip:
