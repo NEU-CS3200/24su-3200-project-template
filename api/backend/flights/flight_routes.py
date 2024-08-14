@@ -9,7 +9,12 @@ flights = Blueprint("flights", __name__)
 def price_range(max_price, min_price):
     current_app.logger.info('flight_routes.py: GET based on budget')
     cursor = db.get_db().cursor()
-    cursor.execute('select airline_name, price from flights')
+    the_query = '''
+        Select airline_name, duration, price 
+        From flights
+        Where max_price >
+    '''
+    cursor.execute(the_query)
 
     theData = cursor.fetchall()
     
