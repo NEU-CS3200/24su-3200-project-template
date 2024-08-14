@@ -9,41 +9,55 @@ restaurant = Blueprint('restaurant', __name__)
 # Get restaurant detail for customer with particular trip id 
 #restaurant inputs id for their trip and based on the city that the trip is located in, we send back restaurant recommendations sorted by least to most expensive
 
-@restaurant.route('/restaurants/<trip_id>', methods=['GET'])
-def get_restaurants_by_trip_id(trip_id):
+
+@restaurant.route('/restaurant/<trip_id>', methods=['GET'])
+def get_restaurant(trip_id): 
+    current_app.logger.info('GET /customers/<userID> route')
     cursor = db.get_db().cursor()
-    query = '''SELECT r.name, r.average_price, r.address, r.rating
-               FROM restaurant r
-               JOIN city c ON r.city_id = c.id
-               JOIN trip t ON t.city_id = c.id
-               WHERE t.id = %s
-               ORDER BY r.average_price ASC'''
-    cursor.execute(query, (trip_id,))
-    restaurant_data = cursor.fetchall()
+    the_query = '''SELECT name, average_price, address, rating 
+        FROM restaurant join city on restaurant.city_id = city.id
+        join trip on trip.city_id = city.id 
+        WHERE trip.id = {0} 
+        ORDER BY restaurant.average_price ASC 
+'''.format(trip_id)
+    cursor.execute(the_query)
+    #row_headers = [x[0] for x in cursor.description]
+    #json_data = []
+    theData = cursor.fetchall()
+    #for row in theData:
+       # json_data.append(dict(zip(row_headers, row)))
+    #the_response = make_response(jsonify(json_data))
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
-    if restaurant_data:
-        return jsonify(restaurant_data), 200
-    else:
-        return jsonify({'error': 'No restaurants found for this trip'}), 404
-
-@restaurant.route('/restaurant/review', methods=['POST'])
+#FROM restaurant
+@restaurant.route('/trip', methods=['POST'])
 def add_new_restaurant_review():
-    try:
-        # Collect data from request object
-        review_data = request.get_json()
-        restaurant_id = review_data['restaurant_id']  # Assuming this is in the request
-        trip_id = review_data['trip_id']  # Assuming this is in the request (optional)
-        rating = review_data['rating']
+    
+    # collecting data from the request object 
+    the_data = request.json
+    current_app.logger.info(the_data)
 
-        # Construct the query with parameter binding
-        query = 'INSERT INTO restaurant_review (restaurant_id, trip_id, rating) VALUES (%s, %s, %s)'
-        cursor = db.get_db().cursor()
-        cursor.execute(query, (restaurant_id, trip_id, rating))
-        db.get_db().commit()
+    #extracting the variable
+    rating = the_data['rating']
 
-        return jsonify({'message': 'Restaurant review added successfully'}), 201
 
-    except Exception as e:
-        # Handle potential errors during execution or commit
-        return jsonify({'error': str(e)}), 500
+    # Constructing the query
+    query = 'insert your rating for the restaurant ("'
+    query += rating + '", "'
+    current_app.logger.info(query)
+
+    # executing and committing the insert statement 
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    
+    return 'Success!'
+
+
+#ADD THIS TO rest_entry.py
+# app.register_blueprint(restaurant,    url_prefix='/r')
+
 
