@@ -8,17 +8,18 @@ restaurant = Blueprint('restaurant', __name__)
 
 # Get restaurant detail for customer with particular trip id 
 #restaurant inputs id for their trip and based on the city that the trip is located in, we send back restaurant recommendations sorted by least to most expensive
-@restaurant.route('/restaurant/<id>', methods=['GET'])
-def get_customer(id):
-    current_app.logger.info('GET /customers/<userID> route')
+
+
+@restaurant.route('/restaurant/<trip_id>', methods=['GET'])
+def get_restaurant(trip_id): 
+    #current_app.logger.info('GET /customers/<userID> route')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT name, average_price, address, rating 
-        FROM restaurant join city on restaurant.city_id = city.id
-        join trip on restaurant on city.id = trip.city_id
-        WHERE trip.id = {0} 
-        SORT BY restaurant.average_price ASC 
-'''.format(id)
-    cursor.execute(the_query)
+    the_query = '''SELECT r.name, r.average_price, r.address, r.rating 
+           FROM restaurant r JOIN city c ON r.city_id = c.id
+           JOIN trip t ON t.city_id = c.id 
+           WHERE t.id = %s
+           ORDER BY r.average_price ASC'''
+    cursor.execute(the_query, (trip_id,))
     #row_headers = [x[0] for x in cursor.description]
     #json_data = []
     theData = cursor.fetchall()

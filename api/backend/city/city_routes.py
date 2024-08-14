@@ -6,12 +6,16 @@ from backend.ml_models.model01 import predict
 
 city = Blueprint('city', __name__)
 
+
 # Getting city 
 @city.route('/city/<name>', methods =['GET'])
-def get_city():
-    current_app.logger.info('city.py: GET /city')
+def get_city(name):
+    #current_app.logger.info('city.py: GET /city')
     cursor = db.get_db().cursor()
-    cursor.execute('country,rating FROM city WHERE name = '+str(name)) 
+    the_query = '''
+        SELECT country, rating FROM city WHERE name = %s
+'''
+    cursor.execute(the_query, (name,)) 
     
     theData = cursor.fetchall()
     
@@ -49,5 +53,3 @@ def add_new_city_rating(name):
 #ADD THIS TO rest_entry.py
 # app.register_blueprint(city,    url_prefix='/c')
 #comment out other c for /customers since there will be two c's; also just an example
-
-

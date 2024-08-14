@@ -7,7 +7,7 @@ from backend.ml_models.model01 import predict
 trip = Blueprint('trip', __name__)
 
 # Getting trips based on a user id
-@trip.route('/trip/<id>', methods =['GET'])
+@trip.route('/trip/<id>', methods =['GET']) #cat-works
 def get_trip(id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
@@ -24,7 +24,7 @@ def get_trip(id):
     return the_response
 
 #FROM trip
-@trip.route('/trip', methods=['POST'])
+@trip.route('/trip', methods=['POST']) 
 def add_new_trip():
     
     # collecting data from the request object 
