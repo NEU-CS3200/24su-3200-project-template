@@ -23,7 +23,7 @@ def get_trip():
     the_response.mimetype = 'application/json'
     return the_response
 
-#FROM PRODUCTS
+#FROM trip
 @trip.route('/trip', methods=['POST'])
 def add_new_trip():
     

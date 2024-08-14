@@ -1,7 +1,4 @@
-########################################################
-# Sample customers blueprint of endpoints
-# Remove this file if you are not using it in your project
-########################################################
+
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
@@ -25,33 +22,21 @@ def get_city():
 
 #FROM city
 #so user can put in new rating
-@city.route('/city', methods=['POST'])
-def add_new_city_rating():
+@city.route('/city/<name>', methods=['POST'])
+def add_new_city_rating(name):
     
     # collecting data from the request object 
     the_data = request.json
     current_app.logger.info(the_data)
 
     #extracting the variable
-    start_date = the_data['start_date']
-    end_date = the_data['end_date']
-    group_size = the_data['group_size']
     name = the_data['name']
-    restaurant_budget = the_data['restaurant_budget']
-    attraction_budget = the_data['attraction_budget']
-    hotel_budget = the_data['hotel_budget']
-    num_of_nights = the_data['num_of_nights']
-    city_id = the_data['city_id']
+    rating = the_date['rating']
 
     # Constructing the query
-    query = 'insert into trip (start_date, end_date, group_size, name, restaurant_budget, attraction_budget, num_of_nights, city_id) values ("'
-    query += start_date + '", "'
-    query += end_date + '", "'
-    query += group_size + '", '
-    query += name + '", '
-    query += str(restaurant_budget) + ')'
-    query += str(attraction_budget) + ')'
-    query += str(hotel_budget) + ')'
+    query = 'insert into city (name, rating) ("'
+    query += name + '", "'
+    query += rating + '", "'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -61,17 +46,8 @@ def add_new_city_rating():
     
     return 'Success!'
 
-@trips.route('/trips/<trip_name>', methods=['DELETE'])
-def delete_trip(trip_name):
-    trip = Trip.query.filter_by(name=name)
-    if trip:
-        db.session.delete(trip)
-        db.session.commit()
-        return jsonify({'message': 'Trip deleted successfully'}), 200
-    else:
-        return jsonify({'error': 'Trip not found'}), 404
-
 #ADD THIS TO rest_entry.py
-# app.register_blueprint(trip,    url_prefix='/t')
+# app.register_blueprint(city,    url_prefix='/c')
+#comment out other c for /customers since there will be two c's; also just an example
 
 
