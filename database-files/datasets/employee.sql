@@ -6,7 +6,7 @@ insert into employee (id, email, first_name, last_name) values (3, 'dgrestie2@ml
 insert into employee (id, email, first_name, last_name) values (4, 'lpriddis3@statcounter.com', 'Laure', 'Priddis');
 insert into employee (id, email, first_name, last_name) values (5, 'mlebel4@w3.org', 'Millard', 'Lebel');
 insert into employee (id, email, first_name, last_name) values (6, 'dolsson5@hhs.gov', 'Des', 'Olsson');
-insert into employee (id, email, first_name, last_name) values (7, 'mkimmins6@yelp.com', 'Mathilde', 'Kimmins');
+insert into employee (id, email, first_name, last_name) values (7, '@yelp.com', 'Mathilde', 'Kimmins');
 insert into employee (id, email, first_name, last_name) values (8, 'tnornable7@hc360.com', 'Theresina', 'Nornable');
 insert into employee (id, email, first_name, last_name) values (9, 'jandrysek8@paypal.com', 'Joye', 'Andrysek');
 insert into employee (id, email, first_name, last_name) values (10, 'ddjurisic9@merriam-webster.com', 'Dorolice', 'Djurisic');

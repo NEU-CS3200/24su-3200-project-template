@@ -6,6 +6,7 @@ from backend.ml_models.model01 import predict
 
 city = Blueprint('city', __name__)
 
+
 # Getting city 
 @city.route('/city/<name>', methods =['GET'])
 def get_city():
@@ -49,5 +50,3 @@ def add_new_city_rating(name):
 #ADD THIS TO rest_entry.py
 # app.register_blueprint(city,    url_prefix='/c')
 #comment out other c for /customers since there will be two c's; also just an example
-
-
