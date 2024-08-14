@@ -4,10 +4,27 @@ logging.basicConfig(level=logging.DEBUG)
 from flask import Flask
 
 from backend.db_connection import db
-from backend.customers.customer_routes import customers
-from backend.products.products_routes import products
+#from backend.customers.customer_routes import customers
+#from backend.products.products_routes import products
 from backend.flights.flight_routes import flights
 from backend.hotels.hotel_routes import hotel
+from backend.attractions.attraction_routes import attractions
+from backend.hotel_clicks.hotel_clicks_routes import hotel_clicks
+from backend.location.location_routes import location
+from backend.trip.trip_routes import trip
+from backend.attraction_clicks.attraction_clicks import attraction_clicks
+from backend.restaurant_clicks.restaurant_clicks_routes import restaurant_clicks
+from backend.users.user_routes import users
+from backend.ads.ads_routes import ads
+from backend.promotions.promotions_route import promotions
+from backend.employee.employee_routes import employees
+from backend.marketing_campaign.marketing_campaign_routes import marketing_campaign
+
+
+
+
+
+
 import os
 from dotenv import load_dotenv
 
