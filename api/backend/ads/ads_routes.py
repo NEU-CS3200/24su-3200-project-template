@@ -21,7 +21,7 @@ def get_ads():
 
 # Adding a new ad 
 @ads.route('/ads', methods=['POST'])
-def add_new_employee():
+def add_new_ad():
     the_data = request.json
     current_app.logger.info(the_data)
     id = the_data['id']
@@ -46,7 +46,7 @@ def add_new_employee():
 
 # Updates ads information 
 @ads.route ('/ads', methods = ['POST'])
-def update_employee():
+def update_ad():
     ads_info = request.json
     id = ads_info['id']
     description = ads_info['description']
