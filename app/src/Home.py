@@ -39,7 +39,7 @@ if st.button("Act as Alice, a Student",
     # when user clicks the button, they are now considered authenticated
     st.session_state['authenticated'] = True
     # we set the role of the current user
-    st.session_state['role'] = 'pol_strat_advisor'
+    st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Alice'
 <<<<<<< HEAD
     st.switch_page('pages/trip.py')
@@ -53,7 +53,7 @@ if st.button('Act as Thomas, an Marketing Analyst',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
+    st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'Thomas'
     st.switch_page('pages/10_USAID_Worker_Home.py')
 
@@ -61,7 +61,7 @@ if st.button('Act as Janice, an intern planning a company trip',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
+    st.session_state['role'] = 'intern'
     st.session_state['first_name'] = 'Janice'
     st.switch_page('pages/20_Admin_Home.py')
 
