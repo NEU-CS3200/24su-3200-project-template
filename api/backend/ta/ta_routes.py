@@ -45,13 +45,16 @@ def get_taAvail(first_name, last_name, email):
         ta_id = theData["ta_id"]
         
         # long select query to find students in the same section and same availability
-        query_avail = '''SELECT first_name, last_name, email, group_id, sa.availability_id
+        query_avail = '''SELECT first_name, last_name, email, group_id, d.day, t.time
                         FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
                         JOIN StudentAvailability sa ON s.student_id=sa.student_id
+                        JOIN Availability a ON sa.availability_id=a.availability_id
+                        JOIN Days d ON a.day_id = d.day_id
+                        JOIN Time t ON a.time_id = t.time_id
                         WHERE ss.section_num = (SELECT section_num FROM TA WHERE ta_id=%s) AND
                         ss.semester_year = (SELECT semester_year FROM TA WHERE ta_id=%s) AND
                         ss.course_id = (SELECT course_id FROM TA WHERE ta_id=%s)
-                        AND sa.availability_id IN (SELECT availability_id FROM TAAvailability WHERE ta_id=%s)'''
+                        AND sa.availability_id IN (SELECT availability_id FROM TAAvailability WHERE ta_id=%s);'''
         
         cursor.execute(query_avail, (ta_id, ta_id, ta_id, ta_id))
         avail_data = cursor.fetchall()
