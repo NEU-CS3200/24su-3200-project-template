@@ -17,17 +17,17 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('View World Bank Data Visualization', 
+if st.button('Fill Out A Form',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/01_World_Bank_Viz.py')
 
-if st.button('View World Map Demo', 
+if st.button('Join A Group and Schedule Meetings',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/02_Map_Demo.py')
 
-student_data = requests.get('http://api:4000/s/students').json()
+student_data = requests.get('http://api:4000/sa/students').json()
 try:
   st.dataframe(student_data)
 except:

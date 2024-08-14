@@ -2,6 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 import pandas as pd
 import streamlit as st
+import requests
 from streamlit_extras.app_logo import add_logo
 import world_bank_data as wb
 import matplotlib.pyplot as plt
@@ -46,7 +47,13 @@ with st.form("Input Your Student Data"):
         data['interests'] = interests
         data['year'] = year
         data['dorm'] = dorm
-        st.write(data).post('http://api:4000/',json=data)
+
+        response = requests.post('http://api:4000/s/students',json=data)
+
+        if response.status_code == 200:
+            st.write("Form Submitted Sucessfully")
+        else:
+            st.write("Failed to Submit")
 
 
 
