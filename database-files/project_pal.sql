@@ -71,11 +71,18 @@ CREATE TABLE IF NOT EXISTS TA (
     PRIMARY KEY (ta_id)
 );
 
--- TA Speciality Table (Multivalued Attribute)
-CREATE TABLE IF NOT EXISTS TASpeciality (
-    ta_id INT PRIMARY KEY,
-    speciality_description VARCHAR(255),
-    FOREIGN KEY (ta_id) REFERENCES TA(ta_id) ON UPDATE restrict ON DELETE restrict
+-- Speciality Table
+CREATE TABLE IF NOT EXISTS Speciality (
+    specialty_id INT AUTO_INCREMENT PRIMARY KEY,
+    speciality VARCHAR(25)
+);
+
+-- TASpecialty Table
+CREATE TABLE IF NOT EXISTS TASpecialty(
+    ta_id INT,
+    specialty_id INT,
+    FOREIGN KEY (ta_id) REFERENCES TA(ta_id) ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (specialty_id) REFERENCES Speciality(specialty_id) ON UPDATE restrict ON DELETE restrict
 );
 
 -- Group Table
@@ -122,10 +129,10 @@ CREATE TABLE IF NOT EXISTS Student (
 
 -- Student Speciality Table (Multivalued Attribute)
 CREATE TABLE IF NOT EXISTS StudentSpeciality (
-    student_id INT PRIMARY KEY,
-    speciality_description VARCHAR(255),
-    FOREIGN KEY (student_id) REFERENCES Student(student_id)
-        ON UPDATE restrict ON DELETE restrict
+    student_id INT,
+    specialty_id INT,
+    FOREIGN KEY (student_id) REFERENCES Student(student_id) ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (specialty_id) REFERENCES Speciality(specialty_id) ON UPDATE restrict ON DELETE restrict
 );
 
 -- StudentSection Table (Bridge Table)
@@ -317,11 +324,30 @@ VALUES
     ('Donni', 'Champneys', 'dchampneys4@google.pl', 2, 'Fall 2024', 5);
 # ----- need to fix this mockaroo data!
 
+INSERT INTO Speciality(speciality)
+VALUES ('Python'),
+       ('JavaScript'),
+       ('Object-Oriented Design'),
+       ('Accounting'),
+       ('Risk management'),
+       ('investments'),
+       ('wet lab experience'),
+       ('data analysis'),
+       ('organic chemistry'),
+       ('Figma'),
+       ('illustrator');
+
 -- TA Specialty Data
-INSERT INTO TASpeciality(ta_id, speciality_description)
-VALUES (1, 'Python, JavaScript, Object-Oriented Design, Data Analysis, React'),
-       (2, 'Accounting, Risk management, investments'),
-       (3, 'wet lab experience, data analysis, organic chemistry');
+INSERT INTO TASpecialty(ta_id, specialty_id)
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (2, 4),
+       (2, 5),
+       (2, 6),
+       (3, 7),
+       (3, 8),
+       (3, 9);
 
 -- Group Data
 INSERT INTO `Group` (group_name, ta_id, section_num, semester_year, course_id)
@@ -346,14 +372,20 @@ VALUES ('John', 'Doe', 'doe.jo@northeastern.edu', 'Computer Science', 3, True, 1
        ('Daryl', 'Candace', 'candace.da@northeatern.edu', 'Neuroscience', 1, True, 2);
 
 -- Student Specialty Data
-INSERT INTO StudentSpeciality(student_id, speciality_description)
-VALUES (1, 'Python, Java, C++, React, Streamlit, SQL'),
-       (2, 'Canva, Figma, Branding'),
-       (3, 'Risk management, trading, Excel, financial accounting');
+INSERT INTO StudentSpeciality(student_id, specialty_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 9),
+       (2, 10),
+       (2, 1),
+       (3, 7),
+       (3, 8);
 
 -- Student Section Data
 INSERT INTO StudentSection(student_id, section_num, semester_year, course_id)
-VALUES (1, 1, 'Spring 2025', 3),
+VALUES (1, 2, 'Spring 2025', 29), -- keep this value!
+       (2, 2, 'Spring 2025', 29), -- keep this value!
+       (1, 1, 'Spring 2025', 3),
        (2, 1, 'Spring 2025', 3),
        (3, 1, 'Spring 2025', 3),
        (4, 1, 'Spring 2025', 3),
@@ -409,7 +441,9 @@ VALUES (1, 1),
        (5, 3),
        (1, 4),
        (2, 4),
-       (2, 5);
+       (2, 5),
+       # need to keep this availability!
+       (5, 1);
 
 -- TAAvailability Data
 INSERT INTO TAAvailability(availability_id, ta_id)
@@ -418,22 +452,3 @@ VALUES (1, 2),
        (5, 1),
        (8, 2),
        (7, 1);
-
--- example query of getting ta and student emails who are available on the same day, time, & location
-SELECT t.ta_id, t.email, s.student_id, s.email
-FROM (
-    SELECT ta.ta_id, sa.student_id
-    FROM TAAvailability ta
-    JOIN StudentAvailability sa ON ta.availability_id = sa.availability_id
-) AS availability_data
-JOIN TA t ON t.ta_id = availability_data.ta_id
-JOIN Student s ON s.student_id = availability_data.student_id;
-
--- find group mates in my section who live on campus
-SELECT s.student_id, email AS potential_groupmates
-FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
-WHERE course_id = 2 AND semester_year = 'Fall 2024' AND s.on_campus IS TRUE;
-
--- As a CS3200 TA, I need to be assigned to students who need help in an area that I specialize in so I can be of the most use to them.
-SELECT ss.student_id, s.email FROM Student s JOIN StudentSpeciality ss ON ss.student_id = s.student_id
-WHERE ss.speciality_description NOT LIKE '%python%' AND ss.speciality_description NOT LIKE '%SQL%';

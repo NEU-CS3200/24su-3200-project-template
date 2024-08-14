@@ -24,4 +24,16 @@ if submitted:
     st.write(f"Email: {ta_email}")
     st.write(f"Day: {avail_day}")
     st.write(f"Time: {avail_time}")
-    # ----- add in routing functionality
+    # ----- add in routing API functionality
+
+st.subheader('Specialty')
+with st.form("Update specialty"):
+  ta_email = st.text_input('Email: ')
+  ta_special = st.text_input('Updated specialty description: ')
+
+  submitted = st.form_submit_button('Submit')
+
+if submitted:
+    st.write(f"Email: {ta_email}")
+    st.write(f"Updated specialty description: {ta_special}")
+    # ----- add in routing API functionality
