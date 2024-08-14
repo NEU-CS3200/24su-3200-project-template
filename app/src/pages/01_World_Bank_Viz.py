@@ -8,34 +8,61 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 from modules.nav import SideBarLinks
+from datetime import datetime as dt,time
+#from streamlit_calendar import calendar
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
 # set the header of the page
-st.header('World Bank Data')
+st.header('Input Your Data Below')
 
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# create a text entry field
+with st.form("Input Your Student Data"):
+    f_name = st.text_input("What's your First name?")
+    l_name = st.text_input("What's your Last name?")
+    email = st.text_input("Enter your NU Email?")
+    major = st.text_input("Enter your Major")
+    interests = st.text_input("What are you interested in?")
+    year = st.selectbox("What year are you",options=(1,2,3,4,5))
+    dorm = st.selectbox("Do you live on or Off Campus?",options=('True','False'))
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+    # insert into availiblity table
+    time = st.selectbox(label = 'What Time Of Day?',options=('Morning','Afternoon','Night'))
+    days = st.multiselect("What Days Can you Meet?",
+                          options=('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
 
-    st.pyplot(test_plot)
+    submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        data = {}
+        data['f_name'] = f_name
+        data['l_name'] = l_name
+        data['email'] = email
+        data['major'] = major
+        data['interests'] = interests
+        data['year'] = year
+        data['dorm'] = dorm
+        st.write(data).post('http://api:4000/',json=data)
+'''
+# create an availiblity calendar
+calendar_options = {
+    "editable": "true",
+    "selectable": "true",
+}
+calendar_events = [
+    {
+        "title": "Event 1",
+        "start": "2023-07-31T08:30:00",
+        "end": "2023-07-31T10:30:00",
+    }
+]
+calendar = calendar(events=calendar_events, options=calendar_options)
+st.write(calendar)
+'''
 
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+
