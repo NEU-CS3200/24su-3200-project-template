@@ -3,12 +3,12 @@ import json
 from backend.db_connection import db
 from backend.ml_models.model01 import predict
 
-campaign = Blueprint('campaign', __name__)
+marketing_campaign = Blueprint('marketing_campaign', __name__)
 
 # Gets all marketing campaigns from getawayguru
-@campaign.route('/campaign', methods =['GET'])
+@marketing_campaign.route('/marketing_campaign', methods =['GET'])
 def get_campaigns():
-    current_app.logger.info('marketing_campaign_routes.py: GET /campaign')
+    current_app.logger.info('marketing_campaign_routes.py: GET /marketing_campaign')
     cursor = db.get_db().cursor()
     cursor.execute('select id, name, employee_id from marketing_campaign')
     
@@ -20,7 +20,7 @@ def get_campaigns():
     return the_response
 
 # Adding a new marketing campaign 
-@campaign.route('/campaign', methods=['POST'])
+@marketing_campaign.route('/marketing_campaign', methods=['POST'])
 def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -40,7 +40,7 @@ def add_new_campaign():
     return 'Success'
 
 # Updates a marketing campaign 
-@campaign.route ('/campaign', methods = ['PUT'])
+@marketing_campaign.route ('/marketing_campaign', methods = ['PUT'])
 def update_campaign():
     campaign_info = request.json
     name = campaign_info['name']
@@ -53,4 +53,3 @@ def update_campaign():
     r = cursor.execute(query, data)
     db.get_db().commit()
     return 'Marketing Campaign Updated'
-
