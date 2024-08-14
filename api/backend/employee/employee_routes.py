@@ -28,7 +28,7 @@ def update_employee():
     email = empl_info['email']
 
     query = 'UPDATE employee SET first_name = %s, last_name %s, email = %s where id = %s'
-    data = (first, last, email)
+    data = (first, last, email, empl_id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
