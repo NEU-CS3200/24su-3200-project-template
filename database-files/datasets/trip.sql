@@ -1,3 +1,5 @@
+use getawayguru;
+
 insert into trip (id, start_date, end_date, group_size, name, hotel_budget, flight_budget, user_id, city_id, attraction_budget, restaurant_budget, budget, num_of_nights) values (1, '2025-10-27 04:02:34', '2025-12-26 16:45:22', 17, 'Persevering', 683.78, 120.48, '5', '28', 2279.41, 1662.79, 4746.46, 8);
 insert into trip (id, start_date, end_date, group_size, name, hotel_budget, flight_budget, user_id, city_id, attraction_budget, restaurant_budget, budget, num_of_nights) values (2, '2025-06-21 12:42:31', '2025-08-02 09:23:35', 12, 'neutral', 1235.63, 616.45, '2', '3', 2454.48, 535.57, 4842.13, 8);
 insert into trip (id, start_date, end_date, group_size, name, hotel_budget, flight_budget, user_id, city_id, attraction_budget, restaurant_budget, budget, num_of_nights) values (3, '2026-05-17 13:01:23', '2025-08-20 18:15:23', 2, 'Monitored', 981.95, 2265.99, '39', '7', 1893.48, 1035.87, 6177.29, 17);
