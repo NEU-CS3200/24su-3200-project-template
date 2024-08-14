@@ -3,3 +3,4 @@ import json
 from backend.db_connection import db
 
 users = Blueprint("users", __name__)
+
