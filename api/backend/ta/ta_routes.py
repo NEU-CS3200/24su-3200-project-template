@@ -29,7 +29,7 @@ def get_all_ta():
     return the_response
 
 @ta.route('/ta/<first_name>/<last_name>/<email>', methods=['POST', 'GET'])
-def get_taId(first_name, last_name, email):
+def get_taAvail(first_name, last_name, email):
     current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>')
 
     # Establish database connection
@@ -43,15 +43,17 @@ def get_taId(first_name, last_name, email):
 
     if theData:
         ta_id = theData["ta_id"]
-
-        query_avail = '''SELECT d.day, t.time
-                         FROM TAAvailability ta
-                         JOIN Availability a ON ta.availability_id = a.availability_id
-                         JOIN Days d ON a.day_id = d.day_id
-                         JOIN Time t ON a.time_id = t.time_id
-                         WHERE ta.ta_id = %s'''
         
-        cursor.execute(query_avail, (ta_id,))
+        # long select query to find students in the same section and same availability
+        query_avail = '''SELECT first_name, last_name, email, group_id, sa.availability_id
+                        FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
+                        JOIN StudentAvailability sa ON s.student_id=sa.student_id
+                        WHERE ss.section_num = (SELECT section_num FROM TA WHERE ta_id=%s) AND
+                        ss.semester_year = (SELECT semester_year FROM TA WHERE ta_id=%s) AND
+                        ss.course_id = (SELECT course_id FROM TA WHERE ta_id=%s)
+                        AND sa.availability_id IN (SELECT availability_id FROM TAAvailability WHERE ta_id=%s)'''
+        
+        cursor.execute(query_avail, (ta_id, ta_id, ta_id, ta_id))
         avail_data = cursor.fetchall()
         the_response = make_response(jsonify(avail_data))
     else:
