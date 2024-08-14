@@ -20,7 +20,7 @@ def get_ads():
     return the_response
 
 # Adding a new ad 
-@ads.route('/ads', methods=['POST'])
+@ads.route('/add_ads', methods=['POST'])
 def add_new_ad():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -45,7 +45,7 @@ def add_new_ad():
     return 'Success'
 
 # Updates ads information 
-@ads.route ('/ads', methods = ['PUT'])
+@ads.route ('/update_ads', methods = ['PUT'])
 def update_ad():
     ads_info = request.json
     id = ads_info['id']
