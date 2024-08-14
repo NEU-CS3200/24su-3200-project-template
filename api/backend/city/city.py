@@ -7,14 +7,14 @@ import json
 from backend.db_connection import db
 from backend.ml_models.model01 import predict
 
-trip = Blueprint('trip', __name__)
+city = Blueprint('city', __name__)
 
-# Getting trips
-@trip.route('/trip', methods =['GET'])
-def get_trip():
-    current_app.logger.info('trip_routes.py: GET /trip')
+# Getting city 
+@city.route('/city', methods =['GET'])
+def get_city():
+    current_app.logger.info('city.py: GET /city')
     cursor = db.get_db().cursor()
-    cursor.execute('Select start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_id FROM trip') #CHANGE FROM CITY_ID TO CITY_NAME
+    cursor.execute('country,rating FROM city') 
     
     theData = cursor.fetchall()
     
@@ -23,9 +23,10 @@ def get_trip():
     the_response.mimetype = 'application/json'
     return the_response
 
-#FROM PRODUCTS
-@trip.route('/trip', methods=['POST'])
-def add_new_trip():
+#FROM city
+#so user can put in new rating
+@city.route('/city', methods=['POST'])
+def add_new_city_rating():
     
     # collecting data from the request object 
     the_data = request.json
