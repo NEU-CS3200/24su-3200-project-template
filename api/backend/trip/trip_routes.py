@@ -13,9 +13,9 @@ def get_trip():
     cursor = db.get_db().cursor()
     the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_id
         FROM trip 
-        WHERE id = 
-'''+str(id)
-    cursor.execute(the_query)
+        WHERE id = %s
+    '''
+    cursor.execute(the_query, id)
     theData = cursor.fetchall()
     
     the_response = make_response(theData)
