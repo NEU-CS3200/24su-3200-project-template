@@ -10,7 +10,7 @@ def get_all_attraction_clicks():
     cursor = db.get_db().cursor()
 
     # Execute a SQL query to fetch all records from the attraction_clicks table
-    cursor.execute('SELECT attraction_id, click_counter, user_id, clicked_at, attraction_click_id FROM attraction_clicks')
+    cursor.execute('SELECT attraction_id, SUM(click_counter) AS total_clicks FROM attraction_clicks GROUP BY attraction_id')
     
     clicks_data = cursor.fetchall()
 
