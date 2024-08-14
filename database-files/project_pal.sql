@@ -452,28 +452,3 @@ VALUES (1, 2),
        (5, 1),
        (8, 2),
        (7, 1);
-
--- example query of getting ta and student emails who are available on the same day, time
-SELECT t.ta_id, t.email, s.student_id, s.email
-FROM (
-    SELECT ta.ta_id, sa.student_id
-    FROM TAAvailability ta
-    JOIN StudentAvailability sa ON ta.availability_id = sa.availability_id
-) AS ad
-JOIN TA t ON t.ta_id = ad.ta_id
-JOIN Student s ON s.student_id = ad.student_id;
-
--- find group mates in my section who live on campus
-SELECT s.student_id, email AS potential_groupmates
-FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
-WHERE course_id = 2 AND semester_year = 'Fall 2024' AND s.on_campus IS TRUE;
-
--- important sql query!
--- still need to merge with availability!
-SELECT first_name, last_name, email, group_id, sa.availability_id
-FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
-JOIN StudentAvailability sa ON s.student_id=sa.student_id
-WHERE ss.section_num = (SELECT section_num FROM TA WHERE ta_id=1) AND
-ss.semester_year = (SELECT semester_year FROM TA WHERE ta_id=1) AND
-ss.course_id = (SELECT course_id FROM TA WHERE ta_id=1)
-AND sa.availability_id IN (SELECT availability_id FROM TAAvailability WHERE ta_id=1);
