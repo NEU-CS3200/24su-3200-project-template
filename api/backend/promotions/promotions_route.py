@@ -53,7 +53,7 @@ def update_promotion():
     terms_and_conditions = promotion_info['terms_and_conditions']
     marketing_campaign_id = promotion_info['marketing_campaign_id']
 
-    query = 'UPDATE promotions SET name = %s, discount_amount = %s, terms_and_conditions = %s, marketing_campaign_id = %s, where code = %s'
+    query = 'UPDATE promotions SET name = %s, discount_amount = %s, terms_and_conditions = %s, marketing_campaign_id = %s where code = %s'
     data = (name, discount_amount, terms_and_conditions, marketing_campaign_id, code)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
