@@ -7,11 +7,11 @@ from backend.ml_models.model01 import predict
 city = Blueprint('city', __name__)
 
 # Getting city 
-@city.route('/city', methods =['GET'])
+@city.route('/city/<name>', methods =['GET'])
 def get_city():
     current_app.logger.info('city.py: GET /city')
     cursor = db.get_db().cursor()
-    cursor.execute('country,rating FROM city') 
+    cursor.execute('country,rating FROM city WHERE name = '+str(name)) 
     
     theData = cursor.fetchall()
     
