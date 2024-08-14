@@ -19,18 +19,12 @@ if st.button('Find students with my availability',
              use_container_width=True):
   st.switch_page('pages/11_Prediction.py')
 
-if st.button('View the Simple API Demo', 
+if st.button('Find students with my specialty', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/12_API_Test.py')
 
-if st.button("View Classification Demo",
+if st.button("Update my information",
              type='primary',
              use_container_width=True):
   st.switch_page('pages/13_Classification.py')
-
-# this is a test button
-if st.button('See my info', 
-             type='primary',
-             use_container_width=True):
-  st.write('Hello! The TA data should pop up here')

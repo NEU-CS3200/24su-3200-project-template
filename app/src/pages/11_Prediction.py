@@ -29,4 +29,4 @@ if submitted:
         taId_data = requests.get(f'http://api:4000/t/ta/{ta_fname}/{ta_lname}/{ta_email}').json()
         st.dataframe(taId_data)
     except:
-        st.write("Could not connect to the database to retrieve TA ID! Make sure there are no typos in the form.")
+        st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")
