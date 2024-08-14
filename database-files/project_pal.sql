@@ -353,7 +353,8 @@ VALUES (1, 'Python, Java, C++, React, Streamlit, SQL'),
 
 -- Student Section Data
 INSERT INTO StudentSection(student_id, section_num, semester_year, course_id)
-VALUES (1, 1, 'Spring 2025', 3),
+VALUES (1, 2, 'Spring 2025', 29), -- keep this value!
+       (1, 1, 'Spring 2025', 3),
        (2, 1, 'Spring 2025', 3),
        (3, 1, 'Spring 2025', 3),
        (4, 1, 'Spring 2025', 3),
@@ -409,7 +410,9 @@ VALUES (1, 1),
        (5, 3),
        (1, 4),
        (2, 4),
-       (2, 5);
+       (2, 5),
+       # need to keep this availability!
+       (5, 1);
 
 -- TAAvailability Data
 INSERT INTO TAAvailability(availability_id, ta_id)
@@ -419,15 +422,15 @@ VALUES (1, 2),
        (8, 2),
        (7, 1);
 
--- example query of getting ta and student emails who are available on the same day, time, & location
+-- example query of getting ta and student emails who are available on the same day, time
 SELECT t.ta_id, t.email, s.student_id, s.email
 FROM (
     SELECT ta.ta_id, sa.student_id
     FROM TAAvailability ta
     JOIN StudentAvailability sa ON ta.availability_id = sa.availability_id
-) AS availability_data
-JOIN TA t ON t.ta_id = availability_data.ta_id
-JOIN Student s ON s.student_id = availability_data.student_id;
+) AS ad
+JOIN TA t ON t.ta_id = ad.ta_id
+JOIN Student s ON s.student_id = ad.student_id;
 
 -- find group mates in my section who live on campus
 SELECT s.student_id, email AS potential_groupmates
@@ -437,3 +440,13 @@ WHERE course_id = 2 AND semester_year = 'Fall 2024' AND s.on_campus IS TRUE;
 -- As a CS3200 TA, I need to be assigned to students who need help in an area that I specialize in so I can be of the most use to them.
 SELECT ss.student_id, s.email FROM Student s JOIN StudentSpeciality ss ON ss.student_id = s.student_id
 WHERE ss.speciality_description NOT LIKE '%python%' AND ss.speciality_description NOT LIKE '%SQL%';
+
+-- important sql query!
+-- still need to merge with availability!
+SELECT first_name, last_name, email, group_id, sa.availability_id
+FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
+JOIN StudentAvailability sa ON s.student_id=sa.student_id
+WHERE ss.section_num = (SELECT section_num FROM TA WHERE ta_id=1) AND
+ss.semester_year = (SELECT semester_year FROM TA WHERE ta_id=1) AND
+ss.course_id = (SELECT course_id FROM TA WHERE ta_id=1)
+AND sa.availability_id IN (SELECT availability_id FROM TAAvailability WHERE ta_id=1);

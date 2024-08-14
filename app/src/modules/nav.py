@@ -21,13 +21,13 @@ def MapDemoNav():
 
 ## ------------------------ Examples for Role of usaid_worker ------------------------
 def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon='🛜')
+    st.sidebar.page_link("pages/12_API_Test.py", label="Specialty", icon='🛜')
 
 def PredictionNav():
-    st.sidebar.page_link("pages/11_Prediction.py", label="Find students - Availability", icon='📈')
+    st.sidebar.page_link("pages/11_Prediction.py", label="Availability", icon='📈')
 
 def ClassificationNav():
-    st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
+    st.sidebar.page_link("pages/13_Classification.py", label="Update info", icon='🌺')
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
