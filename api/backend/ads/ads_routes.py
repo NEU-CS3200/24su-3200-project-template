@@ -10,7 +10,7 @@ ads = Blueprint('ads', __name__)
 def get_ads():
     current_app.logger.info('ads_routes.py: GET /users')
     cursor = db.get_db().cursor()
-    cursor.execute('select id, terms_and_conditions, description, types, description from ads')
+    cursor.execute('select id, terms_and_conditions, description, type, marketing_campaign_id from ads')
     
     theData = cursor.fetchall()
     
@@ -26,15 +26,15 @@ def add_new_ad():
     current_app.logger.info(the_data)
     id = the_data['id']
     description = the_data['description']
-    types = the_data['types']
+    type = the_data['type']
     terms_and_conditions = the_data['terms_and_conditions']
     marketing_campaign_id = the_data['marketing_campaign_id']
     budget = the_data['budget']
 
-    query = 'insert into ads (id, description, types, terms_and_conditions, marketing_campaign_id, budget) values("'
+    query = 'insert into ads (id, description, type, terms_and_conditions, marketing_campaign_id, budget) values("'
     query += id + '", "'
     query += description + '", "'
-    query += types + '", "' 
+    query += type + '", "' 
     query += terms_and_conditions + '", "'
     query += marketing_campaign_id + '", "' 
     query += budget + ')'
@@ -50,14 +50,14 @@ def update_ad():
     ads_info = request.json
     id = ads_info['id']
     description = ads_info['description']
-    types = ads_info['types']
+    type = ads_info['type']
     terms_and_conditions = ads_info['terms_and_conditions']
     budget = ads_info['budget']
     marketing_campaign_id = ads_info['marketing_campaign_id']
     
 
-    query = 'UPDATE ads SET description = %s, types %s, terms_and_conditions = %s, budget = %s, marketing_campaign_id = %s where id = %s'
-    data = (description, types, terms_and_conditions, budget, marketing_campaign_id, id)
+    query = 'UPDATE ads SET description = %s, type %s, terms_and_conditions = %s, budget = %s, marketing_campaign_id = %s where id = %s'
+    data = (description, type, terms_and_conditions, budget, marketing_campaign_id, id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
