@@ -10,7 +10,7 @@ def get_all_restaurant_clicks():
     cursor = db.get_db().cursor()
 
     # Execute a SQL query to fetch all records from the restaurant_clicks table
-    cursor.execute('SELECT restaurant_id, click_counter, user_id, clicked_at, restaurant_click_id FROM restaurant_clicks')
+    cursor.execute('SELECT restaurant_id, SUM(click_counter) AS total_clicks FROM restaurant_clicks GROUP BY restaurant_id')
     
     clicks_data = cursor.fetchall()
 
