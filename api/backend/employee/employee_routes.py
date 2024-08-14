@@ -9,7 +9,7 @@ employees = Blueprint('employee', __name__)
 @employees.route('/employee', methods =['GET'])
 def get_employees():
     cursor = db.get_db().cursor()
-    cursor.execute('select id, email, username from employee')
+    cursor.execute('select id, email from employee')
     
     theData = cursor.fetchall()
     
@@ -17,6 +17,7 @@ def get_employees():
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
 
 # Updates the employees personal information 
 @employees.route ('/update_employee', methods = ['PUT'])
@@ -43,14 +44,13 @@ def add_new_employee():
     last = the_data['last_name']
     id = the_data['id']
     email = the_data['email']
-    username = the_data['username']
+    
 
     query = 'insert into employee (first_name, last_name, id, email, user) values("'
     query += first + '", "'
     query += last + '", "'
     query += id + '", "' 
-    query += email + '", "'
-    query += username + ')'
+    query += email + ')'
 
     cursor = db.get_db().cursor()
     cursor.execute(query)
