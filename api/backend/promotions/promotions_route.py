@@ -20,7 +20,7 @@ def get_promotions():
     return the_response
 
 # Adding a new promotion
-@promotions.route('/promotions', methods=['POST'])
+@promotions.route('/add_promotions', methods=['POST'])
 def add_new_promotion():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -44,7 +44,7 @@ def add_new_promotion():
     return 'Success'
 
 # Updates a promotion
-@employees.route ('/promotion', methods = ['PUT'])
+@employees.route ('/update_promotion', methods = ['PUT'])
 def update_promotion():
     promotion_info = request.json
     code = promotion_info['code']
