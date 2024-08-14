@@ -38,4 +38,18 @@ def choose_loc(hotel_budget, flight_budget, attraction_budget, restaurant_budget
     the_response.mimetype = 'application/json'
     return the_response
 
-# 
+# Update the users current location
+@locations.route('/current_loc', methods = ['PUT'])
+def update_loc():
+    current_app.logger.info('locations.route.py: PUT users location')
+    # how does this connect to mockaroo data?
+    loc_info = request.json
+    current_city = loc_info['curr_city']
+    city_id = loc_info['city_id']
+
+    query = 'UPDATE city SET city = %s, id = %s'
+    data = (current_city, city_id)
+    cursor = db.get_db().cursor()
+    r = cursor.execute(query, data)
+    db.get_db().commit()
+    return 'address updated!'
