@@ -20,7 +20,7 @@ def get_ads():
     return the_response
 
 # Adding a new ad 
-@employees.route('/ads', methods=['POST'])
+@ads.route('/ads', methods=['POST'])
 def add_new_employee():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -28,16 +28,37 @@ def add_new_employee():
     description = the_data['description']
     types = the_data['types']
     terms_and_conditions = the_data['terms_and_conditions']
+    marketing_campaign_id = the_data['marketing_campaign_id']
     budget = the_data['budget']
 
-    query = 'insert into ads (id, description, types, terms_and_conditions, budget) values("'
+    query = 'insert into ads (id, description, types, terms_and_conditions, marketing_campaign_id, budget) values("'
     query += id + '", "'
     query += description + '", "'
     query += types + '", "' 
     query += terms_and_conditions + '", "'
+    query += marketing_campaign_id + '", "' 
     query += budget + ')'
 
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db.commit()
     return 'Success'
+
+# Updates ads information 
+@ads.route ('/ads', methods = ['POST'])
+def update_employee():
+    ads_info = request.json
+    id = ads_info['id']
+    description = ads_info['description']
+    types = ads_info['types']
+    terms_and_conditions = ads_info['terms_and_conditions']
+    budget = ads_info['budget']
+    marketing_campaign_id = ads_info['marketing_campaign_id']
+    
+
+    query = 'UPDATE employee SET description = %s, types %s, terms_and_conditions = %s, budget = %s, marketing_campaign_id = %s, where id = %s'
+    data = (description, types, terms_and_conditions, budget, marketing_campaign_id, id)
+    cursor = db.get_db().cursor()
+    r = cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Ad Updated '
