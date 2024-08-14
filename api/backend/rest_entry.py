@@ -7,6 +7,8 @@ from backend.db_connection import db
 from backend.student.student_routes import students
 from backend.stuAvailability.stuAvailability_routes import stuAvailability
 from backend.ta.ta_routes import ta
+from backend.professor.professor_routes import professors
+from backend.section.section_routes import sections
 import os
 from dotenv import load_dotenv
 
@@ -98,6 +100,8 @@ def create_app():
     app.register_blueprint(students,   url_prefix='/s')
     app.register_blueprint(stuAvailability,   url_prefix='/sa')
     app.register_blueprint(ta,   url_prefix='/t')
+    app.register_blueprint(professors, url_prefix='/p')
+    app.regsiter_blueprint(sections, url_prefix='/sec')
 
     # Don't forget to return the app object
     return app
