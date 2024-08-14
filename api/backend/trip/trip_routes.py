@@ -62,7 +62,7 @@ def add_new_trip():
 
 @trips.route('/trips/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
-    trip = Trip.query.filter_by(name=name)
+    trip = trip.query.filter_by(name=name)
     if trip:
         db.session.delete(trip)
         db.session.commit()
