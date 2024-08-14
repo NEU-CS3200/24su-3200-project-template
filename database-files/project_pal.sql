@@ -6,7 +6,7 @@ USE Project_pal;
 -- Department Table
 CREATE TABLE IF NOT EXISTS Department (
     dept_id INT AUTO_INCREMENT,
-    deptName VARCHAR(75) NOT NULL,
+    deptName VARCHAR(75) NOT NULL UNIQUE,
     PRIMARY KEY (dept_id)
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS Professor (
 -- Class Table
 CREATE TABLE IF NOT EXISTS Class (
     course_id INT AUTO_INCREMENT,
-    course_name VARCHAR(55),
+    course_name VARCHAR(55) UNIQUE,
     dept_id INT,
     FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
         ON UPDATE restrict ON DELETE restrict,
@@ -197,75 +197,108 @@ CREATE TABLE IF NOT EXISTS TAAvailability (
 
 -- Department Data
 INSERT INTO Department (deptName)
-VALUES ('Computer Science'),
-       ('Finance'),
-       ('Chemistry'),
-       ('Marketing'),
-       ('Public Relations'),
-       ('Physics'),
-       ('International Business'),
-       ('Information Science'),
-       ('Bioengineering'),
-       ('Chemical Engineering'),
-       ('Civil Engineering'),
-       ('Industrial Engineering'),
-       ('Nursing'),
-       ('Hisotry'),
-       ('Communications');
+VALUES ('Computer Science'), ('Mathematics'), ('Biology'),
+       ('Chemistry'), ('Physics'), ('Economics'),
+       ('Psychology'), ('Political Science'), ('Sociology'),
+       ('Anthropology'), ('History'), ('English Literature'),
+       ('Philosophy'), ('Art History'), ('Business Administration'),
+       ('Environmental Science'), ('Mechanical Engineering'),
+       ('Electrical Engineering'), ('Communication Studies'), ('Linguistics');
 
 -- Professor Data
-INSERT INTO Professor(first_name, last_name, email, dept_id, office_location)
-VALUES ('Mark', 'Fontenot', 'm.fontenot@northeastern.edu', 1, 'WVH 115'),
-       ('Sally', 'Fields', 'fields.sa@northeastern.edu', 2, 'Hayden 302'),
-       ('Patrick', 'Thompson', 'pa.thompson@northeastern.edu', 3, 'Mugar 112'),
-       ('Sara', 'Klein', 's.klein@northeastern.edu', 3, 'Mugar 223'),
-       ('Matt', 'James', 'm.james@northestern.edu', 3, 'Churchill 102'),
-       ('Normie', 'Hollyer', 'nhollyer0@paypal.com', 25, 'Adams Building'),
-       ('Holt', 'Anderton', 'handerton1@mac.com', 9, 'Dodge Hall'),
-       ('Marne', 'Swainsbury', 'mswainsbury2@skype.com', 26, 'Adams Building'),
-       ('Brear', 'Roberds', 'broberds3@squidoo.com', 3, 'Dodge Hall'),
-       ('Ileana', 'Scarr', 'iscarr4@guardian.co.uk', 1, 'Dodge Hall'),
-       ('Nan', 'Tully', 'ntully5@trellian.com', 27, 'Wilson Hall'),
-       ('Janeta', 'Banbury', 'jbanbury6@naver.com', 18, 'Parker Center'),
-       ('Kippie', 'Redsull', 'kredsull7@flavors.me', 20, 'Wilson Hall'),
-       ('Clim', 'Frid', 'cfrid8@blogspot.com', 20, 'Johnson Center'),
-       ('Jonas', 'Swigger', 'jswigger9@e-recht24.de', 1, 'Johnson Center'),
-       ('Berty', 'Pittle', 'bpittlea@pcworld.com', 27, 'Grant Hall'),
-       ('Winifred', 'Comizzoli', 'wcomizzolib@drupal.org', 11, 'Adams Building'),
-       ('Michelina', 'Boulton', 'mboultonc@dailymail.co.uk', 18, 'Grant Hall'),
-       ('Philippine', 'Binnion', 'pbinniond@nbcnews.com', 27, 'Clark Hall'),
-       ('Margo', 'Van Waadenburg', 'mvanwaadenburge@hp.com', 24, 'Smith Building'),
-       ('Lorraine', 'Chesterfield', 'lchesterfieldf@marketwatch.com', 2, 'Parker Center'),
-       ('Adella', 'Fannin', 'afanning@house.gov', 8, 'Parker Center'),
-       ('Yolane', 'Caldero', 'ycalderoh@hhs.gov', 11, 'Forsyth Hall'),
-       ('Francyne', 'Wartonby', 'fwartonbyi@ibm.com', 20, 'Johnson Center'),
-       ('Izaak', 'Meadowcroft', 'imeadowcroftj@google.it', 15, 'Dodge Hall');
+INSERT INTO Professor (first_name, last_name, email, dept_id, office_location)
+VALUES ('Mark', 'Fontenot', 'm.fontenot@northeastern.edu', 1, 'Mugar Hall'),
+       ('Pietra', 'Ramsey', 'pramsey0@wunderground.com', 15, 'Forsyth Hall'),
+       ('Nikola', 'Pock', 'npock1@wiley.com', 4, 'Adams Building'),
+       ('Sacha', 'Winnister', 'swinnister2@rambler.ru', 6, 'Adams Building'),
+       ('Burke', 'Goforth', 'bgoforth3@google.ru', 4, 'Dodge Hall'),
+       ('Win', 'Sparshatt', 'wsparshatt4@youtube.com', 8, 'Adams Building'),
+       ('Debra', 'Piniur', 'dpiniur5@sfgate.com', 5, 'Wilson Hall'),
+       ('Yanaton', 'Pescud', 'ypescud6@digg.com', 10, 'Parker Center'),
+       ('Eada', 'Carrington', 'ecarrington7@1688.com', 17, 'Wilson Hall'),
+       ('Bettine', 'Southerton', 'bsoutherton8@ocn.ne.jp', 3, 'Dodge Hall'),
+       ('Griz', 'Pusill', 'gpusill9@latimes.com', 17, 'Clark Hall'),
+       ('Serge', 'Kitchaside', 'skitchasidea@comsenz.com', 8, 'Forsyth Hall'),
+       ('Veronike', 'Meletti', 'vmelettib@wikimedia.org', 4, 'Smith Building'),
+       ('Renato', 'Mellor', 'rmellorc@disqus.com', 10, 'Grant Hall'),
+       ('Zoe', 'Vayro', 'zvayrod@wordpress.com', 9, 'Forsyth Hall'),
+       ('Octavia', 'Terzo', 'oterzoe@loc.gov', 5, 'Taylor Hall'),
+       ('Dorthy', 'Shelbourne', 'dshelbournef@hibu.com', 14, 'Adams Building'),
+       ('Adey', 'Postles', 'apostlesg@clickbank.net', 12, 'Taylor Hall'),
+       ('Laurie', 'Daines', 'ldainesh@hp.com', 4, 'Johnson Center'),
+       ('Adriane', 'Genn', 'agenni@noaa.gov', 4, 'Taylor Hall'),
+       ('Amabelle', 'Durie', 'aduriej@jugem.jp', 15, 'Clark Hall'),
+       ('Natty', 'Bellelli', 'nbellellik@webs.com', 14, 'Parker Center'),
+       ('Noelyn', 'Kildahl', 'nkildahll@twitter.com', 13, 'Forsyth Hall'),
+       ('Currey', 'Tideswell', 'ctideswellm@slate.com', 9, 'Adams Building'),
+       ('Keelby', 'Eymor', 'keymorn@xrea.com', 5, 'Grant Hall'),
+       ('Klara', 'Poutress', 'kpoutresso@paginegialle.it', 6, 'Taylor Hall'),
+       ('Loren', 'Brandino', 'lbrandinop@shinystat.com', 19, 'Taylor Hall'),
+       ('Sampson', 'Ellissen', 'sellissenq@craigslist.org', 8, 'Taylor Hall'),
+       ('Burlie', 'Laytham', 'blaythamr@paginegialle.it', 4, 'Forsyth Hall'),
+       ('Elinore', 'Nelle', 'enelles@about.com', 9, 'Clark Hall'),
+       ('Agnella', 'Keppy', 'akeppyt@ucsd.edu', 9, 'Adams Building');
 
 -- Class Data
-INSERT INTO Class(course_name, dept_id)
-VALUES ('Database Design', 1),
-       ('Organic Chemistry', 3),
-       ('Investments', 2),
-       ('Introduction to Psychology', 1),
-       ('Advanced Calculus', 2),
-       ('History of Art', 3),
-       ('Digital Marketing Strategies', 4),
-       ('Creative Writing Workshop', 5),
-       ('Environmental Science and Sustainability', 6),
-       ('Introduction to Astrophysics', 7),
-       ('Fashion Design Fundamentals', 8),
-       ('Music Theory and Composition', 9),
-       ('Entrepreneurship and Innovation', 10)
-;
-# --- need to change department ids
+INSERT INTO Class (course_name, dept_id) VALUES
+('Introduction to Cultural Anthropology', 10),
+('Human Evolution', 10),
+('Introduction to Art History', 14),
+('Renaissance Art', 14),
+('General Biology', 3),
+('Genetics', 3),
+('Principles of Management', 15),
+('Marketing Fundamentals', 15),
+('General Chemistry', 4),
+('Organic Chemistry', 4),
+('Public Speaking', 19),
+('Interpersonal Communication', 19),
+('Introduction to Programming', 1),
+('Data Structures and Algorithms', 1),
+('Microeconomics', 6),
+('Macroeconomics', 6),
+('Circuit Analysis', 17),
+('Electromagnetics', 17),
+('British Literature', 12),
+('American Fiction', 12),
+('Introduction to Environmental Science', 16),
+('Environmental Policy', 16),
+('World History', 11),
+('American History', 11),
+('Introduction to Linguistics', 20),
+('Phonetics and Phonology', 20),
+('Calculus I', 2),
+('Linear Algebra', 2),
+('Dynamics', 2),
+('Thermodynamics', 2);
 
 -- Section Data
-INSERT INTO Section(course_id, semester_year, section_num, professor_id)
-VALUES (1, 'Fall 2024', 1, 1),
-       (3, 'Spring 2025', 1, 2),
-       (2, 'Fall 2024', 1, 3),
-       (2, 'Fall 2024', 2, 4),
-       (2, 'Spring 2025', 1, 5);
+INSERT INTO Section (section_num, semester_year, professor_id, course_id)
+VALUES
+       (1, 'Spring 2025', 14, 3),
+       (2, 'Spring 2025', 10, 6),
+       (2, 'Fall 2024', 15, 7),
+       (2, 'Spring 2025', 24, 9),
+       (2, 'Fall 2024', 7, 5),
+       (1, 'Spring 2025', 9, 18),
+       (3, 'Spring 2025', 26, 26),
+       (2, 'Fall 2024', 23, 24),
+       (1, 'Spring 2025', 5, 9),
+       (2, 'Fall 2024', 28, 28),
+       (2, 'Fall 2024', 25, 25),
+       (1, 'Spring 2025', 27, 27),
+       (2, 'Spring 2025', 22, 22),
+       (3, 'Fall 2024', 11, 17),
+       (3, 'Spring 2025', 2, 7),
+       (2, 'Spring 2025', 19, 11),
+       (1, 'Fall 2024', NULL, 11),
+       (2, 'Spring 2025', 30, 30),
+       (3, 'Fall 2024', 10, 6),
+       (3, 'Fall 2024', 25, 25),
+       (3, 'Spring 2025', 8, 2),
+       (1, 'Fall 2024', 20, 25),
+       (2, 'Spring 2025', 4, 16),
+       (2, 'Spring 2025', 29, 29);
 
 -- Project Data
 INSERT INTO Project(instructions, professor_id)
@@ -274,10 +307,15 @@ VALUES ('Make a functional data-driven application and be original!', 1),
        ('See the linked instructions doc for the final risk management group project', 2);
 
 -- TA Data
-INSERT INTO TA(first_name, last_name, email, section_num, semester_year, course_id)
-VALUES ('Timmy', 'Johnson', 'johnson.ti@northeastern,edu', 1, 'Fall 2024', 1),
-       ('Charlotte', 'Smith', 'smith.ch@northeastern.edu', 1, 'Fall 2024', 2),
-       ('Katie', 'OBrian', 'obrian.kate@northeastern.edu', 1, 'Spring 2025', 3);
+INSERT INTO TA (first_name, last_name, email, section_num, semester_year, course_id)
+VALUES
+    ('Timmy', 'Johnson', 'john.timmy@northeastern.edu', 2, 'Spring 2025', 29),
+    ('Merle', 'Cheeld', 'mcheeld0@weather.com', 1, 'Spring 2025', 3),
+    ('Vally', 'Lambdin', 'vlambdin1@wunderground.com', 2, 'Spring 2025', 6),
+    ('Ennis', 'Eake', 'eeake2@ihg.com', 2, 'Fall 2024', 7),
+    ('Turner', 'Lafflin', 'tlafflin3@thetimes.co.uk', 2, 'Spring 2025', 9),
+    ('Donni', 'Champneys', 'dchampneys4@google.pl', 2, 'Fall 2024', 5);
+# ----- need to fix this mockaroo data!
 
 -- TA Specialty Data
 INSERT INTO TASpeciality(ta_id, speciality_description)
@@ -287,9 +325,10 @@ VALUES (1, 'Python, JavaScript, Object-Oriented Design, Data Analysis, React'),
 
 -- Group Data
 INSERT INTO `Group` (group_name, ta_id, section_num, semester_year, course_id)
-VALUES ('Team Green', 1, 1, 'Fall 2024', 1),
-       ('WeLoveChem', 3, 1, 'Spring 2025', 3),
-       ('FinanceBros', 2, 1, 'Fall 2024', 2);
+VALUES ('Team Green', 1, 2, 'Spring 2025', 29),
+       ('WeLoveChem', 3, 2, 'Spring 2025', 6),
+       ('FinanceBros', 2, 1, 'Spring 2025', 3);
+# ----- need to fix this error!
 
 -- Submission Data
 INSERT INTO Submission (group_id, submitted_at, submission_link, project_id)
@@ -313,12 +352,12 @@ VALUES (1, 'Python, Java, C++, React, Streamlit, SQL'),
        (3, 'Risk management, trading, Excel, financial accounting');
 
 -- Student Section Data
-INSERT INTO StudentSection(student_id, section_num, course_id, semester_year)
-VALUES (1, 1, 1, 'Fall 2024'),
-       (2, 1, 2, 'Fall 2024'),
-       (3, 1, 2, 'Fall 2024'),
-       (4, 1, 2, 'Fall 2024'),
-       (5, 1, 3, 'Spring 2025');
+INSERT INTO StudentSection(student_id, section_num, semester_year, course_id)
+VALUES (1, 1, 'Spring 2025', 3),
+       (2, 1, 'Spring 2025', 3),
+       (3, 1, 'Spring 2025', 3),
+       (4, 1, 'Spring 2025', 3),
+       (5, 2,'Spring 2025', 6);
 
 -- Days Data
 INSERT INTO Days(day)
