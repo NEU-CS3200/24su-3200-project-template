@@ -21,6 +21,7 @@ from backend.employee.employee_routes import employees
 from backend.marketing_campaign.marketing_campaign_routes import marketing_campaign
 from backend.city_clicks.city_clicks_routes import city_clicks
 from backend.city.city_routes import city
+from backend.restaurant.restaurant_routes import restaurant
 
 import os
 from dotenv import load_dotenv
@@ -126,6 +127,7 @@ def create_app():
     app.register_blueprint(city_clicks, url_prefix='/cc')
     app.register_blueprint(locations, url_prefix='/l')
     app.register_blueprint(city, url_prefix='/c')
+    app.register_blueprint(restaurant, url_prefix='/r')
 
 
     # Don't forget to return the app object
