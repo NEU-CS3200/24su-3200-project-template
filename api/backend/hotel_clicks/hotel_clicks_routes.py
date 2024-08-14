@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 from backend.db_connection import db
 
-# Create a new Blueprint named restaurant clicks for managing click-related routes
+# Create a new Blueprint named "clicks" for managing click-related routes
 restaurant_clicks = Blueprint('restautant_clicks', __name__)
 
 # Route to retrieve all clicks for restaurants
