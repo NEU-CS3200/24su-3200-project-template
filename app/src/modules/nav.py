@@ -9,6 +9,13 @@ def HomeNav():
 def AboutPageNav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
+### -------------------------Sidebar for Regular User -------------------------------------
+def PlanTrip():
+    st.sidebar.page_link("pages/select_trip.py", label = "Select Trip", icon = "🗒️")
+
+def SelectTrip():
+    st.sidebar.page_link("pages/plan_trip.py", label = "Plan Trip", icon = "✈️")
+
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
 def PolStratAdvHomeNav():
     st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon='👤')
@@ -58,15 +65,13 @@ def SideBarLinks(show_home=False):
 
         # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
         if st.session_state['role'] == 'student':
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
+            PlanTrip()
+            SelectTrip()
 
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state['role'] == 'intern':
-            PredictionNav()
-            ApiTestNav() 
-            ClassificationNav()
+            PlanTrip()
+            SelectTrip()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':

@@ -8,11 +8,10 @@ st.write("# About this App")
 
 st.markdown (
     """
-    This is a demo app for CS 3200 Course Project.  
+    This is a travel app for CS 3200 Course Project.  
 
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
+    The goal of this travel app is to help you plan your next vacation based on your preferences!
 
-    Stay tuned for more information and features to come!
+    ✈️ Happy Traveling! ✈️
     """
         )
