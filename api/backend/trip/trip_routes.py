@@ -6,7 +6,7 @@ from backend.ml_models.model01 import predict
 
 trip = Blueprint('trip', __name__)
 
-# Getting trips
+# Getting trips based on a user id
 @trip.route('/trip/<id>', methods =['GET'])
 def get_trip():
     current_app.logger.info('trip_routes.py: GET /trip')

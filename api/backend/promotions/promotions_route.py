@@ -31,7 +31,7 @@ def add_new_promotion():
     marketing_campaign_id = the_data['marketing_campaign_id']
     
 
-    query = 'insert into employee (code, name, discount_amount, terms_and_conditions, marketing_campaign_id) values("'
+    query = 'INSERT into employee (code, name, discount_amount, terms_and_conditions, marketing_campaign_id) values("'
     query += code + '", "'
     query += name + '", "'
     query += discount_amount + '", "' 
