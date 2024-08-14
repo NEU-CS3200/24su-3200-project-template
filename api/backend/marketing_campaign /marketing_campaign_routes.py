@@ -10,7 +10,7 @@ campaign = Blueprint('campaign', __name__)
 def get_campaigns():
     current_app.logger.info('marketing_campaign_routes.py: GET /campaign')
     cursor = db.get_db().cursor()
-    cursor.execute('select marketing_campaign_id, name, employee_id from marketing_campaign')
+    cursor.execute('select id, name, employee_id from marketing_campaign')
     
     theData = cursor.fetchall()
     
@@ -25,11 +25,11 @@ def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
     name = the_data['name']
-    marketing_campaign_id = the_data['marketing_campaign_id']
+    marketing_campaign_id = the_data['id']
     employee_id = the_data['employee_id']
     
 
-    query = 'insert into employee (name, marketing_campaign_id, employee_id) values("'
+    query = 'insert into employee (name, id, employee_id) values("'
     query += name + '", "'
     query += marketing_campaign_id + '", "'
     query += employee_id + ')'
@@ -44,10 +44,10 @@ def add_new_campaign():
 def update_campaign():
     campaign_info = request.json
     name = campaign_info['name']
-    marketing_campaign_id = campaign_info['marketing_campaign_id']
+    marketing_campaign_id = campaign_info['id']
     employee_id = campaign_info['employee_id']
 
-    query = 'UPDATE marketing_campaign SET name %s, employee_id = %s, where marketing_campaign_id = %s'
+    query = 'UPDATE marketing_campaign SET name %s, employee_id = %s where id = %s'
     data = (name, employee_id, marketing_campaign_id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
