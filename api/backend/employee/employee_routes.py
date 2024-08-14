@@ -19,7 +19,7 @@ def get_employees():
     return the_response
 
 # Updates the employees personal information 
-@employees.route ('/employee/<id>', methods = ['POST'])
+@employees.route ('/employee/<id>', methods = ['PUT'])
 def update_employee():
     empl_info = request.json
     empl_id = empl_info['id']
