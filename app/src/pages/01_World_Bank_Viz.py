@@ -47,22 +47,6 @@ with st.form("Input Your Student Data"):
         data['year'] = year
         data['dorm'] = dorm
         st.write(data).post('http://api:4000/',json=data)
-'''
-# create an availiblity calendar
-calendar_options = {
-    "editable": "true",
-    "selectable": "true",
-}
-calendar_events = [
-    {
-        "title": "Event 1",
-        "start": "2023-07-31T08:30:00",
-        "end": "2023-07-31T10:30:00",
-    }
-]
-calendar = calendar(events=calendar_events, options=calendar_options)
-st.write(calendar)
-'''
 
 
 

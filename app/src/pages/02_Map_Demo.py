@@ -7,7 +7,7 @@ import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
 from datetime import datetime as dt
-#from awesome_table import AwesomeTable
+from streamlit_calendar import calendar
 SideBarLinks()
 
 # add the logo
