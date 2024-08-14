@@ -16,7 +16,12 @@ st.write('')
 if st.button('Plan your next trip',
               type = 'primary',
               use_container_width = True):
-   st.switch_page('pages/trip.py')
+   st.switch_page('pages/plan_trip.py')
+
+if st.button('Look through your previous trips',
+                type = 'primary',
+                use_container_width = True):
+    st.switch_page('pages/select_trip.py')
 
 address = st.columns(1)
 with address:

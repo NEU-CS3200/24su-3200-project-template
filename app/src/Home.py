@@ -40,12 +40,11 @@ if st.button("Act as Alice, a Student",
     st.session_state['authenticated'] = True
     # we set the role of the current user
     st.session_state['role'] = 'student'
-    st.session_state['first_name'] = 'Alice'
     st.switch_page('pages/users.py')
     st.session_state['first_name'] = 'Alice'
     st.switch_page('pages/users.py')
 
-if st.button('Act as Thomas, an Marketing Analyst', 
+if st.button('Act as Thomas, a Marketing Analyst', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True

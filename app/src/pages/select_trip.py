@@ -14,3 +14,8 @@ st.title(f"Hi, {st.session_state['first_name']}.")
 st.write('Here are all your previous trips')
 st.write('')
 st.write('')
+try:
+    trips = requests.get('http://api:4000/t/get_trip').json()
+    st.dataframe(trips)
+except:
+    st.write("Error!")
