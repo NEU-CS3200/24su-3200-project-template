@@ -12,15 +12,14 @@ restaurant = Blueprint('restaurant', __name__)
 
 @restaurant.route('/restaurant/<trip_id>', methods=['GET'])
 def get_restaurant(trip_id): 
-    current_app.logger.info('GET /customers/<userID> route')
+    #current_app.logger.info('GET /customers/<userID> route')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT name, average_price, address, rating 
-        FROM restaurant join city on restaurant.city_id = city.id
-        join trip on trip.city_id = city.id 
-        WHERE trip.id = {0} 
-        ORDER BY restaurant.average_price ASC 
-'''.format(trip_id)
-    cursor.execute(the_query)
+    the_query = '''SELECT r.name, r.average_price, r.address, r.rating 
+           FROM restaurant r JOIN city c ON r.city_id = c.id
+           JOIN trip t ON t.city_id = c.id 
+           WHERE t.id = %s
+           ORDER BY r.average_price ASC'''
+    cursor.execute(the_query, (trip_id,))
     #row_headers = [x[0] for x in cursor.description]
     #json_data = []
     theData = cursor.fetchall()

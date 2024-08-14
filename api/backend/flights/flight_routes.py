@@ -4,10 +4,9 @@ from backend.db_connection import db
 
 flights = Blueprint("flights", __name__)
 
-# Gets all the flights that fit under a certain price range
-@flights.route('/price/<max_price>)', methods = ['GET'])
+@flights.route('/price/<int:max_price>', methods=['GET'])
 def price_range(max_price):
-    current_app.logger.info('flight_routes.py: GET based on budget')
+    #current_app.logger.info('flight_routes.py: GET based on budget')
     cursor = db.get_db().cursor()
     the_query = '''
         SELECT airline_name, duration, price 
@@ -15,14 +14,17 @@ def price_range(max_price):
         WHERE price <= %s
         ORDER BY price ASC
     '''
-    cursor.execute(the_query, (max_price))
+    cursor.execute(the_query, (max_price))  # Pass max_price as a tuple
 
     theData = cursor.fetchall()
     
-    the_response = make_response(theData)
+    # Convert data to JSON response
+    the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+
 
 #     formatted_results = [dict(zip(['airline_name', 'duration', 'price'], row)) for row in results]
 #     return jsonify(formatted_results)
