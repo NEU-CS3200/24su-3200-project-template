@@ -358,8 +358,10 @@ VALUES (1, 1, 'Spring 2025', 3),
        (3, 1, 'Spring 2025', 3),
        (4, 1, 'Spring 2025', 3),
        (5, 2,'Spring 2025', 6);
+# ----- need to fix mockoroo data file
 
 -- Days Data
+-- data exhaustive, can't insert anymore data bc there are only 7 days in a week
 INSERT INTO Days(day)
 VALUES ('Monday'),
        ('Tuesday'),
@@ -370,6 +372,7 @@ VALUES ('Monday'),
        ('Sunday');
 
 -- Time Data
+-- data exhaustive, can't insert anymore data bc only 3 time options
 INSERT INTO Time(time)
 VALUES ('Morning'),
        ('Afternoon'),
@@ -430,6 +433,7 @@ JOIN Student s ON s.student_id = availability_data.student_id;
 SELECT s.student_id, email AS potential_groupmates
 FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
 WHERE course_id = 2 AND semester_year = 'Fall 2024' AND s.on_campus IS TRUE;
+
 -- As a CS3200 TA, I need to be assigned to students who need help in an area that I specialize in so I can be of the most use to them.
 SELECT ss.student_id, s.email FROM Student s JOIN StudentSpeciality ss ON ss.student_id = s.student_id
 WHERE ss.speciality_description NOT LIKE '%python%' AND ss.speciality_description NOT LIKE '%SQL%';

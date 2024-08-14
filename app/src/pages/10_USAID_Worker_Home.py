@@ -14,7 +14,7 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('View Regression Prediction', 
+if st.button('Find students with my availability', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/11_Prediction.py')
@@ -28,3 +28,9 @@ if st.button("View Classification Demo",
              type='primary',
              use_container_width=True):
   st.switch_page('pages/13_Classification.py')
+
+# this is a test button
+if st.button('See my info', 
+             type='primary',
+             use_container_width=True):
+  st.write('Hello! The TA data should pop up here')
