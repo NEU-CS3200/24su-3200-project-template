@@ -24,9 +24,15 @@ if submitted:
     st.write(f"Email: {ta_email}")
     # --- need to get this to return the specfic TA's availability 
     try:
-        # ---- turn this into a header 
+        # ----- eventually want to add a button to go to update information page 
         st.write("This is your specialty description:")
         ta_data = requests.get(f'http://api:4000/t/ta/{ta_fname}/{ta_lname}/{ta_email}/special').json()
         st.dataframe(ta_data)
+    except:
+        st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")
+    try: 
+        st.write("These students may need your help:")
+        help_data = requests.get(f'http://api:4000/t/ta/{ta_fname}/{ta_lname}/{ta_email}/students').json()
+        st.dataframe(help_data)
     except:
         st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")

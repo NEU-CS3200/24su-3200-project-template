@@ -66,6 +66,8 @@ def get_taAvail(first_name, last_name, email):
     the_response.mimetype = 'application/json'
     return the_response
 
+# this a route for ta subpage 2: Specialty 
+# this shows the logged in ta what their current specialty description is 
 @ta.route('/ta/<first_name>/<last_name>/<email>/special', methods=['POST', 'GET'])
 def get_taSpecial(first_name, last_name, email):
     current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>/special')
@@ -93,6 +95,38 @@ def get_taSpecial(first_name, last_name, email):
     else:
         # Return an error if the TA is not found
         the_response = make_response(jsonify({'error': 'TA NOT found'}), 404)
+    
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# this a route for ta subpage 2: Specialty 
+# want to return a list of students who need help with a given ta's specialty 
+# aka they do not have a least on of the TA's specialty 
+@ta.route('/ta/<first_name>/<last_name>/<email>/students', methods=['POST', 'GET'])
+def get_taStudents(first_name, last_name, email):
+    current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>/students')
+
+    # Establish database connection
+    connection = db.get_db()
+    cursor = connection.cursor()
+
+    # Use parameterized query to prevent SQL injection
+    query_id = '''SELECT ta_id FROM TA WHERE first_name = %s AND last_name = %s AND email = %s'''
+    cursor.execute(query_id, (first_name, last_name, email))
+    theData = cursor.fetchone()
+
+    if theData:
+        ta_id = theData["ta_id"]
+        
+        # long select query to find students in the same section and same availability
+        query_stu = ''''''
+        
+        cursor.execute(query_stu, (ta_id))
+        student_data = cursor.fetchall()
+        the_response = make_response(jsonify(student_data))
+    else:
+        # Return an error if the TA is not found
+        the_response = make_response(jsonify({'error': 'No students found'}), 404)
     
     the_response.mimetype = 'application/json'
     return the_response
