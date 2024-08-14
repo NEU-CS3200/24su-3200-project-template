@@ -43,3 +43,21 @@ def add_new_promotion():
     db.get_db.commit()
     return 'Success'
 
+# Updates a promotion
+# Updates the employees personal information 
+@employees.route ('/employee/<id>', methods = ['PUT'])
+def update_promotion():
+    promotion_info = request.json
+    code = promotion_info['code']
+    name = promotion_info['name']
+    discount_amount = promotion_info['discount_amount']
+    terms_and_conditions = promotion_info['terms_and_conditions']
+    marketing_campaign_id = promotion_info['marketing_campaign_id']
+
+    query = 'UPDATE employee SET name %s, discount_amount = %s, terms_and_conditions = %s, marketing_campaign_id = %s, where code = %s'
+    data = (name, discount_amount, terms_and_conditions, marketing_campaign_id, code)
+    cursor = db.get_db().cursor()
+    r = cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Promotion Updated '
+
