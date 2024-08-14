@@ -9,7 +9,7 @@ employees = Blueprint('employee', __name__)
 @employees.route('/employee', methods =['GET'])
 def get_employees():
     cursor = db.get_db().cursor()
-    cursor.execute('select id, email, username from employee')
+    cursor.execute('select id, email from employee')
     
     theData = cursor.fetchall()
     
@@ -18,8 +18,9 @@ def get_employees():
     the_response.mimetype = 'application/json'
     return the_response
 
+
 # Updates the employees personal information 
-@employees.route ('/employee', methods = ['PUT'])
+@employees.route ('/update_employee', methods = ['PUT'])
 def update_employee():
     empl_info = request.json
     empl_id = empl_info['id']
@@ -35,7 +36,7 @@ def update_employee():
     return 'Employee Updated '
 
 # Adding a new employee 
-@employees.route('/employee', methods=['POST'])
+@employees.route('/add_employee', methods=['POST'])
 def add_new_employee():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -43,14 +44,13 @@ def add_new_employee():
     last = the_data['last_name']
     id = the_data['id']
     email = the_data['email']
-    username = the_data['username']
+    
 
     query = 'insert into employee (first_name, last_name, id, email, user) values("'
     query += first + '", "'
     query += last + '", "'
     query += id + '", "' 
-    query += email + '", "'
-    query += username + ')'
+    query += email + ')'
 
     cursor = db.get_db().cursor()
     cursor.execute(query)
