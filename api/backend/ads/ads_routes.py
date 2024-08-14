@@ -45,7 +45,7 @@ def add_new_ad():
     return 'Success'
 
 # Updates ads information 
-@ads.route ('/ads', methods = ['POST'])
+@ads.route ('/ads', methods = ['PUT'])
 def update_ad():
     ads_info = request.json
     id = ads_info['id']
