@@ -85,9 +85,9 @@ def get_taSpecial(first_name, last_name, email):
         ta_id = theData["ta_id"]
         
         # long select query to find students in the same section and same availability
-        query_special = '''SELECT speciality_description
-                            FROM TASpeciality
-                            WHERE ta_id=%s;'''
+        query_special = '''SELECT speciality
+                        FROM TASpecialty ts JOIN Speciality s ON ts.specialty_id = s.specialty_id
+                        WHERE ta_id=%s;'''
         
         cursor.execute(query_special, (ta_id))
         special_data = cursor.fetchall()
@@ -119,9 +119,19 @@ def get_taStudents(first_name, last_name, email):
         ta_id = theData["ta_id"]
         
         # long select query to find students in the same section and same availability
-        query_stu = ''''''
+        query_stu = '''SELECT DISTINCT s.first_name, s.last_name, s.email, s.group_id
+                    FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
+                    JOIN StudentSpeciality sp ON s.student_id = sp.student_id
+                    JOIN Speciality sl ON sp.specialty_id = sl.specialty_id
+                    WHERE ss.section_num = (SELECT section_num FROM TA WHERE ta_id=%s) AND
+                    ss.semester_year = (SELECT semester_year FROM TA WHERE ta_id=%s) AND
+                    ss.course_id = (SELECT course_id FROM TA WHERE ta_id=%s) AND
+                    sl.specialty_id NOT IN (
+                    SELECT ts.specialty_id
+                    FROM TASpecialty ts
+                    WHERE ts.ta_id = %s)'''
         
-        cursor.execute(query_stu, (ta_id))
+        cursor.execute(query_stu, (ta_id, ta_id, ta_id, ta_id))
         student_data = cursor.fetchall()
         the_response = make_response(jsonify(student_data))
     else:

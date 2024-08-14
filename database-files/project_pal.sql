@@ -333,7 +333,9 @@ VALUES ('Python'),
        ('investments'),
        ('wet lab experience'),
        ('data analysis'),
-       ('organic chemistry');
+       ('organic chemistry'),
+       ('Figma'),
+       ('illustrator');
 
 -- TA Specialty Data
 INSERT INTO TASpecialty(ta_id, specialty_id)
@@ -373,14 +375,16 @@ VALUES ('John', 'Doe', 'doe.jo@northeastern.edu', 'Computer Science', 3, True, 1
 INSERT INTO StudentSpeciality(student_id, specialty_id)
 VALUES (1, 1),
        (1, 2),
-       (2, 2),
-       (2, 3),
+       (2, 9),
+       (2, 10),
+       (2, 1),
        (3, 7),
        (3, 8);
 
 -- Student Section Data
 INSERT INTO StudentSection(student_id, section_num, semester_year, course_id)
 VALUES (1, 2, 'Spring 2025', 29), -- keep this value!
+       (2, 2, 'Spring 2025', 29), -- keep this value!
        (1, 1, 'Spring 2025', 3),
        (2, 1, 'Spring 2025', 3),
        (3, 1, 'Spring 2025', 3),
