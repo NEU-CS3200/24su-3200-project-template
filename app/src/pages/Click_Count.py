@@ -1,82 +1,74 @@
 import logging
-logger = logging.getLogger(__name__)
 import streamlit as st
 import requests
 import pandas as pd
-import numpy as np
+import plotly.express as px
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
-SideBarLinks()
+# Setup logging
+logger = logging.getLogger(__name__)
 
+# Setup Streamlit
+SideBarLinks()
 st.write("Click Counter")
 
-
-# Fetch the data from the route
+# Fetch and process Hotel Clicks data
 url = "http://api:4000/hc/hotel_clicks"
 response = requests.get(url)
 response.raise_for_status()
 data_json = response.json()
 data = pd.DataFrame(data_json)
 
-# Check if the required columns are present
 if 'name' in data.columns and 'total_clicks' in data.columns:
-    # Streamlit app
-    st.title('Top 5 Hotel Clicks Data')
-    
-    # Display a bar chart
-    st.bar_chart(data.set_index('name')['total_clicks'])
+    data_sorted = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
 
-
-# Fetch the data from the route
+# Fetch and process Restaurant Clicks data
 url = "http://api:4000/rc/restaurant_clicks"
 response = requests.get(url)
 response.raise_for_status()
 data_json = response.json()
 data = pd.DataFrame(data_json)
 
-# Check if the required columns are present
 if 'name' in data.columns and 'total_clicks' in data.columns:
-    # Streamlit app
-    st.title('Top 5 Restaurant Clicks Data')
-    
-    # Display a bar chart
-    st.bar_chart(data.set_index('name')['total_clicks'])
+    data_sorted_restaurants = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
 
-
-# Fetch the data from the route
+# Fetch and process Attraction Clicks data
 url = "http://api:4000/ac/attraction_clicks"
 response = requests.get(url)
 response.raise_for_status()
 data_json = response.json()
 data = pd.DataFrame(data_json)
 
-# Check if the required columns are present
 if 'name' in data.columns and 'total_clicks' in data.columns:
-    # Streamlit app
-    st.title('Top 5 Attraction Clicks Data')
-    
-    # Display a bar chart
-    st.bar_chart(data.set_index('name')['total_clicks'])
+    data_sorted_attractions = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
 
-
-
 # Creating tabs for each bar graph
 tab1, tab2, tab3 = st.tabs(["Hotels", "Restaurants", "Attractions"])
-data = np.random.randn(10, 1)
 
-tab1.subheader("Top 5 hotels with the most clicks")
-tab1.line_chart(data)
+with tab1:
+    st.header("Top 5 Hotel Clicks")
+    if not data_sorted.empty:
+        fig = px.bar(data_sorted.head(5), x='name', y='total_clicks', title="Top 5 Hotel Clicks",
+                     labels={'name': 'Hotel Name', 'total_clicks': 'Total Clicks'})
+        st.plotly_chart(fig)
 
-tab2.subheader("Top 5 restaurants with the most clicks")
-tab2.write(data)
+with tab2:
+    st.header("Top 5 Restaurant Clicks")
+    if not data_sorted_restaurants.empty:
+        fig = px.bar(data_sorted_restaurants.head(5), x='name', y='total_clicks', title="Top 5 Restaurant Clicks",
+                     labels={'name': 'Restaurant Name', 'total_clicks': 'Total Clicks'})
+        st.plotly_chart(fig)
 
-
-tab3.subheader("Top 5 attractions with the most clicks")
-tab3.write(data)
+with tab3:
+    st.header("Top 5 Attraction Clicks")
+    if not data_sorted_attractions.empty:
+        fig = px.bar(data_sorted_attractions.head(5), x='name', y='total_clicks', title="Top 5 Attraction Clicks",
+                     labels={'name': 'Attraction Name', 'total_clicks': 'Total Clicks'})
+        st.plotly_chart(fig)
