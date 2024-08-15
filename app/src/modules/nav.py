@@ -19,6 +19,10 @@ def SelectTrip():
 def UpdateAccount():
     st.sidebar.page_link("pages/users.py", label = "Update Account", icon = "🌟")
 
+def Ratings():
+    st.sidebar.page_link("pages/ratings_page.py", label = "Ratings")
+
+
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
 def PolStratAdvHomeNav():
     st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon='👤')
@@ -84,6 +88,7 @@ def SideBarLinks(show_home=False):
             PlanTrip()
             SelectTrip()
             UpdateAccount()
+            Ratings()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':
