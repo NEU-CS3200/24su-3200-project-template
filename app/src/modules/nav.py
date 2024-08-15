@@ -14,12 +14,16 @@ def StudentHomeNav():
     st.sidebar.page_link("pages/00_student_Home.py", label="Student Home", icon='👤')
 
 def FormNav():
-    st.sidebar.page_link("pages/01_prefrence_form.py", label="Fill Out Preference Form", icon='📋')
+    st.sidebar.page_link("pages/01_prefrence_form.py", label="Update your major", icon='📋')
 
 def GroupNav():
-    st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👨‍👨‍👦‍👦')
+    st.sidebar.page_link("pages/02_find_similar_students.py", label="Find by specialty", icon='👨‍👨‍👦‍👦')
+
 def SchedulingTaskNav():
     st.sidebar.page_link("pages/Scheduler_Tracker.py", label="Tasks + Scheduling", icon='🗓')
+
+def OnCampusNav():
+    st.sidebar.page_link("pages/03_find_oc.py", label="Find by on-campus", icon='🏫')
 
 ## ------------------------ Examples for Role of TA ------------------------
 def SpecialTaNav():
@@ -65,6 +69,7 @@ def SideBarLinks(show_home=False):
             StudentHomeNav()
             FormNav()
             GroupNav()
+            OnCampusNav()
             SchedulingTaskNav()
 
         # If the user role is usaid worker, show the Api Testing page

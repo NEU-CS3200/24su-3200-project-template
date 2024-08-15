@@ -106,6 +106,8 @@ def create_app():
     app.register_blueprint(availability, url_prefix='/a')
     app.register_blueprint(sections, url_prefix='/sec')
     app.register_blueprint(speciality, url_prefix='/sp')
+    app.register_blueprint(submissions, url_prefix='/sub')
+
 
 
     # Don't forget to return the app object

@@ -1,29 +1,43 @@
-import logging
+
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
 
-logger = logging.getLogger(__name__)
-
-st.set_page_config(layout = 'wide')
-
 SideBarLinks()
 
-st.title('App Administration Page')
 
-st.write('\n\n')
-st.write('## Model 1 Maintenance')
+st.title('Update Students and Groups')
 
-st.button("Train Model 01", 
-            type = 'primary', 
-            use_container_width=True)
+# Step 1: Enter Professor ID
+professor_id = st.text_input('Enter Professor ID:')
 
-st.button('Test Model 01', 
-            type = 'primary', 
-            use_container_width=True)
-
-if st.button('Model 1 - get predicted value for 10, 25', 
-             type = 'primary',
-             use_container_width=True):
-  results = requests.get('http://api:4000/c/prediction/10/25').json()
-  st.dataframe(results)
+if professor_id:
+    # Step 2: Select Section
+    section_response = requests.get(f'http://api:4000/sec/{professor_id}/sections')
+    if section_response.status_code == 200:
+        sections = section_response.json()
+        section_options = [(section['section_num'], section['course_name']) for section in sections]
+        
+        selected_section = st.selectbox('Select Section', section_options)
+        
+        if selected_section:
+            section_num, course_name = selected_section
+            
+            # Step 3: Fetch Students in Section
+            students_api_url = f'http://api:4000/sec/sections/{section_num}/students'
+            
+            student_response = requests.get(students_api_url)
+            
+            if student_response.status_code == 200:
+                students = student_response.json()
+                student_options = [(student['student_id'], f"{student['first_name']} {student['last_name']}") for student in students]
+                
+                selected_student = st.selectbox('Select Student', student_options)
+                
+                if selected_student:
+                    # Step 4: Perform any other action on selected student
+                    st.write(f"Selected Student: {selected_student}")
+            else:
+                st.error(f'Failed to load students. Status Code: {student_response.status_code}')
+    else:
+        st.error('Failed to load sections.')

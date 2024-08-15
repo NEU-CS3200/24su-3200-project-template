@@ -23,12 +23,12 @@ st.write('')
 if submitted:
     st.write(f"Your ID: {prof_id}")
     try:
-        # ---- turn this into a header 
-        st.write("Here are the current sections:")
-        students_data = requests.get(f'http://api:4000/sub/{prof_id}/students').json()
-        st.dataframe(students_data)
+        # Fetch student submissions from the API
+        st.write("Here are the current submissions:")
+        submissions_data = requests.get(f'http://api:4000/sub/professors/{prof_id}/submissions').json()
+        st.dataframe(pd.DataFrame(submissions_data))
 
-    except:
-        st.write("Could not connect to the database to get your students, you may not be teaching a section.")
+    except Exception as e:
+        st.write(f"Could not connect to the database to get student submissions. Error: {str(e)}")
 
 
