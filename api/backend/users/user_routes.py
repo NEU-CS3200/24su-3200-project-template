@@ -41,21 +41,22 @@ def create_account():
     return 'Success!'
 
 # Update the users account details
-@users.route('/update_account', methods = ['PUT'])
-def update_account():
+@users.route('/update_account/id', methods = ['PUT'])
+def update_account(id):
     current_app.logger.info('PUT /users route')
     user_info = request.json
 
-    user_id = user_info['id']
     email = user_info['email']
     address = the_data['address']
     username = the_data['username']
 
-    query = 'UPDATE customers SET email = %s, address = %s, username = %s where id = %s'
-    data = (email, address, username, user_id)
+    query = '''
+        UPDATE customers SET email = "{email}", address = "{address}", username = "{username}"
+        WHERE id = {id}
+    '''
+    # query = 'UPDATE customers SET email = %s, address = %s, username = %s where id = %s'
+    # data = (email, address, username, user_id)
     cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
+    r = cursor.execute(query)
     db.get_db().commit()
-    return 'customer updated!'
-
-# to delete a user, just set everything to null
+    return 'user updated!'

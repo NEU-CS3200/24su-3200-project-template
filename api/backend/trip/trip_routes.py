@@ -61,12 +61,18 @@ def add_new_trip():
 
 @trip.route('/delete_trip/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
-    trip = Trip.query.filter_by(name=trip_name).first()
+    current_app.logger.info('trip_routes.py: GET /trip')
+    cursor = db.get_db().cursor()
+    the_query = f'''
+        UPDATE trip SET
+        {start_date} = NULL, {end_date} = NULL, {group_size} = NULL, {name} = NULL,
+        {restaurant_budget} = NULL, {flight_budget} = NULL, {user_id} = NULL, 
+        {city_id} = NULL, {city_name} = NULL, {attraction_budget} = NULL, 
+        {num_of_nights} = NULL
+        WHERE name = {trip_name}
+    '''
 
-    if trip:
-        db.session.delete(trip)
-        db.session.commit()
-        return jsonify({'message': 'Trip deleted successfully'}), 200
-    else:
-        return jsonify({'error': 'Trip not found'}), 404
+    cursor.execute(the_query)
+    db.get_db().commit()
+    return "Success!"
 

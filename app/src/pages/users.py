@@ -27,7 +27,6 @@ with email_col[0]:
     email = st.text_input('New Email:')
 
 data = {
-    'id': st.session_state.get('id', ''),
     'address': address,
     'username': username,
     'email': email
@@ -43,7 +42,7 @@ if st.button('Update!',
              use_container_width=True):
     st.write(data)
     try:
-        response = requests.put('http://api:4000/u/update_account', json = data)
+        response = requests.put(f'http://api:4000/u/update_account/{st.session_state["id"]}', json = data)
         st.success("Account information updated successfully!")
     except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
