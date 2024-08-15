@@ -4,8 +4,6 @@ logging.basicConfig(level=logging.DEBUG)
 from flask import Flask
 
 from backend.db_connection import db
-from backend.customers.customer_routes import customers
-from backend.products.products_routes import products
 from backend.flights.flight_routes import flights
 from backend.hotels.hotel_routes import hotel
 from backend.attractions.attraction_routes import attractions
@@ -109,8 +107,6 @@ def create_app():
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
-    #app.register_blueprint(customers,   url_prefix='/c')
-    #app.register_blueprint(products,    url_prefix='/p')
     app.register_blueprint(flights,     url_prefix='/f')
     app.register_blueprint(hotel,      url_prefix='/h')
     app.register_blueprint(attraction_clicks,    url_prefix='/ac')
