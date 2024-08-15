@@ -15,7 +15,7 @@ st.write('Here are all your previous trips')
 st.write('')
 st.write('')
 try:
-    trips = requests.get('http://api:4000/t/get_trip').json()
+    trips = requests.get(f'http://api:4000/t/trip/{st.session_state['id']}').json()
     st.dataframe(trips)
 except:
     st.write("Error!")

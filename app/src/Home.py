@@ -41,6 +41,7 @@ if st.button("Act as Alice, a Student",
     # we set the role of the current user
     st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Alice'
+    st.session_state['id'] = 1
     st.switch_page('pages/users_home.py')
 
 if st.button('Act as Thomas, a Marketing Analyst', 
@@ -49,6 +50,7 @@ if st.button('Act as Thomas, a Marketing Analyst',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'Thomas'
+    st.session_state['id'] = 2
     st.switch_page('pages/10_USAID_Worker_Home.py')
 
 if st.button('Act as Janice, an intern planning a company trip', 
@@ -57,6 +59,7 @@ if st.button('Act as Janice, an intern planning a company trip',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'intern'
     st.session_state['first_name'] = 'Janice'
+    st.session_state['id'] = 3
     st.switch_page('pages/users_home.py')
 
 
