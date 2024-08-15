@@ -25,7 +25,6 @@ create table if not exists tracks (
     constraint fk_2 foreign key (trackee_id) references employee (id) on update cascade
 );
 
-
 create table if not exists city (
     id integer auto_increment primary key,
     country varchar(255),
