@@ -46,3 +46,18 @@ if st.button('Update!',
         st.success("Account information updated successfully!")
     except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
+
+#delete trip based on trip name
+
+option = st.selectbox(
+     "Which trip would you like to delete?",
+    (f''' SELECT name 
+        FROM trip
+         WHERE user_id = {st.session_state["id"]}
+         '''),
+    index=None,
+     placeholder="Select trip...",
+ )
+
+st.write("You selected:", option)
+
