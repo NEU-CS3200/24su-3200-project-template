@@ -296,7 +296,8 @@ VALUES
        (3, 'Spring 2025', 8, 2),
        (1, 'Fall 2024', 20, 25),
        (2, 'Spring 2025', 4, 16),
-       (2, 'Spring 2025', 29, 29);
+       (2, 'Spring 2025', 29, 29),
+       (1, 'Fall 2024', 1, 13); -- MODEL DATA, taught by Prof Mark: DON'T DELETE!
 
 -- Project Data
 INSERT INTO Project(instructions, professor_id)
@@ -312,7 +313,11 @@ VALUES
     ('Vally', 'Lambdin', 'vlambdin1@wunderground.com', 2, 'Spring 2025', 6),
     ('Ennis', 'Eake', 'eeake2@ihg.com', 2, 'Fall 2024', 7),
     ('Turner', 'Lafflin', 'tlafflin3@thetimes.co.uk', 2, 'Spring 2025', 9),
-    ('Donni', 'Champneys', 'dchampneys4@google.pl', 2, 'Fall 2024', 5);
+    ('Donni', 'Champneys', 'dchampneys4@google.pl', 2, 'Fall 2024', 5),
+    -- TA's for Prof Mark class: DON'T DELETE!
+    ('John', 'Cain', 'john.cain@northeastern.edu', 1, 'Fall 2024', 13),
+    ('Grace', 'Martin', 'martin.grace@northeastern.edu', 1, 'Fall 2024', 13),
+    ('Kate', 'Harold', 'harold.ka@northeastern.edu', 1, 'Fall 2024', 13);
 # ----- need to fix this mockaroo data!
 
 INSERT INTO Speciality(speciality)
@@ -341,11 +346,17 @@ VALUES (1, 1),
        (3, 9);
 
 -- Group Data
+-- (1, 'Fall 2024', 13)
 INSERT INTO `Group` (group_name, ta_id, section_num, semester_year, course_id)
 VALUES ('Team Green', 1, 2, 'Spring 2025', 29),
        ('WeLoveChem', 3, 2, 'Spring 2025', 6),
-       ('FinanceBros', 2, 1, 'Spring 2025', 3);
-# ----- need to fix this error!
+       ('FinanceBros', 2, 1, 'Spring 2025', 3),
+       ('Group1', 8, 1, 'Fall 2024', 13),
+       -- These are groups in Prof Mark's section
+       ('Group2', NULL, 1, 'Fall 2024', 13),
+       ('Group3', 7, 1, 'Fall 2024', 13),
+       ('Group4', 9, 1, 'Fall 2024', 13),
+       ('Group5', NULL, 1, 'Fall 2024', 13);
 
 -- Submission Data
 INSERT INTO Submission (group_id, submitted_at, submission_link, project_id)
@@ -353,6 +364,7 @@ VALUES (1, '2024-08-16 10:45:28', 'projecturl1.com', 1),
        (2, '2024-08-12 09:18:57', 'finaproject.com', 2);
 INSERT INTO Submission (group_id, submitted_at, project_id)
 VALUES (3, '2024-09-30 06:22:30', 3);
+-- need to add in submissions from professor mark's section
 
 -- Student Data
 INSERT INTO Student(first_name, last_name, email, major, year, on_campus, group_id)
@@ -361,6 +373,47 @@ VALUES ('John', 'Doe', 'doe.jo@northeastern.edu', 'Computer Science', 3, True, 1
        ('Tom', 'Williams', 'williams.tom@northeastern.edu', 'Finance', 2, False, 1),
        ('Carrie', 'Smith', 'smith.car@northeastern.edu', 'Accounting', 2, True, 1),
        ('Daryl', 'Candace', 'candace.da@northeatern.edu', 'Neuroscience', 1, True, 2);
+INSERT INTO Student (first_name, last_name, email, major, year, on_campus, group_id)
+VALUES ('Nanette', 'Aronovitz', 'naronovitz0@state.tx.us', 'Theatre', 5, true, 4),
+       ('Luigi', 'Langlais', 'llanglais1@prnewswire.com', 'Biology', 5, true, 6),
+       ('Gardener', 'Studdeard', 'gstuddeard2@mit.edu', 'Accounting', 5, false, 4),
+       ('Tremaine', 'Byre', 'tbyre3@upenn.edu', 'Political Science', 3, true, 1),
+       ('Joanna', 'Muncey', 'jmuncey4@berkeley.edu', 'Data Science', 5, false, 1),
+       ('Cleveland', 'Arend', 'carend5@aol.com', 'Biology', 1, true, 2),
+       ('Julietta', 'Kennedy', 'jkennedy6@umich.edu', 'Data Science', 4, true, 6),
+       ('Nonnah', 'Maton', 'nmaton7@is.gd', 'Theatre', 4, true, 4),
+       ('Wynny', 'Ledamun', 'wledamun8@hao123.com', 'Theatre', 3, false, 3),
+       ('Timothee', 'Laidel', 'tlaidel9@apple.com', 'Industrial Engineering', 5, false, 4),
+       ('Caresse', 'Mackley', 'cmackleya@imageshack.us', 'Industrial Engineering', 5, false, 4),
+       ('Micki', 'Woodrooffe', 'mwoodrooffeb@apache.org', 'Biomedical Engineering', 3, true, 3),
+       ('Portie', 'Boram', 'pboramc@canalblog.com', 'Architecture', 4, true, 6),
+       ('Norrie', 'Immings', 'nimmingsd@bbb.org', 'Neuroscience', 2, false, 5),
+       ('Gizela', 'Jedrychowski', 'gjedrychowskie@ustream.tv', 'Dance', 2, false, 3),
+       ('Calhoun', 'Lievesley', 'clievesleyf@parallels.com', 'Neuroscience', 5, true, 5),
+       ('Florida', 'Coster', 'fcosterg@mail.ru', 'Neuroscience', 3, true, 5),
+       ('Weidar', 'Van den Oord', 'wvandenoordh@kickstarter.com', 'International Business', 1, false, 3),
+       ('Lebbie', 'Balls', 'lballsi@example.com', 'Industrial Engineering', 1, false, 5),
+       ('Eduardo', 'Lintin', 'elintinj@ezinearticles.com', 'Political Science', 1, false, Null),
+       ('Aubree', 'Djurdjevic', 'adjurdjevick@tinyurl.com', 'Chemistry', 1, false, 5),
+       ('Shaina', 'Mant', 'smantl@gov.uk', 'Neuroscience', 5, false, Null),
+       ('Andra', 'Yu', 'ayum@etsy.com', 'Theatre', 4, true, Null),
+       ('Jobie', 'Worland', 'jworlandn@bravesites.com', 'Accounting', 4, true, Null),
+       ('Christiano', 'Foxall', 'cfoxallo@feedburner.com', 'Fashion', 3, true, 3),
+       ('Oliviero', 'Spawton', 'ospawtonp@cloudflare.com', 'Criminal Justice', 1, false, 3),
+       ('Philippine', 'Marusyak', 'pmarusyakq@blinklist.com', 'International Business', 5, false, 2),
+       ('Boone', 'Morde', 'bmorder@craigslist.org', 'Computer Engineering', 1, true, 1),
+       ('Julee', 'Mulryan', 'jmulryans@senate.gov', 'Data Science', 5, true, 2),
+       ('Renaldo', 'Brabban', 'rbrabbant@de.vu', 'Mechanical Engineering', 4, true, 1),
+       ('Allx', 'Greene', 'agreeneu@wufoo.com', 'Criminal Justice', 4, true, 4),
+       ('Farah', 'Nulty', 'fnultyv@jalbum.net', 'Accounting', 5, false, 4),
+       ('Cassius', 'Piscot', 'cpiscotw@amazon.com', 'Dance', 4, false, 1),
+       ('Marga', 'Bernardino', 'mbernardinox@arstechnica.com', 'International Business', 2, false, 4),
+       ('Tallulah', 'Corbie', 'tcorbiey@addtoany.com', 'Accounting', 3, true, 5),
+       ('Hieronymus', 'Daly', 'hdalyz@tumblr.com', 'Theatre', 2, false, 4),
+       ('Patrica', 'Goadsby', 'pgoadsby10@goo.gl', 'Chemistry', 4, false, 5),
+       ('Alina', 'Couche', 'acouche11@stanford.edu', 'Fashion', 2, false, 6),
+       ('Becka', 'Croneen', 'bcroneen12@guardian.co.uk', 'International Business', 1, false, 6),
+       ('Wenda', 'Ghidini', 'wghidini13@house.gov', 'Computer Engineering', 4, false, 6);
 
 -- Student Specialty Data
 INSERT INTO StudentSpeciality(student_id, specialty_id)
@@ -380,7 +433,18 @@ VALUES (1, 2, 'Spring 2025', 29), -- keep this value!
        (2, 1, 'Spring 2025', 3),
        (3, 1, 'Spring 2025', 3),
        (4, 1, 'Spring 2025', 3),
-       (5, 2,'Spring 2025', 6);
+       (5, 2,'Spring 2025', 6),
+       -- Students in Prof Mark's class
+       (11, 1, 'Fall 2024', 13),
+       (12, 1, 'Fall 2024', 13),
+       (15, 1, 'Fall 2024', 13),
+       (20, 1, 'Fall 2024', 13),
+       (21, 1, 'Fall 2024', 13),
+       (30, 1, 'Fall 2024', 13),
+       (31, 1, 'Fall 2024', 13),
+       (40, 1, 'Fall 2024', 13),
+       (1, 1, 'Fall 2024', 13),
+       (18, 1, 'Fall 2024', 13);
 # ----- need to fix mockoroo data file
 
 -- Days Data

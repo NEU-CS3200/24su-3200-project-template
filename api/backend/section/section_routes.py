@@ -5,7 +5,7 @@ from backend.db_connection import db
 sections = Blueprint('sections', __name__)
 
 # Get all sections for a professor
-@sections.route('/professors/<int:professor_id>/sections', methods=['GET'])
+@sections.route('/<professor_id>/sections', methods=['GET'])
 def get_sections_by_professor(professor_id):
     cursor = db.get_db().cursor()
     query = '''
