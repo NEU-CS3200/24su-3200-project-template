@@ -134,34 +134,34 @@ def update_professor():
     return 'Success!'
 
 
-# Updated route for updating group details
-@professors.route('/professors/<int:professor_id>/sections/<int:section_num>/groups/<int:group_id>', methods=['PUT'])
-def update_group(professor_id, section_num, group_id):
-    cursor = db.get_db().cursor()
-    group_data = request.json
+# # Updated route for updating group details
+# @professors.route('/professors/<professor_id>/sections/<section_num>/groups/<group_id>', methods=['PUT'])
+# def update_group(professor_id, section_num, group_id):
+#     cursor = db.get_db().cursor()
+#     group_data = request.json
 
-    group_name = group_data.get('group_name')
-    ta_id = group_data.get('ta_id')
+#     group_name = group_data.get('group_name')
+#     ta_id = group_data.get('ta_id')
 
-    # Check if the professor is assigned to this section
-    check_query = '''
-    SELECT 1 FROM Section 
-    WHERE section_num = %s AND professor_id = %s
-    '''
-    cursor.execute(check_query, (section_num, professor_id))
-    if cursor.fetchone() is None:
-        return jsonify({"error": "Unauthorized: You cannot update groups in another professor's section."}), 403
+#     # Check if the professor is assigned to this section
+#     check_query = '''
+#     SELECT 1 FROM Section 
+#     WHERE section_num = %s AND professor_id = %s
+#     '''
+#     cursor.execute(check_query, (section_num, professor_id))
+#     if cursor.fetchone() is None:
+#         return jsonify({"error": "Unauthorized: You cannot update groups in another professor's section."}), 403
 
-    query = '''
-    UPDATE `Group`
-    SET group_name = %s, ta_id = %s
-    WHERE group_id = %s AND section_num = %s
-    AND EXISTS (SELECT 1 FROM Section sec WHERE sec.section_num = %s AND sec.professor_id = %s)
-    '''
-    cursor.execute(query, (group_name, ta_id, group_id, section_num, section_num, professor_id))
-    db.get_db().commit()
+#     query = '''
+#     UPDATE `Group`
+#     SET group_name = %s, ta_id = %s
+#     WHERE group_id = %s AND section_num = %s
+#     AND EXISTS (SELECT 1 FROM Section sec WHERE sec.section_num = %s AND sec.professor_id = %s)
+#     '''
+#     cursor.execute(query, (group_name, ta_id, group_id, section_num, section_num, professor_id))
+#     db.get_db().commit()
 
-    return jsonify({"message": "Group updated successfully"}), 200
+#     return jsonify({"message": "Group updated successfully"}), 200
 
 # New Route: Update student's group in a section
 @professors.route('/professors/<int:professor_id>/sections/<int:section_num>/<string:semester_year>/students/<int:student_id>', methods=['PUT'])
