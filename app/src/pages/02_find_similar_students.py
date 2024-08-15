@@ -7,7 +7,6 @@ import pandas as pd
 import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
-from st_aggrid import AgGrid
 
 SideBarLinks()
 
