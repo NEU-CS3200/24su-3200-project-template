@@ -3,6 +3,7 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 import requests
 import pandas as pd
+import numpy as np
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 
@@ -63,3 +64,19 @@ if 'name' in data.columns and 'total_clicks' in data.columns:
     st.bar_chart(data.set_index('name')['total_clicks'])
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
+
+
+
+# Creating tabs for each bar graph
+tab1, tab2, tab3 = st.tabs(["Hotels", "Restaurants", "Attractions"])
+data = np.random.randn(10, 1)
+
+tab1.subheader("Top 5 hotels with the most clicks")
+tab1.line_chart(data)
+
+tab2.subheader("Top 5 restaurants with the most clicks")
+tab2.write(data)
+
+
+tab3.subheader("Top 5 attractions with the most clicks")
+tab3.write(data)

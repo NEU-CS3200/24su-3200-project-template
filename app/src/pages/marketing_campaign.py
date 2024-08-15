@@ -17,24 +17,22 @@ name = st.text_input("Enter the hotel name:")
 
 # Button to find the email
 if st.button("Get Hotel Email"):
-    if destination:
-        # Request hotels data from the Flask backend
-        response = requests.get(f'http://api:4000/h/hotel/{destination}')
+    # Make a request to the API (replace 'API_URL' with the actual API endpoint)
+    response = requests.get('http://api:4000/h/hotel')
+    
+    if response.status_code == 200:
+        hotels = response.json()
         
-        if response.status_code == 200:
-            hotels = response.json()
-            
-            # Search for the hotel by name
-            hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
-            
-            if hotel_email:
-                st.success(f"The email for {name} is: {hotel_email}")
-            else:
-                st.error("Hotel not found! Please check the name and try again.")
+        # Search for the hotel by name
+        hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
+        
+        if hotel_email:
+            st.success(f"The email for {name} is: {hotel_email}")
         else:
-            st.error("Failed to retrieve hotels. Please try again later.")
+            st.error("Hotel not found! Please check the name and try again.")
     else:
-        st.error("Please enter a destination.")
+        st.error("Failed to retrieve hotels. Please try again later.")
+
 
 
 
