@@ -14,7 +14,7 @@ def get_all_students():
     current_app.logger.info('student_routes.py: GET /students')
     cursor = db.get_db().cursor()
     the_query = '''
-    SELECT student_id, first_name, last_name, email, major, year, on_campus, group_id
+    SELECT email,first_name,group_id,last_name,major,on_campus,student_id
     FROM Student;
     '''
     cursor.execute(the_query)

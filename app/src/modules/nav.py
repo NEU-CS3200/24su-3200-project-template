@@ -11,13 +11,13 @@ def AboutPageNav():
 
 #### ------------------------ Student Interface ------------------------
 def StudentHomeNav():
-    st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Student Home", icon='👤')
+    st.sidebar.page_link("pages/00_student_Home.py", label="Student Home", icon='👤')
 
 def FormNav():
-    st.sidebar.page_link("pages/01_World_Bank_Viz.py", label="Fill Out Preference Form", icon='📋')
+    st.sidebar.page_link("pages/01_prefrence_form.py", label="Fill Out Preference Form", icon='📋')
 
 def GroupNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Join A Group", icon='👥')
+    st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👥')
 def SchedulingTaskNav():
     st.sidebar.page_link("pages/Scheduler_Tracker.py", label="Tasks + Scheduling", icon='🗓')
 
