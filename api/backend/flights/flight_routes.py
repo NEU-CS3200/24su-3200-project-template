@@ -23,7 +23,7 @@ def get_flights():
     the_response.mimetype = 'application/json'
     return the_response
 
-@flights.route('/price/<int:max_price>', methods=['GET'])
+@flights.route('/price/<max_price>', methods=['GET'])
 def price_range(max_price):
     #current_app.logger.info('flight_routes.py: GET based on budget')
     cursor = db.get_db().cursor()

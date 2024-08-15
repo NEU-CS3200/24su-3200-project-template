@@ -49,14 +49,14 @@ def add_new_trip():
     restaurant_budget, attraction_budget, flight_budget, num_of_nights) values ("'
     query += start_date + '", "'
     query += end_date + '", "'
-    query += group_size + '", '
+    query += str(group_size) + '", '
     query += name + '", '
-    query += hotel_budget + ','
+    query += str(hotel_budget) + ','
     query += city_name + '", '
-    query += restaurant_budget + ','
-    query += attraction_budget + ','
-    query += flight_budget + ','
-    query += num_of_nights + ')'
+    query += str(restaurant_budget) + ','
+    query += str(attraction_budget) + ','
+    query += str(flight_budget) + ','
+    query += str(num_of_nights) + ')'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
