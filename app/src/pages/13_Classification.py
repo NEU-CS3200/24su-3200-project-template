@@ -47,6 +47,17 @@ if delete_submitted:
     data['time'] = avail_time      
     data['day'] = avail_day   
     st.write("Deleting the following data:", data)
+
+    # Send the POST request with the TA's email included in the URL
+    response = requests.delete(f'http://api:4000/a/{ta_email}', json=data)
+
+    # Check the response from the server
+    if response.status_code == 200 or response.status_code == 204:
+        st.success('TA availability deleted successfully!')
+    elif response.status_code == 404:
+        st.error('TA or Availability not found!')
+    else:
+        st.error(f'Failed to delete TA availability: {response.status_code}')
     # ----- need to add in DELETE call
 
 # ------------- BREAK
