@@ -16,10 +16,11 @@ add_logo("assets/logo.png", height=400)
 # set up the page
 st.markdown("# Find Your Similar Students")
 st.sidebar.header("Find Students with similar interests")
-try:
-    student_data = requests.get(f'http://api:4000/s/students/').json()
-    st.dataframe(student_data)
-except:
-    st.write("Doesnt work")
 
 st.selectbox("what attributes should your teammates have",options=('C++','Java'))
+
+try: 
+    data = requests.get('http://api:4000/s/students').json()
+    st.dataframe(data)
+except:
+    st.write('ERROR')
