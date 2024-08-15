@@ -19,10 +19,10 @@ with st.form("Create a trip"):
     start_date = st.date_input("Insert start date of your trip.")
     end_date = st.date_input("Insert end date of your trip.")
     name = st.text_input("Insert the name of your trip.")
-    restaurant_budget = st.number_input("What is your budget for eating out at restaurants?", min_value=0.0, format="%.2f")
-    attraction_budget = st.number_input("What is your budget for attractions?", min_value=0.0, format="%.2f")
-    hotel_budget = st.number_input("What is your hotel budget?", min_value=0.0, format="%.2f")
-    flight_budget = st.number_input("What is your flight budget?", min_value=0.0, format="%.2f")
+    restaurant_budget = st.number_input("What is your budget for eating out at restaurants?", min_value=0.0)
+    attraction_budget = st.number_input("What is your budget for attractions?", min_value=0.0)
+    hotel_budget = st.number_input("What is your hotel budget?", min_value=0.0)
+    flight_budget = st.number_input("What is your flight budget?", min_value=0.0)
     num_of_nights = st.number_input("How many nights is your trip?", min_value=1, step=1, format="%d")
     
     submitted = st.form_submit_button("Submit")
@@ -52,27 +52,58 @@ if submitted:
 
     if st.button('Find your flight!', type='primary', use_container_width=True):
         try:
-            result = requests.get('http://api:4000/f/get_flight').json()
+            result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
             st.dataframe(result)
+            st.write('worked')
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
 
     if st.button('Find your hotel!', type='primary', use_container_width=True):
-        if city_name:
-            try:
-                result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
-                st.dataframe(result)
-            except requests.exceptions.RequestException as e:
+        try:
+            result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
+            st.dataframe(result)
+            st.write('worked')
+        except requests.exceptions.RequestException as e:
                 st.error(f"An error occurred: {e}")
         else:
             st.warning("Please input a city name to find a hotel.")
 
     if st.button('Find your attraction!', type='primary', use_container_width=True):
-        if city_name:
-            try:
+        try:
                 result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
                 st.dataframe(result)
-            except requests.exceptions.RequestException as e:
+                st.write('worked')
+        except requests.exceptions.RequestException as e:
                 st.error(f"An error occurred: {e}")
         else:
             st.warning("Please input a city name to find an attraction.")
+
+# if st.button('Find your flight!', type='primary', use_container_width=True):
+#     try:
+#             result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
+#             st.dataframe(result)
+#             st.write('worked')
+#     except requests.exceptions.RequestException as e:
+#             st.error(f"An error occurred: {e}")
+
+# if st.button('Find your hotel!', type='primary', use_container_width=True):
+#     if city_name:
+#         try:
+#                 result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
+#                 st.dataframe(result)
+#                 st.write('worked')
+#         except requests.exceptions.RequestException as e:
+#                 st.error(f"An error occurred: {e}")
+#     else:
+#             st.warning("Please input a city name to find a hotel.")
+
+# if st.button('Find your attraction!', type='primary', use_container_width=True):
+#     if city_name:
+#         try:
+#                 result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
+#                 st.dataframe(result)
+#                 st.write('worked')
+#         except requests.exceptions.RequestException as e:
+#                 st.error(f"An error occurred: {e}")
+#     else:
+#             st.warning("Please input a city name to find an attraction.")
