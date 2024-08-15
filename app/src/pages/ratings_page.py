@@ -22,7 +22,19 @@ with st.form("Choose the restaurant rating you would like to visit today:"):
     submitted = st.form_submit_button("Submit")
     if submitted:
         try:
-            response = requests.post(f"http://api:4000/t/restaurant_rating/{rating}").json()
+            response = requests.post(f"http://api:4000/r/add_review/{rating}").json()
             st.dataframe(response)
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
+
+with st.form("Choose the Hotel rating you would like to visit today:"):
+    rating = st.number_input("List Hotel rating", min_value=1, step=1, format="%d")
+
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        try:
+            response = requests.post(f"http://api:4000/h/add_review/{rating}").json()
+            st.dataframe(response)
+        except requests.exceptions.RequestException as e:
+            st.error(f"An error occurred: {e}")
+
