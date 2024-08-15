@@ -69,7 +69,7 @@ def delete_trip(trip_name):
         restaurant_budget = NULL, flight_budget = NULL, user_id = NULL, 
         city_id = NULL, city_name = NULL, attraction_budget = NULL, 
         num_of_nights = NULL
-        WHERE name = trip_name
+        WHERE name = {trip_name}
     '''
 
     cursor.execute(the_query)
