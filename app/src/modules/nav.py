@@ -20,7 +20,7 @@ def UpdateAccount():
     st.sidebar.page_link("pages/users.py", label = "Update Account", icon = "🌟")
 
 def Ratings():
-    st.sidebar.page_link("pages/ratings_page.py", label = "Ratings")
+    st.sidebar.page_link("pages/ratings_page.py", label = "Ratings", icon = "🗒️")
 
 
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
