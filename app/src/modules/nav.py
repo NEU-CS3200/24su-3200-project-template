@@ -36,13 +36,21 @@ def PredictionNav():
 def ClassificationNav():
     st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
 
-def Click_Count():
-    st.sidebar.page_link("pages/Click_Count.py", label="Click Count Graphs")
+
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
     st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
+
+def adminpagenav():
+    st.sidebar.page_link("pages/admin_home.py", label="Admin Home Page", icon='🖥️')
+
+def Click_Count():
+    st.sidebar.page_link("pages/Click_Count.py", label="Click Count Graphs", icon='📈')
+
+def marketing_campaign():
+    st.sidebar.page_link("pages/marketing_campaign.py", label="Marketing Campaign for Hotels")
 
 
 # --------------------------------Links Function -----------------------------------------------

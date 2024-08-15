@@ -8,3 +8,4 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 st.write("Click Counter")
+
