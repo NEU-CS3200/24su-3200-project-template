@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
-from backend.ml_models.model01 import predict
 
 marketing_campaign = Blueprint('marketing_campaign', __name__)
 
@@ -20,8 +19,8 @@ def get_campaigns():
     return the_response
 
 # Adding a new marketing campaign 
-@marketing_campaign.route('/add_marketing_campaign/<id>', methods=['POST'])
-def add_new_campaign(id):
+@marketing_campaign.route('/add_marketing_campaign', methods=['POST'])
+def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
     name = the_data['name']
@@ -31,34 +30,26 @@ def add_new_campaign(id):
     description = the_data['description']
     budget = the_data['budget']
     
-    # turn queries into f strings and make sure all datatpyes match up to mockarro
-    # make sure strings are strings
     query = f'''
-        Insert into employee (name, id, employee_id) values (
-        "{name}", {id}, {employee_id})
+        Insert into marketing_campaign (name, employee_id) values (
+        "{name}", "{employee_id}")
     '''
-    # query = 'insert into employee (name, id, employee_id) values("'
-    # query += name + '", "'
-    # query += str(employee_id) + ')'
-    
     query_2 = f'''
         Insert into promotions(discount_amount, code) values(
         {discount_amount}, "{code}")
     '''
-    # query_2 = 'insert into promotions (discount_amount, code) values("'
-    # query_2 += str(discount_amount) + '","'
-    # query_2 += str(code) +  ')'
 
     query_3 = f'''
         Insert into ads (description, budget) values(
-        "{description}", "{budget}")
+        "{description}", {budget})
     '''
-    # query_3 = 'insert into ads (description, budget) values("'
-    # query_3 += description + '","'
-    # query_3 += str(budget) + ')'
 
     cursor = db.get_db().cursor()
-    cursor.execute(query, query_2, query_3)
+    cursor.execute(query)
+    db.get_db.commit()
+    cursor.execute(query_2)
+    db.get_db.commit()
+    cursor.execute(query_3)
     db.get_db.commit()
     return 'Success'
 
