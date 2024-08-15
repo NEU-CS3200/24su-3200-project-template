@@ -19,7 +19,7 @@ def get_employees():
 
 
 # Updates the employees personal information 
-@employees.route ('/update_employee', methods = ['PUT'])
+@employees.route ('/employee', methods = ['PUT'])
 def update_employee():
     empl_info = request.json
     empl_id = empl_info['id']
@@ -35,7 +35,7 @@ def update_employee():
     return 'Employee Updated '
 
 # Adding a new employee 
-@employees.route('/add_employee', methods=['POST'])
+@employees.route('/employee', methods=['POST'])
 def add_new_employee():
     the_data = request.json
     current_app.logger.info(the_data)

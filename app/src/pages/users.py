@@ -41,7 +41,7 @@ if st.button('Update!',
              use_container_width=True):
     st.write(data)
     try:
-        response = requests.put(f'http://api:4000/u/update_account/{st.session_state["id"]}', json = data)
+        response = requests.put(f'http://api:4000/u/users/{st.session_state["id"]}', json = data)
         st.success("Account information updated successfully!")
     except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")

@@ -13,7 +13,7 @@ st.title('Based on your preferences, here are our recommendations!')
 
 if st.button('Find your flight!', type='primary', use_container_width=True):
     try:
-        result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
+        result = requests.get(f'http://api:4000/f/flight/{flight_budget}').json()
         st.dataframe(result)
         st.write('worked')
     except requests.exceptions.RequestException as e:
@@ -31,7 +31,7 @@ if st.button('Find your hotel!', type='primary', use_container_width=True):
 
 if st.button('Find your attraction!', type='primary', use_container_width=True):
     try:
-            result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
+            result = requests.get(f'http://api:4000/a/attraction/{city_name}').json()
             st.dataframe(result)
             st.write('worked')
     except requests.exceptions.RequestException as e:

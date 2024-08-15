@@ -5,7 +5,7 @@ from backend.db_connection import db
 attractions = Blueprint("attractions", __name__)
 
 # Get recommended attractions based on price and ordered by rating
-@attractions.route('/rating/<city_name>/<max_price>', methods = ['GET'])
+@attractions.route('/attraction/<city_name>/<max_price>', methods = ['GET'])
 def get_attractions(city_name, max_price):
     cursor = db.get_db().cursor()
     the_query = '''
@@ -26,7 +26,7 @@ def get_attractions(city_name, max_price):
     return the_response
 
 # User can give the hotel a rating, [REMOVE???]
-@attractions.route('/give_rating', methods = ['POST'])
+@attractions.route('/attraction', methods = ['POST'])
 def post_rating():
     the_data = request.json
     current_app.logger.info(the_data) 

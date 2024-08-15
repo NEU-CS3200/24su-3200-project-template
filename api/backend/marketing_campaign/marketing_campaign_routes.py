@@ -19,7 +19,7 @@ def get_campaigns():
     return the_response
 
 # Adding a new marketing campaign 
-@marketing_campaign.route('/add_marketing_campaign', methods=['POST'])
+@marketing_campaign.route('/marketing_campaign', methods=['POST'])
 def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -61,16 +61,16 @@ def add_new_campaign():
         current_app.logger.error(f"Error occurred: {e}")
         return jsonify({'error': 'Failed to add marketing campaign'}), 500
     
-# Updates a marketing campaign 
-@marketing_campaign.route ('/update_marketing_campaign', methods = ['PUT'])
-def update_campaign():
-    campaign_info = request.json
-    name = campaign_info['name']
-    employee_id = campaign_info['employee_id']
+# # Updates a marketing campaign 
+# @marketing_campaign.route ('/update_marketing_campaign', methods = ['PUT'])
+# def update_campaign():
+#     campaign_info = request.json
+#     name = campaign_info['name']
+#     employee_id = campaign_info['employee_id']
 
-    query = 'UPDATE marketing_campaign SET name %s, employee_id = %s where id = %s'
-    data = (name, employee_id, marketing_campaign_id)
-    cursor = db.get_db().cursor()
-    r = cursor.execute(query, data)
-    db.get_db().commit()
-    return 'Marketing Campaign Updated'
+#     query = 'UPDATE marketing_campaign SET name %s, employee_id = %s where id = %s'
+#     data = (name, employee_id, marketing_campaign_id)
+#     cursor = db.get_db().cursor()
+#     r = cursor.execute(query, data)
+#     db.get_db().commit()
+#     return 'Marketing Campaign Updated'

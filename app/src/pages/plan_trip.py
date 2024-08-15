@@ -43,7 +43,7 @@ with st.form("Create a trip"):
         st.session_state['the_data'] = data
 
         try:
-            response = requests.post('http://api:4000/t/add_trip', json = data)
+            response = requests.post('http://api:4000/t/trip', json = data)
             st.success("Trip details submitted successfully!")
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
@@ -52,7 +52,7 @@ st.write('Based on your preferences, here are our recommendations!')
 if st.button('Find your flight!', type='primary', use_container_width=True):
     logger.info(f'data = {data}')
     try:
-        result = requests.get(f'http://api:4000/f/price/{st.session_state["the_data"]["flight_budget"]}').json()
+        result = requests.get(f'http://api:4000/f/flight/{st.session_state["the_data"]["flight_budget"]}').json()
         st.dataframe(result)
     except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")
@@ -70,7 +70,7 @@ if st.button('Find your hotel!', type='primary', use_container_width=True):
 if st.button('Find your attraction!', type='primary', use_container_width=True):
     if city_name:
         try:
-            result = requests.get(f'http://api:4000/a/rating/{st.session_state["the_data"]["city_name"]}/{st.session_state["the_data"]["attraction_budget"]}').json()
+            result = requests.get(f'http://api:4000/a/attraction/{st.session_state["the_data"]["city_name"]}/{st.session_state["the_data"]["attraction_budget"]}').json()
             st.dataframe(result)
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")

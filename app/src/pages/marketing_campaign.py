@@ -56,7 +56,7 @@ with st.form("Create Marketing Campaign"):
         st.write(data)
 
         try:
-            response = requests.post('http://api:4000/mc/add_marketing_campaign', json = data)
+            response = requests.post('http://api:4000/mc/marketing_campaign', json = data)
             st.success("Marketing Campaign details submitted successfully!")
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")

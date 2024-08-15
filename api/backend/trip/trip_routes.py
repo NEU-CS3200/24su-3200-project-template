@@ -23,7 +23,7 @@ def get_trip(user_id):
     return the_response
 
 #FROM trip
-@trip.route('/add_trip', methods=['POST']) 
+@trip.route('/trip', methods=['POST']) 
 def add_new_trip():
     
     # collecting data from the request object 
@@ -58,7 +58,7 @@ def add_new_trip():
     db.get_db().commit()
     return 'Success'
 
-@trip.route('/delete_trip/<trip_name>', methods=['DELETE'])
+@trip.route('/trip/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()

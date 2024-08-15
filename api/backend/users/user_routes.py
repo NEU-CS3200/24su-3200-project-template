@@ -19,7 +19,7 @@ def get_users():
     return the_response
 
 # create a new user account with user information
-@users.route('/create_account', methods = ['POST'])
+@users.route('/users', methods = ['POST'])
 def create_account():
     the_data = request.json
     current_app.logger.info(the_data)
@@ -41,7 +41,7 @@ def create_account():
     return 'Success!'
 
 # Update the users account details
-@users.route('/update_account/<id>', methods = ['PUT'])
+@users.route('/users/<id>', methods = ['PUT'])
 def update_account(id):
     current_app.logger.info('PUT /users')
     user_info = request.json
