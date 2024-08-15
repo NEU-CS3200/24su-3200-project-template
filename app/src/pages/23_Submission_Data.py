@@ -11,7 +11,7 @@ st.set_page_config(layout = 'wide')
 SideBarLinks()
 
 # ----------- this just gets the sections that a given professor is teaching 
-st.title('See My Students')
+st.title('See Student Submissions')
 st.write('')
 st.write('Feel free to sort by section in the data below')
 with st.form("Section Data "):
