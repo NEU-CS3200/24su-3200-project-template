@@ -13,6 +13,11 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 st.write('')
 st.write('')
 
+if st.button('Plan your next trip',
+              type = 'primary',
+              use_container_width = True):
+   st.switch_page('pages/plan_trip.py')
+
 if st.button('Go to Ratings Page',
               type = 'primary',
               use_container_width = True):

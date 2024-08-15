@@ -27,6 +27,22 @@ def get_hotel(destination):
     the_response.mimetype = 'application/json'
     return the_response
 
+@hotel.route('/hotel_rating/<rating>/<city_name>', methods=['GET'])
+def get_hotel_rating(rating, city_name):
+   #current_app.logger.info('GET /customers/<userID> route')
+   cursor = db.get_db().cursor()
+   the_query = '''SELECT name, rating, room_type, price_per_night, amenitites, city_name
+          FROM hotel 
+          WHERE hotel.rating = %s
+          ORDER BY average_price ASC'''
+   cursor.execute(the_query, (rating,), (city_name))
+
+
+   theData = cursor.fetchall()
+   the_response = make_response(theData)
+   the_response.status_code = 200
+   the_response.mimetype = 'application/json'
+
 @hotel.route('/add_review', methods=['POST'])
 def add_new_hotel_review():
     
