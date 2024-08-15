@@ -35,7 +35,7 @@ st.write('')
 
 with st.form("Create Marketing Campaign"):
     name = st.text_input("Input the name of the Marketing Campaign you would like to create.")
-    employee_id = st.number_input("Insert your employee id. ")
+    employee_id = st.number_input("Insert your employee id. ", min_value=1, step=1, format="%d")
     description = st.text_input("Ad description")
     budget = st.number_input("What is the budget for this Ad?", min_value=0.0, format="%.2f")
     code = st.number_input("Insert promotion code")

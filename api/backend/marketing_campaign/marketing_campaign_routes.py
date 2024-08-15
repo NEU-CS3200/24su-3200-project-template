@@ -32,7 +32,7 @@ def add_new_campaign():
     
     query = f'''
         Insert into marketing_campaign (name, employee_id) values (
-        "{name}", "{employee_id}")
+        "{name}", {employee_id})
     '''
     query_2 = f'''
         Insert into promotions(discount_amount, code) values(
@@ -44,15 +44,23 @@ def add_new_campaign():
         "{description}", {budget})
     '''
 
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db.commit()
-    cursor.execute(query_2)
-    db.get_db.commit()
-    cursor.execute(query_3)
-    db.get_db.commit()
-    return 'Success'
-
+    try:
+        # Use a context manager to handle cursor and connection
+        with db.get_db().cursor() as cursor:
+            cursor.execute(query)
+            cursor.execute(query_2)
+            cursor.execute(query_3)
+            
+            # Commit the transaction after all queries
+            db.get_db().commit()
+        
+        return jsonify({'message': 'Success'}), 201  # Use JSON response and appropriate status code
+    except Exception as e:
+        # Rollback in case of error
+        db.get_db().rollback()
+        current_app.logger.error(f"Error occurred: {e}")
+        return jsonify({'error': 'Failed to add marketing campaign'}), 500
+    
 # Updates a marketing campaign 
 @marketing_campaign.route ('/update_marketing_campaign', methods = ['PUT'])
 def update_campaign():
