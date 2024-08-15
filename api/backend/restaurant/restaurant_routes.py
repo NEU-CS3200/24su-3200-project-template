@@ -32,7 +32,7 @@ def get_restaurant(trip_id):
     return the_response
 
 #FROM restaurant
-@restaurant.route('/trip', methods=['POST'])
+@restaurant.route('/add_review', methods=['POST'])
 def add_new_restaurant_review():
     
     # collecting data from the request object 
