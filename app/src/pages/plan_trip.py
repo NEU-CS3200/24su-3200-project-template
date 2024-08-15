@@ -47,63 +47,32 @@ with st.form("Create a trip"):
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
 
-if submitted:
-    st.write('Based on your preferences, here are our recommendations!')
-
-    if st.button('Find your flight!', type='primary', use_container_width=True):
-        try:
+if st.button('Find your flight!', type='primary', use_container_width=True):
+    try:
             result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
             st.dataframe(result)
             st.write('worked')
-        except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
 
-    if st.button('Find your hotel!', type='primary', use_container_width=True):
+if st.button('Find your hotel!', type='primary', use_container_width=True):
+    if city_name:
         try:
-            result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
-            st.dataframe(result)
-            st.write('worked')
+                result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
+                st.dataframe(result)
+                st.write('worked')
         except requests.exceptions.RequestException as e:
                 st.error(f"An error occurred: {e}")
-        else:
+    else:
             st.warning("Please input a city name to find a hotel.")
 
-    if st.button('Find your attraction!', type='primary', use_container_width=True):
+if st.button('Find your attraction!', type='primary', use_container_width=True):
+    if city_name:
         try:
                 result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
                 st.dataframe(result)
                 st.write('worked')
         except requests.exceptions.RequestException as e:
                 st.error(f"An error occurred: {e}")
-        else:
+    else:
             st.warning("Please input a city name to find an attraction.")
-
-# if st.button('Find your flight!', type='primary', use_container_width=True):
-#     try:
-#             result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
-#             st.dataframe(result)
-#             st.write('worked')
-#     except requests.exceptions.RequestException as e:
-#             st.error(f"An error occurred: {e}")
-
-# if st.button('Find your hotel!', type='primary', use_container_width=True):
-#     if city_name:
-#         try:
-#                 result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
-#                 st.dataframe(result)
-#                 st.write('worked')
-#         except requests.exceptions.RequestException as e:
-#                 st.error(f"An error occurred: {e}")
-#     else:
-#             st.warning("Please input a city name to find a hotel.")
-
-# if st.button('Find your attraction!', type='primary', use_container_width=True):
-#     if city_name:
-#         try:
-#                 result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
-#                 st.dataframe(result)
-#                 st.write('worked')
-#         except requests.exceptions.RequestException as e:
-#                 st.error(f"An error occurred: {e}")
-#     else:
-#             st.warning("Please input a city name to find an attraction.")

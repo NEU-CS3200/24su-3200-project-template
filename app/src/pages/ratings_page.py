@@ -21,7 +21,7 @@ with st.form("Choose the restaurant rating you would like to visit today:"):
     submitted = st.form_submit_button("Submit")
     if submitted:
         try:
-            response = requests.get(f"http://api:4000/r/restaurant_rating/{rating}").json()
+            response = requests.get(f"http://api:4000/r/restaurant_rating/{rating}/{city_name}").json()
             st.dataframe(response)
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
