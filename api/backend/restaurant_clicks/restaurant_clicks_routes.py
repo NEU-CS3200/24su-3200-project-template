@@ -5,7 +5,7 @@ from backend.db_connection import db
 restaurant_clicks = Blueprint('restaurant_clicks', __name__)
 
 # Route to retrieve the total clicks for the top 5 most clicked restaurants
-@restaurant_clicks.route('/restaurant_clicks>', methods=['GET'])
+@restaurant_clicks.route('/restaurant_clicks', methods=['GET'])
 def get_restaurant_clicks():
     current_app.logger.info('restaurant_clicks.py: GET /restaurant_clicks')
     cursor = db.get_db().cursor()
