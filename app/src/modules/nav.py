@@ -31,10 +31,10 @@ def AvailabilityTaNav():
 def UpdateTANav():
     st.sidebar.page_link("pages/13_Update_Ta.py", label="Update availability", icon='📝')
 
-#### ------------------------ System Admin Role ------------------------
+#### ------------------------ Professor (ADMIN) Role ------------------------
 def AdminPageNav():
-    st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
-    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='ML Model Management', icon='🏢')
+    st.sidebar.page_link("pages/20_Admin_Home.py", label="Update Groups", icon='💻')
+    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='My Students', icon='📕')
 
 
 # --------------------------------Links Function -----------------------------------------------
