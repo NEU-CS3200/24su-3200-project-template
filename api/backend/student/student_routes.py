@@ -26,8 +26,8 @@ def get_all_students():
 
 
 
-''' @students.route('/students', methods=['POST'])
-def update_customer():
+@students.route('/students', methods=['POST'])
+def post_customer():
     current_app.logger.info('PUT /students route')
     student_info = request.json
     # current_app.logger.info(cust_info)
@@ -64,4 +64,4 @@ def update_customer():
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
-    return 'Student updated!' '''
+    return 'Student updated!'

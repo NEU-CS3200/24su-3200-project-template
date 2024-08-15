@@ -1,4 +1,5 @@
 import logging
+import requests
 logger = logging.getLogger(__name__)
 import streamlit as st
 from streamlit_extras.app_logo import add_logo
@@ -6,26 +7,20 @@ import pandas as pd
 import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
-from datetime import datetime as dt
-from streamlit_calendar import calendar
+from st_aggrid import AgGrid
+
 SideBarLinks()
 
 # add the logo
 add_logo("assets/logo.png", height=400)
 
 # set up the page
-st.markdown("# Find Your Group")
-st.sidebar.header("Find Your Group Here")
-
-# Create a scheduling calendar
-now = dt.now()
+st.markdown("# Find Your Similar Students")
+st.sidebar.header("Find Students with similar interests")
 try:
-    meetings = st.date_input(label='Schedule Meetings: ',
-                value=(dt(year=now.year, month=now.month, day=now.day, hour=now.hour, minute=now.minute),
-                        dt(year=now.year, month=now.month, day=now.day, hour=now.hour, minute=now.minute)),
-                key='#date_range',
-                help="The start and end date time")
-    st.write('Start: ', dts[0], "End: ", dts[1])
-
+    student_data = requests.get(f'http://api:4000/s/students/').json()
+    st.dataframe(student_data)
 except:
-    pass
+    st.write("Doesnt work")
+
+st.selectbox("what attributes should your teammates have",options=('C++','Java'))
