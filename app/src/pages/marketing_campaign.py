@@ -17,27 +17,28 @@ name = st.text_input("Enter the hotel name:")
 
 # Button to find the email
 if st.button("Get Hotel Email"):
-    # Make a request to the API (replace 'API_URL' with the actual API endpoint)
-    response = requests.get('http://api:4000/h/hotel')
-    
-    if response.status_code == 200:
-        hotels = response.json()
-        
-        # Search for the hotel by name
-        hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
-        
-        if hotel_email:
-            st.success(f"The email for {name} is: {hotel_email}")
-        else:
-            st.error("Hotel not found! Please check the name and try again.")
+    if not name:
+        st.error("Please enter the hotel name.")
     else:
-        st.error("Failed to retrieve hotels. Please try again later.")
+        # Make a request to the API (assuming it requires destination and hotel name, but we will only use hotel name here)
+        response = requests.get(f'http://api:4000/h/hotel/{destination}')
+
+        if response.status_code == 200:
+            hotels = response.json()
+            
+            # Search for the hotel by name
+            hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
+            
+            if hotel_email:
+                st.success(f"The email for {name} is: {hotel_email}")
+            else:
+                st.error("Hotel not found! Please check the name and try again.")
+        else:
+            st.error("Failed to retrieve hotels. Please try again later.")
 
 
 
-
-
-
+# Creates a form to create a marketing campaign based off of the most clicked on
 st.title("Create a Hotel Marketing Campaign")
 st.write('')
 st.write('')
