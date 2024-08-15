@@ -4,13 +4,13 @@ from backend.db_connection import db
 # Create a new Blueprint named restaurant_clicks for managing click-related routes
 restaurant_clicks = Blueprint('restaurant_clicks', __name__)
 
-# Route to retrieve the total clicks for a specific restaurant
+# Route to retrieve the total clicks for the top 5 most clicked restaurants
 @restaurant_clicks.route('/restaurant_clicks>', methods=['GET'])
 def get_restaurant_clicks():
     current_app.logger.info('restaurant_clicks.py: GET /restaurant_clicks')
     cursor = db.get_db().cursor()
 
-    # Execute a SQL query to fetch the sum of clicks for the specified restaurant_id
+    # Execute a SQL query to fetch the sum of clicks for the top 5 most clicked restaurants
     the_query = '''SELECT name, SUM(click_counter) AS total_clicks 
     FROM restaurant_clicks join restaurant ON restaurant.id = restaurant_clicks.restaurant_id
     GROUP BY name
