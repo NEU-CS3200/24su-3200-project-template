@@ -25,7 +25,6 @@ def add_new_campaign():
     the_data = request.json
     current_app.logger.info(the_data)
     name = the_data['name']
-    marketing_campaign_id = the_data['id']
     employee_id = the_data['employee_id']
     discount_amount = the_data['discount_amount']
     code = the_data['code']
@@ -35,16 +34,15 @@ def add_new_campaign():
 
     query = 'insert into employee (name, id, employee_id) values("'
     query += name + '", "'
-    query += marketing_campaign_id + '", "'
-    query += employee_id + ')'
+    query += str(employee_id) + ')'
     
     query_2 = 'insert into promotions (discount_amount, code) values("'
-    query_2 += discount_amount + '","'
-    query_2 += code +  ')'
+    query_2 += str(discount_amount) + '","'
+    query_2 += str(code) +  ')'
 
     query_3 = 'insert into ads (description, budget) values("'
     query_3 += description + '","'
-    query_3 += budget + ')'
+    query_3 += str(budget) + ')'
 
 
     cursor = db.get_db().cursor()
@@ -57,7 +55,6 @@ def add_new_campaign():
 def update_campaign():
     campaign_info = request.json
     name = campaign_info['name']
-    marketing_campaign_id = campaign_info['id']
     employee_id = campaign_info['employee_id']
 
     query = 'UPDATE marketing_campaign SET name %s, employee_id = %s where id = %s'
