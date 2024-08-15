@@ -50,7 +50,7 @@ with st.form("Create Marketing Campaign"):
     description = st.text_input("Ad description")
     budget = st.number_input("What is the budget for this Ad?", min_value=0.0, format="%.2f")
     code = st.number_input("Insert promotion code")
-    name = st.text_input("Insert the name of the promotion")
+    promotion_name = st.text_input("Insert the name of the promotion")
     discount_amount = st.number_input("What is the discount amount?", min_value=0.0, format="%.2f")
     
     
@@ -62,7 +62,7 @@ with st.form("Create Marketing Campaign"):
         data['description'] = description
         data['budget'] = budget
         data['code'] = code
-        data['name'] = name
+        data['promotion_name'] = promotion_name
         data['discount_amount'] = discount_amount
 
         st.write(data)
