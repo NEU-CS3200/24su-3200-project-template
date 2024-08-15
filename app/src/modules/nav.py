@@ -46,7 +46,7 @@ def Click_Count():
     st.sidebar.page_link("pages/Click_Count.py", label="Click Count Graphs", icon='📈')
 
 def marketing_campaign():
-    st.sidebar.page_link("pages/marketing_campaign.py", label="Marketing Campaign for Hotels")
+    st.sidebar.page_link("pages/marketing_campaign.py", label="Marketing Campaign for Hotels", icon = "🗒️")
 
 
 # --------------------------------Links Function -----------------------------------------------

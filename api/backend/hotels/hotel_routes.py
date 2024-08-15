@@ -10,7 +10,7 @@ def get_hotel(destination):
     current_app.logger.info('hotel_routes.py: GET /hotel')
     cursor = db.get_db().cursor()
     query = f'''
-        Select hotel.id, hotel.room_type, hotel.amenities, hotel.price_per_night, hotel.rating, hotel.city_id
+        Select hotel.id, hotel.room_type, hotel.amenities, hotel.price_per_night, hotel.rating, hotel.city_id, hotel.email
         FROM hotel JOIN trip ON hotel.city_id = trip.city_id
         JOIN city ON hotel.city_id = city.id
         WHERE city.name like "{destination}"
