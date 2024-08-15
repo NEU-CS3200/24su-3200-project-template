@@ -25,7 +25,6 @@ create table if not exists tracks (
     constraint fk_2 foreign key (trackee_id) references employee (id) on update cascade
 );
 
-
 create table if not exists city (
     id integer auto_increment primary key,
     country varchar(255),
@@ -45,12 +44,13 @@ create table if not exists trip (
     hotel_budget integer,
     flight_budget integer,
     user_id integer unique,
-    city_name varchar(255) unique,
+    city_id integer unique,
+    city_name varchar(255),
     attraction_budget integer,
     restaurant_budget integer,
     num_of_nights integer,
     constraint fk_3 foreign key (user_id) references users (id) on update cascade,
-    constraint fk_4 foreign key (city_name) references city (name) on update cascade
+    constraint fk_4 foreign key (city_id) references city (id) on update cascade
 );
 
 

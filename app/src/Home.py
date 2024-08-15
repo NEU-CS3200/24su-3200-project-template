@@ -51,7 +51,7 @@ if st.button('Act as Thomas, a Marketing Analyst',
     st.session_state['role'] = 'administrator'
     st.session_state['first_name'] = 'Thomas'
     st.session_state['id'] = 2
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.switch_page('pages/admin_home.py')
 
 if st.button('Act as Janice, an intern planning a company trip', 
             type = 'primary', 

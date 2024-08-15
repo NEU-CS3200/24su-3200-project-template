@@ -27,15 +27,30 @@ def add_new_campaign():
     name = the_data['name']
     marketing_campaign_id = the_data['id']
     employee_id = the_data['employee_id']
+    discount_amount = the_data['discount_amount']
+    code = the_data['code']
+    promotion_name = the_data['promotion_name']
+    description = the_data['description']
+    budget = the_data['budget']
     
 
     query = 'insert into employee (name, id, employee_id) values("'
     query += name + '", "'
     query += marketing_campaign_id + '", "'
     query += employee_id + ')'
+    
+    query_2 = 'insert into promotions (discount_amount, code, name) values("'
+    query_2 += discount_amount + '","'
+    query_2 += code + '","'
+    query_2 += promotion_name + ')'
+
+    query_3 = 'insert into ads (description, budget) values("'
+    query_3 += description + '","'
+    query_3 += budget + ')'
+
 
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, query_2, query_3)
     db.get_db.commit()
     return 'Success'
 
