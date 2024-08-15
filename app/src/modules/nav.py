@@ -21,15 +21,15 @@ def GroupNav():
 def SchedulingTaskNav():
     st.sidebar.page_link("pages/Scheduler_Tracker.py", label="Tasks + Scheduling", icon='🗓')
 
-## ------------------------ Examples for Role of usaid_worker ------------------------
-def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Specialty", icon='🛜')
+## ------------------------ Examples for Role of TA ------------------------
+def SpecialTaNav():
+    st.sidebar.page_link("pages/12_Special_Ta.py", label="Specialty", icon='🌟')
 
-def PredictionNav():
-    st.sidebar.page_link("pages/11_Prediction.py", label="Availability", icon='📈')
+def AvailabilityTaNav():
+    st.sidebar.page_link("pages/11_Availability_Ta.py", label="Availability", icon='🗓')
 
-def ClassificationNav():
-    st.sidebar.page_link("pages/13_Classification.py", label="Update info", icon='🌺')
+def UpdateTANav():
+    st.sidebar.page_link("pages/13_Update_Ta.py", label="Update availability", icon='📝')
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
@@ -67,9 +67,9 @@ def SideBarLinks(show_home=False):
 
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state['role'] == 'ta':
-            PredictionNav()
-            ApiTestNav() 
-            ClassificationNav()
+            AvailabilityTaNav()
+            SpecialTaNav()
+            UpdateTANav()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'professor':

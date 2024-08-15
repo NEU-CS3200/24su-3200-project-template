@@ -66,7 +66,7 @@ if st.button('Act as Timmy, a NEU teaching assistant',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'ta'
     st.session_state['first_name'] = 'Timmy'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.switch_page('pages/10_Ta_Home.py')
 
 if st.button('Act as Mark, a NEU professor', 
             type = 'primary', 

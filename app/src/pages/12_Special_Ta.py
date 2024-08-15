@@ -8,8 +8,8 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 st.title('My Specialty')
-st.write('Let us find students in your section that need help with your specialty!')
-#st.write('Enter your information in the form below:')
+st.write('**Find students in your section that need help with your specialty!**')
+st.write('Enter your information in the form below:')
 
 with st.form("Find students with my availabilty"):
   ta_fname = st.text_input('First Name: ')

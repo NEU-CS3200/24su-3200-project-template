@@ -11,7 +11,8 @@ st.set_page_config(layout = 'wide')
 SideBarLinks()
 
 st.title('My Availability')
-st.write('Let us find students in your section with your availability!')
+st.write('**Find students in your section with your availability!**')
+st.write('')
 st.write('Enter your information in the form below:')
 
 with st.form("Find students with my availabilty"):

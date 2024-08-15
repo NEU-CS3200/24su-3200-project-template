@@ -17,14 +17,14 @@ st.write('### What would you like to do today?')
 if st.button('Find students with my availability', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/11_Prediction.py')
+  st.switch_page('pages/11_Availability_Ta.py')
 
 if st.button('Find students with my specialty', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/12_API_Test.py')
+  st.switch_page('pages/12_Special_Ta.py')
 
-if st.button("Manage my availability",
+if st.button("Update your availability",
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/13_Update_Ta.py')
