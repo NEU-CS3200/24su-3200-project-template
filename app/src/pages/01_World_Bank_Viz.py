@@ -37,6 +37,7 @@ with st.form("Input Your Student Data"):
                           options=('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
 
     submitted = st.form_submit_button("Submit")
+    updated = st.form_submit_button("Update")
 # Upon submission Update the Database with the information by using a put request
     if submitted:
         data = {}
@@ -48,7 +49,7 @@ with st.form("Input Your Student Data"):
         data['year'] = year
         data['dorm'] = dorm
 
-        response = requests.put('http://api:4000/s/students',json=data)
+        response = requests.post('http://api:4000/s/students',json=data)
 
         if response.status_code == 200:
             st.write("Form Submitted Sucessfully")
@@ -60,5 +61,28 @@ with st.form("Input Your Student Data"):
             aval_data['time'] = time
             aval_data['days'] = days
 
-            response = requests.put('http://api:4000/sa/stuAvailability',json=data)
+            response = requests.post('http://api:4000/sa/stuAvailability',json=data)
 
+    if updated:
+        data_u = {}
+        data['f_name'] = f_name
+        data['l_name'] = l_name
+        data['email'] = email
+        data['major'] = major
+        data['interests'] = interests
+        data['year'] = year
+        data['dorm'] = dorm
+
+        response = requests.put('http://api:4000/s/students',json=data_u)
+
+        if response.status_code == 200:
+            st.write("Form Updated Sucessfully")
+        else:
+            st.write("Failed Update Submit")
+
+        if updated:
+            aval_data_u ={}
+            aval_data['time'] = time
+            aval_data['days'] = days
+
+            response = requests.put('http://api:4000/sa/stuAvailability',json=aval_data_u)
