@@ -74,5 +74,4 @@ if st.button('Act as Mark, a NEU professor',
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'professor'
     st.session_state['first_name'] = 'Mark'
-    st.switch_page('pages/20_Admin_Home.py')
-    st.write('Hello')
+    st.switch_page('pages/20_Professor_Home.py')
