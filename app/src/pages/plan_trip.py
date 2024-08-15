@@ -61,3 +61,9 @@ if st.button('Find your hotel!',
               use_container_width = True):
     result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
     st.dataframe(results)
+
+if st.button('Find your attraction!',
+              type = 'primary',
+              use_container_width = True):
+    result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
+    st.dataframe(results)
