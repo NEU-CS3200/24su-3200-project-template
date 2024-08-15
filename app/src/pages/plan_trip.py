@@ -14,24 +14,6 @@ st.write('')
 
 # should have a statement for adding a new trip
 
-flight_budget_col = st.columns(1)
-with flight_budget_col[0]:
-    flight_budget = st.number_input('Maximum flight budget:')
-
-logger.info(f'flight_budget = {flight_budget}')
-
-if st.button('Find flights! ',
-              type = 'primary',
-              use_container_width = True):
-    try:
-        flights = requests.get(f'http://api:4000/f/price/{flight_budget}')
-        st.dataframe(flights)
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
-
-
-
-
 with st.form("Create a trip"):
     city_name = st.text_input("Input the city you would like to travel to.")
     group_size = st.number_input("List group size.")
@@ -41,6 +23,7 @@ with st.form("Create a trip"):
     restaurant_budget = st.number_input("What is your budget for eating out at restaurants?")
     attraction_budget = st.number_input("What is your budget for attractions?")
     hotel_budget = st.number_input("What is your hotel budget?")
+    flight_budget = st.number_input("What is your flight?")
     num_of_nights = st.number_input("How many nights is your trip?")
     
 
@@ -56,6 +39,7 @@ with st.form("Create a trip"):
         data['restaurant_budget'] = restaurant_budget
         data['attraction_budget'] = attraction_budget
         data['hotel_budget'] = hotel_budget
+        data['flight_budget'] = flight_budget
         data['num_of_nights'] = num_of_nights
         st.write(data)
 
