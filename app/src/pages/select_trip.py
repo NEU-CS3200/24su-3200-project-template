@@ -22,10 +22,13 @@ try:
 except:
     st.write("Error!")
 
+trip_col = st.columns(1)
+with trip_col[0]:
+    trip = st.text_input('Trip name of trip to delete:')
+
 if st.button('Delete old trip?', type='primary', use_container_width=True):
     try:
-        result = requests.get(f'http://api:4000/f/price/{flight_budget}').json()
+        result = requests.get(f'http://api:4000/t/delete_trip/{trip}').json()
         st.dataframe(result)
-        st.write('worked')
     except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")

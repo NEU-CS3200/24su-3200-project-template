@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
+from urllib.parse import unquote
 
 hotel = Blueprint('hotel', __name__)
 
@@ -36,15 +37,13 @@ def get_hotel(city_name, max_price):
 def get_hotel_email(name):
     current_app.logger.info('hotel_routes.py: GET /hotel')
     cursor = db.get_db().cursor()
-    query = '''
+    query = f'''
         SELECT email
         FROM hotel
-        WHERE name = %s
+        WHERE name = "{unquote(name)}"
     '''
-    data = (name)
-
     current_app.logger.info(f'query = {query}')
-    cursor.execute(query, data)
+    cursor.execute(query)
     
     theData = cursor.fetchall()
     current_app.logger.info(f'retVal = {theData}')

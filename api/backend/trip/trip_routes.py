@@ -46,18 +46,12 @@ def add_new_trip():
     city_name = the_data['city_name']
 
     # Constructing the query
-    query = 'insert into trip (start_date, end_date, group_size, name, hotel_budget, city_name, \
-    restaurant_budget, attraction_budget, flight_budget, num_of_nights) values ("'
-    query += start_date + '", "'
-    query += end_date + '", "'
-    query += str(group_size) + '", '
-    query += name + '", '
-    query += str(hotel_budget) + ','
-    query += city_name + '", '
-    query += str(restaurant_budget) + ','
-    query += str(attraction_budget) + ','
-    query += str(flight_budget) + ','
-    query += str(num_of_nights) + ')'
+    query = f'''
+        insert into trip (start_date, end_date, group_size, name, hotel_budget, city_name, 
+    restaurant_budget, attraction_budget, flight_budget, num_of_nights) values ( 
+    "{start_date}", "{end_date}", {group_size}, "{name}", {hotel_budget}, "{city_name}", 
+    {restaurant_budget}, {attraction_budget}, {flight_budget}, "{num_of_nights}")
+    '''
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
@@ -68,7 +62,8 @@ def add_new_trip():
 
 @trip.route('/delete_trip/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
-    trip = trip.query.filter_by(name=name)
+    trip = Trip.query.filter_by(name=trip_name).first()
+
     if trip:
         db.session.delete(trip)
         db.session.commit()
