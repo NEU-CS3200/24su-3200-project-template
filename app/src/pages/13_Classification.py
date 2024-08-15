@@ -14,7 +14,7 @@ st.title('Update your information')
 
 st.subheader('Availability')
 with st.form("Add new availability time slot"):
-  #ta_email = st.text_input('Email: ')
+  ta_email = st.text_input('Email: ')
   avail_day = st.text_input('Day: ')
   # ----- eventually hopefully this is a dropdown
   avail_time = st.text_input('Time (Morning, Afternoon, or Night): ')

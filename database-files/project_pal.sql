@@ -163,20 +163,11 @@ CREATE TABLE IF NOT EXISTS Time (
     time ENUM('Morning', 'Afternoon', 'Night') NOT NULL
 );
 
--- Location Table (Part of Availability Composite Attribute)
-CREATE TABLE IF NOT EXISTS Location (
-    location_id INT AUTO_INCREMENT PRIMARY KEY,
-    location VARCHAR(255) NOT NULL
-);
-
 -- Availability Table
 CREATE TABLE IF NOT EXISTS Availability (
     availability_id INT AUTO_INCREMENT,
-    location_id INT,
     day_id INT NOT NULL,
     time_id INT,
-    FOREIGN KEY (location_id) REFERENCES Location(location_id)
-        ON UPDATE restrict ON DELETE restrict,
     FOREIGN KEY (day_id) REFERENCES Days(day_id)
         ON UPDATE restrict ON DELETE restrict,
     FOREIGN KEY (time_id) REFERENCES Time(time_id)
@@ -410,24 +401,14 @@ VALUES ('Morning'),
        ('Afternoon'),
        ('Night');
 
--- Location Data
-INSERT INTO Location(location)
-VALUES ('Snell'),
-       ('Curry'),
-       ('ISEC'),
-       ('EXP'),
-       ('Law Library'),
-       ('Boston Public Library');
-
 -- Availability Data
-INSERT INTO Availability(location_id, day_id, time_id)
-VALUES (1, 1, 1), -- snell, monday morning
-       (1, 5, 3), -- snell friday night
-       (3, 2, 2),
-       (4, 3, 1),
-       (6, 6, 2);
 INSERT INTO Availability(day_id, time_id)
-VALUES (2, 1), -- location can be null (undecided)
+VALUES (1, 1), -- monday morning
+       (5, 3), -- friday night
+       (2, 2),
+       (3, 1),
+       (6, 2),
+       (2, 1),
        (3, 2),
        (5, 1);
 
