@@ -32,7 +32,6 @@ data = {
     'email': email
 }
 
-logger.info(f'id = {data["id"]}')
 logger.info(f'address = {data["address"]}')
 logger.info(f'username = {data["username"]}')
 logger.info(f'email = {data["email"]}')
