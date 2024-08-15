@@ -8,10 +8,10 @@ trip = Blueprint('trip', __name__)
 
 # Getting trips based on a user id
 @trip.route('/trip/<id>', methods =['GET']) #cat-works
-def get_trip(id):
+def get_trip():
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_id
+    the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_name
         FROM trip 
         WHERE id = %s
     '''
@@ -24,7 +24,7 @@ def get_trip(id):
     return the_response
 
 #FROM trip
-@trip.route('/trip', methods=['POST']) 
+@trip.route('/update_trip', methods=['POST']) 
 def add_new_trip():
     
     # collecting data from the request object 
@@ -40,14 +40,16 @@ def add_new_trip():
     attraction_budget = the_data['attraction_budget']
     hotel_budget = the_data['hotel_budget']
     num_of_nights = the_data['num_of_nights']
-    city_id = the_data['city_id']
+    #city_id = the_data['city_id']
+    city_name = the_data['city_name']
 
     # Constructing the query
-    query = 'insert into trip (start_date, end_date, group_size, name, restaurant_budget, attraction_budget, num_of_nights, city_id) values ("'
+    query = 'insert into trip (start_date, end_date, group_size, name, restaurant_budget, attraction_budget, num_of_nights, city_name) values ("'
     query += start_date + '", "'
     query += end_date + '", "'
     query += group_size + '", '
     query += name + '", '
+    query += city_name + '", '
     query += str(restaurant_budget) + ')'
     query += str(attraction_budget) + ')'
     query += str(hotel_budget) + ')'
@@ -60,7 +62,7 @@ def add_new_trip():
     
     return 'Success!'
 
-@trip.route('/trips/<trip_name>', methods=['DELETE'])
+@trip.route('/delete_trip/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
     trip = trip.query.filter_by(name=name)
     if trip:

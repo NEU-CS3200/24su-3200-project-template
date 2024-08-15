@@ -53,7 +53,7 @@ def get_product_detail (id):
     
 
 # get the top 5 products from the database
-@products.route('/mostExpensive')
+@products.route('/mostExpensive', methods = ['GET'])
 def get_most_pop_products():
     cursor = db.get_db().cursor()
     query = '''

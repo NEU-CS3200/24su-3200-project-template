@@ -26,7 +26,7 @@ def get_city(name):
 
 #FROM city
 #so user can put in new rating
-@city.route('/city/<name>', methods=['POST'])
+@city.route('/add_city_rating/<name>', methods=['POST'])
 def add_new_city_rating(name):
     
     # collecting data from the request object 

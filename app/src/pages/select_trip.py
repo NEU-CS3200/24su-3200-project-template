@@ -15,10 +15,8 @@ st.write('Here are all your previous trips')
 st.write('')
 st.write('')
 
-logger.info(f"id = {st.session_state['id']}")
-
 try:
-    trips = requests.get(f"http://api:4000/t/trip/{st.session_state['id']}").json()
-    st.dataframe(trips)
+    trip_info = requests.get(f"http://api:4000/t/trip/{st.session_state['id']}").json()
+    st.dataframe(trip_info)
 except:
     st.write("Error!")
