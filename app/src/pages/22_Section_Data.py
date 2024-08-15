@@ -30,8 +30,8 @@ if submitted:
     except:
         st.write("Could not connect to the database to get your students, you may not be teaching a section.")
 
-# database
-df = pd.DataFrame(
+# this is test dataframe 
+''' df = pd.DataFrame(
     [
         {"command": "st.selectbox", "rating": 4, "is_widget": True},
         {"command": "st.balloons", "rating": 5, "is_widget": False},
@@ -39,4 +39,4 @@ df = pd.DataFrame(
     ]
 )
 
-st.dataframe(df, use_container_width = True)
+st.dataframe(df, use_container_width = True)'''
