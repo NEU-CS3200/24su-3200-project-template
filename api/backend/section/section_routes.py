@@ -25,17 +25,18 @@ def get_sections_by_professor(professor_id):
 @sections.route('/<prof_id>/students', methods=['GET'])
 def get_prof_students(prof_id):
     cursor = db.get_db().cursor()
-    query = '''SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num
-            FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
-            WHERE ss.section_num IN (SELECT s.section_num
-                      FROM Section s
-                      WHERE s.professor_id = %s)
-            AND ss.semester_year IN (SELECT s.semester_year
-                      FROM Section s
-                      WHERE s.professor_id = %s)
-            AND ss.course_id IN (SELECT s.course_id
-                  FROM Section s
-                  WHERE s.professor_id = %s)
+    query = '''
+    SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num
+    FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
+    WHERE ss.section_num IN (SELECT s.section_num
+        FROM Section s
+        WHERE s.professor_id = %s)
+        AND ss.semester_year IN (SELECT s.semester_year
+            FROM Section s
+            WHERE s.professor_id = %s)
+        AND ss.course_id IN (SELECT s.course_id
+            FROM Section s
+            WHERE s.professor_id = %s)
     '''
     cursor.execute(query, (prof_id, prof_id, prof_id))
     sections = cursor.fetchall()

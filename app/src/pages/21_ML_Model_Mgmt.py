@@ -9,21 +9,10 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title('App Administration Page')
+st.title('Update Page')
 
-st.write('\n\n')
-st.write('## Model 1 Maintenance')
+st.write('## Update Students and Groups')
+st.write('Use the forms below to update groups and assign students to groups.')
 
-st.button("Train Model 01", 
-            type = 'primary', 
-            use_container_width=True)
-
-st.button('Test Model 01', 
-            type = 'primary', 
-            use_container_width=True)
-
-if st.button('Model 1 - get predicted value for 10, 25', 
-             type = 'primary',
-             use_container_width=True):
-  results = requests.get('http://api:4000/c/prediction/10/25').json()
-  st.dataframe(results)
+# Step 1: Enter Professor ID to fetch relevant sections
+professor_id = st.text_input('Enter Professor ID:')
