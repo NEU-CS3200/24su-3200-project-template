@@ -41,9 +41,3 @@ insert into hotel (id, room_type, amenities, price_per_night, email, name, ratin
 insert into hotel (id, room_type, amenities, price_per_night, email, name, rating, city_id) values (39, 'Presidential Suite', 'Free Wi-Fi and Personalized Pillow Menu', 456.56, 'amcpake12@sciencedirect.com', 'Golden Sands Resort', 3, '11');
 insert into hotel (id, room_type, amenities, price_per_night, email, name, rating, city_id) values (40, 'Double Room', '24-hour Front Desk Service and Customized Aromatherapy', 39.02, 'aphare13@reverbnation.com', 'Lakeside Haven Resort', 2, '22');
 
-Select hotel.id, hotel.room_type, hotel.amenities, hotel.price_per_night, hotel.rating, hotel.city_id
-        FROM hotel JOIN trip ON hotel.city_id = trip.city_id
-        JOIN city ON hotel.city_id = city.id
-        WHERE city.name like '%s'
-        AND (hotel.price_per_night * trip.num_of_nights) <= trip.hotel_budget
-        ORDER BY rating, price_per_night DESC;
