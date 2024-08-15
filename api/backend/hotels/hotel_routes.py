@@ -12,17 +12,37 @@ def get_hotel(city_name, max_price):
     query = '''
         SELECT hotel.id, hotel.room_type, hotel.amenities, hotel.price_per_night,
                hotel.rating, hotel.city_id, hotel.email,
-               (trip.group_size * hotel.price_per_night) AS total_price
+               (trip.num_of_nights * hotel.price_per_night) AS total_price
         FROM hotel
-        JOIN city ON hotel.city_id = city.id
         JOIN trip ON trip.city_id = hotel.city_id
-        WHERE city.name = %s
-        AND (trip.group_size * hotel.price_per_night) <= %s
+        WHERE hotel.city_name = %s
+        AND (trip.num_of_nights * hotel.price_per_night) <= %s
         GROUP BY hotel.id, hotel.room_type, hotel.amenities, hotel.price_per_night,
                  hotel.rating, hotel.city_id, hotel.email
         ORDER BY hotel.rating, total_price DESC;
     '''
     data = (city_name, max_price)
+    current_app.logger.info(f'query = {query}')
+    cursor.execute(query, data)
+    
+    theData = cursor.fetchall()
+    current_app.logger.info(f'retVal = {theData}')
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+@hotel.route('/get_email/<name>', methods =['GET'])
+def get_hotel_email(name):
+    current_app.logger.info('hotel_routes.py: GET /hotel')
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT email
+        FROM hotel
+        WHERE name = %s
+    '''
+    data = (name)
+
     current_app.logger.info(f'query = {query}')
     cursor.execute(query, data)
     
