@@ -18,7 +18,7 @@ st.write(f"Welcome, {st.session_state.get('first_name', 'Professor')}!")
 if st.button('Update groups', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_Model_Mgmt.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
 if st.button('See my students', 
              type='primary',
