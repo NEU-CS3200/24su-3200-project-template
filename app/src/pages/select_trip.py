@@ -28,7 +28,19 @@ with trip_col[0]:
 
 if st.button('Delete old trip?', type='primary', use_container_width=True):
     try:
-        result = requests.get(f'http://api:4000/t/delete_trip/{trip}').json()
-        st.dataframe(result)
+        result = requests.delete(f'http://api:4000/t/delete_trip/{trip}')
+        st.write("Successfully deleted!")
     except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")
+
+#delete trip based on trip name
+
+# result = requests.get(f'http://api:4000/t/get_trip/{st.session_state["id"]}').json()
+# option = st.selectbox(
+#      "Which trip would you like to delete?",
+#     (result),
+#     index=None,
+#     placeholder="Select trip...",
+#  )
+
+# st.write("You selected:", option)
