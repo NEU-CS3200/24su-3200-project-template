@@ -179,8 +179,8 @@ CREATE TABLE IF NOT EXISTS Availability (
 CREATE TABLE IF NOT EXISTS StudentAvailability (
     availability_id INT NOT NULL,
     student_id INT NOT NULL,
-    FOREIGN KEY (student_id) REFERENCES Student(student_id)
-        ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (availability_id) REFERENCES Student(student_id) ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (availability_id) REFERENCES Availability(availability_id) ON UPDATE restrict ON DELETE restrict,
     PRIMARY KEY (availability_id, student_id)
 );
 
@@ -188,8 +188,8 @@ CREATE TABLE IF NOT EXISTS StudentAvailability (
 CREATE TABLE IF NOT EXISTS TAAvailability (
     availability_id INT NOT NULL,
     ta_id INT NOT NULL,
-    FOREIGN KEY (ta_id) REFERENCES TA(ta_id)
-        ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (ta_id) REFERENCES TA(ta_id) ON UPDATE restrict ON DELETE restrict,
+    FOREIGN KEY (availability_id) REFERENCES Availability(availability_id) ON UPDATE restrict ON DELETE restrict,
     PRIMARY KEY (availability_id, ta_id)
 );
 
