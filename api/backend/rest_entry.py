@@ -2,7 +2,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 from flask import Flask
-
+import os
 from backend.db_connection import db
 from backend.student.student_routes import students
 from backend.stuAvailability.stuAvailability_routes import stuAvailability
@@ -11,7 +11,7 @@ from backend.professor.professor_routes import professors
 from backend.availability.availability_routes import availability
 from backend.section.section_routes import sections
 from backend.submissions.submission_routes import submissions
-import os
+from backend.speciality.speciality_routes import speciality
 from dotenv import load_dotenv
 
 def create_app():
@@ -105,7 +105,10 @@ def create_app():
     app.register_blueprint(professors, url_prefix='/p')
     app.register_blueprint(availability, url_prefix='/a')
     app.register_blueprint(sections, url_prefix='/sec')
+    app.register_blueprint(speciality, url_prefix='/sp')
     app.register_blueprint(submissions, url_prefix='/sub')
+
+
 
     # Don't forget to return the app object
     return app

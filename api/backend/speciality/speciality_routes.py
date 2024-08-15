@@ -6,23 +6,18 @@ import json
 from backend.db_connection import db
 from backend.ml_models.model01 import predict
 
-students = Blueprint('students', __name__)
+speciality = Blueprint('speciality', __name__)
 
-@students.route('/students/<speciality>', methods = ['POST','GET'])
+@speciality.route('/speciality/', methods = ['GET'])
 
-def get_all_students(speciality):
-    current_app.logger.info('student_routes.py: GET /students')
+def get_all_students():
+    current_app.logger.info('speciality_routes.py: GET /speciality')
     cursor = db.get_db().cursor()
     the_query = '''
-    SELECT email,first_name,last_name
-    FROM Student s
-    JOIN StudentSpeciality ss
-    ON s.student_id = ss.student_id
-    JOIN Speciality sp
-    ON sp.specialty_id = ss.specialty_id
-    WHERE speciality = %s;
+    SELECT speciality
+    FROM Speciality;
     '''
-    cursor.execute(the_query,(speciality))
+    cursor.execute(the_query)
     theData = cursor.fetchall()
     the_response = make_response(theData)
     the_response.status_code = 200

@@ -99,7 +99,7 @@ def get_taSpecial(first_name, last_name, email):
     the_response.mimetype = 'application/json'
     return the_response
 
-# this a route for ta subpage 2: Specialty 
+# this a route for ta subpage 2: Specialty [DIFFERENT FROM get TA special ]
 # want to return a list of students who need help with a given ta's specialty 
 # aka they do not have a least on of the TA's specialty 
 @ta.route('/ta/<first_name>/<last_name>/<email>/students', methods=['POST', 'GET'])
