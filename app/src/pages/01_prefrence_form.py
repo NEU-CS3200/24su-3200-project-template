@@ -16,12 +16,10 @@ from datetime import datetime as dt,time
 SideBarLinks()
 
 # set the header of the page
-st.header('Input Your Data Below')
+st.title('Update your major')
 
-# You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
 
-st.write('Update your major')
+st.write('Enter your information in the form below:')
 with st.form("Update Major"):
     fname = st.text_input('First Name: ')
     lname = st.text_input('Last Name: ')
