@@ -60,7 +60,7 @@ if st.button('Act as Janice, an intern planning a company trip',
     st.session_state['role'] = 'intern'
     st.session_state['first_name'] = 'Janice'
     st.session_state['id'] = 3
-    st.switch_page('pages/users_home.py')
+    st.switch_page('pages/intern_home.py')
 
 
 
