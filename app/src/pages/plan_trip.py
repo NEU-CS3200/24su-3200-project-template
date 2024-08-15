@@ -12,6 +12,8 @@ st.title("Time to plan your next trip!")
 st.write('')
 st.write('')
 
+# should have a statement for adding a new trip
+
 flight_budget_col = st.columns(1)
 with flight_budget_col[0]:
     flight_budget = st.number_input('Maximum flight budget:')
