@@ -10,10 +10,24 @@ import requests
 
 SideBarLinks()
 
-st.title('Update your information')
+st.title('Manage your availability')
 
-st.subheader('Availability')
+st.write('**Check your current availability**')
+with st.form("Current availability time slots"):
+    ta_email = st.text_input('Email: ')
 
+    submitted = st.form_submit_button('Check')
+    if submitted:
+        try:
+        # ---- turn this into a header 
+            st.write("Here is your current availability:")
+            avail_data = requests.get(f'http://api:4000/a/avail/{ta_email}').json()
+            st.dataframe(avail_data)
+        except:
+            st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")
+
+st.write('')
+st.write('**Add or delete your availability**')
 # Create a form for adding or deleting a TA availability time slot
 with st.form("Manage TA availability time slot"):
     ta_email = st.text_input('Email: ')

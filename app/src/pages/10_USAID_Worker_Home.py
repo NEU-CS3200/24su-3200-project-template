@@ -24,7 +24,7 @@ if st.button('Find students with my specialty',
              use_container_width=True):
   st.switch_page('pages/12_API_Test.py')
 
-if st.button("Update my information",
+if st.button("Manage my availability",
              type='primary',
              use_container_width=True):
   st.switch_page('pages/13_Classification.py')

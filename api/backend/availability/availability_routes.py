@@ -124,5 +124,33 @@ def manage_ta_availability(email):
             return 'TA availability entry not found!', 404
 
 
+@availability.route('/avail/<email>', methods = ['GET'])
+# Showing the TA user their current availabilities 
+def get_ta_avail(email):
+    current_app.logger.info('availability_routes.py: GET /TA/avail')
+    cursor = db.get_db().cursor()
+    query_ta_id = '''SELECT ta_id
+                     FROM TA
+                     WHERE email=%s;'''
+    cursor.execute(query_ta_id, (email,))
+    theData = cursor.fetchone()
+    current_app.logger.info(f"ta_id fetched: {theData}")
+
+    if not theData:
+        return 'TA not found!', 404
+
+    ta_id = theData["ta_id"]
+    # Query to get availabilities given a ta's id 
+    the_query = '''SELECT day, time
+                FROM TAAvailability ta JOIN Availability a ON ta.availability_id=a.availability_id
+                JOIN Days d ON a.day_id = d.day_id
+                JOIN Time t ON a.time_id = t.time_id
+                WHERE ta_id=%s;'''
+    cursor.execute(the_query, (ta_id))
+    availData = cursor.fetchall()
+    the_response = make_response(availData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 
 
