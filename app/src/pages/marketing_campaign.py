@@ -12,9 +12,6 @@ SideBarLinks()
 # Streamlit app title
 st.title("Hotel Email Finder")
 
-# Input field to enter the hotel destination
-destination = st.text_input("Enter the destination:")
-
 # Input field to enter the hotel name
 name = st.text_input("Enter the hotel name:")
 
@@ -53,7 +50,7 @@ with st.form("Create Marketing Campaign"):
     description = st.text_input("Ad description")
     budget = st.number_input("What is the budget for this Ad?", min_value=0.0, format="%.2f")
     code = st.number_input("Insert promotion code")
-    name = st.text_input("Insert the name of the promotion")
+    promotion_name = st.text_input("Insert the name of the promotion")
     discount_amount = st.number_input("What is the discount amount?", min_value=0.0, format="%.2f")
     
     
@@ -65,13 +62,13 @@ with st.form("Create Marketing Campaign"):
         data['description'] = description
         data['budget'] = budget
         data['code'] = code
-        data['name'] = name
+        data['promotion_name'] = promotion_name
         data['discount_amount'] = discount_amount
 
         st.write(data)
 
         try:
-            response = requests.post('http://api:4000/mc/marketing_campaign', json = data)
+            response = requests.post('http://api:4000/mc/add_marketing_campaign', json = data)
             st.success("Marketing Campaign details submitted successfully!")
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
