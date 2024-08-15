@@ -35,7 +35,7 @@ st.write('')
 
 with st.form("Create Marketing Campaign"):
     name = st.text_input("Input the name of the Marketing Campaign you would like to create.")
-    employee_id = st.number_input("Insert your employee id. ")
+    employee_id = st.number_input("Insert your employee id. ", min_value=1, step=1, format="%d")
     description = st.text_input("Ad description")
     budget = st.number_input("What is the budget for this Ad?", min_value=0.0, format="%.2f")
     code = st.number_input("Insert promotion code")
@@ -56,7 +56,7 @@ with st.form("Create Marketing Campaign"):
         st.write(data)
 
         try:
-            response = requests.post(f'http://api:4000/mc/add_marketing_campaign/{st.session_state["id"]}', json = data)
+            response = requests.post('http://api:4000/mc/add_marketing_campaign', json = data)
             st.success("Marketing Campaign details submitted successfully!")
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
