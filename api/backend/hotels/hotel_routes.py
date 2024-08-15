@@ -14,6 +14,7 @@ def get_hotel(destination):
         FROM hotel JOIN trip ON hotel.city_id = trip.city_id
         JOIN city ON hotel.city_id = city.id
         WHERE city.name like "{destination}"
+        AND (trip.group_size * hotel.price_per_night) <= trip.hotel_budget
         ORDER BY rating, price_per_night DESC;
     '''
     current_app.logger.info(f'query = {query}')
