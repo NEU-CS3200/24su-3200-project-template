@@ -23,3 +23,31 @@ st.title('Hotel Clicks Data')
 
 # Display a bar chart
 st.bar_chart(data, x="name", y="hotel_clicks", color="site", stack=False)
+
+
+# Fetch the data from the route
+url = "http://api:4000/rc/restaurant_clicks"
+response = requests.get(url)
+response.raise_for_status()
+data_json = response.json()
+data = pd.DataFrame(data_json)
+
+# Streamlit app
+st.title('Restaurant Clicks Data')
+
+# Display a bar chart
+st.bar_chart(data, x="name", y="restaurant_clicks", color="site", stack=False)
+
+
+# Fetch the data from the route
+url = "http://api:4000/ac/attraction_clicks"
+response = requests.get(url)
+response.raise_for_status()
+data_json = response.json()
+data = pd.DataFrame(data_json)
+
+# Streamlit app
+st.title('Attraction Clicks Data')
+
+# Display a bar chart
+st.bar_chart(data, x="name", y="attraction_clicks", color="site", stack=False)
