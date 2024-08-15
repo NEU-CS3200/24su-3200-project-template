@@ -1,7 +1,6 @@
 import logging
-import requests
-import pandas as pd
 import streamlit as st
+import requests
 from modules.nav import SideBarLinks
 
 logger = logging.getLogger(__name__)
@@ -10,26 +9,8 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title(f"Welcome, Professor {st.session_state.get('first_name', 'Professor')}!")
-st.write('')
-st.write('')
-st.write('### What would you like to do today?')
-
-if st.button('Fill Out A Form',
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
-
-
-
-
-
-
-
-
-
 # Fetch sections assigned to the professor using the API
-''' def fetch_sections(professor_id):
+def fetch_sections(professor_id):
     response = requests.get(f'http://api:4000/p/professors/{professor_id}/sections')
     return response.json()
 
@@ -57,5 +38,4 @@ if st.button('Export Data to CSV', type='primary', use_container_width=True):
     if students:
         students_df = pd.DataFrame(students)
         students_df.to_csv('exported_students.csv', index=False)
-    st.success("Data exported to CSV files successfully!")'''
-
+    st.success("Data exported to CSV files successfully!")
