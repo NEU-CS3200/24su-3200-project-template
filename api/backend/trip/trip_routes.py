@@ -65,11 +65,11 @@ def delete_trip(trip_name):
     cursor = db.get_db().cursor()
     the_query = f'''
         UPDATE trip SET
-        {start_date} = NULL, {end_date} = NULL, {group_size} = NULL, {name} = NULL,
-        {restaurant_budget} = NULL, {flight_budget} = NULL, {user_id} = NULL, 
-        {city_id} = NULL, {city_name} = NULL, {attraction_budget} = NULL, 
-        {num_of_nights} = NULL
-        WHERE name = {trip_name}
+        start_date = NULL, end_date = NULL, group_size = NULL, name = NULL,
+        restaurant_budget = NULL, flight_budget = NULL, user_id = NULL, 
+        city_id = NULL, city_name = NULL, attraction_budget = NULL, 
+        num_of_nights = NULL
+        WHERE name = trip_name
     '''
 
     cursor.execute(the_query)
