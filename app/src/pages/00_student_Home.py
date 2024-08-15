@@ -20,12 +20,12 @@ st.write('### What would you like to do today?')
 if st.button('Fill Out A Form',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+  st.switch_page('pages/01_prefrence_form.py')
 
 if st.button('Join A Group and Schedule Meetings',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/02_find_similar_students.py')
 
 if st.button('Scheduling and Task List',
              type='primary',use_container_width=True):
