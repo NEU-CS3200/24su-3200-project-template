@@ -11,10 +11,10 @@ st.set_page_config(layout = 'wide')
 SideBarLinks()
 
 # ----------- this just gets the sections that a given professor is teaching 
-st.title('See My Students')
+st.title('See Student Submissions')
 st.write('')
-st.write('Feel free to sort by section in the data below')
-with st.form("Section Data "):
+st.write('View Student Submissions Below')
+with st.form("Submission Data "):
   prof_id = st.text_input('ID: ')
 
   submitted = st.form_submit_button('Submit')
@@ -25,21 +25,10 @@ if submitted:
     try:
         # ---- turn this into a header 
         st.write("Here are the current sections:")
-        students_data = requests.get(f'http://api:4000/sec/{prof_id}/students').json()
+        students_data = requests.get(f'http://api:4000/sub/{prof_id}/students').json()
         st.dataframe(students_data)
 
     except:
         st.write("Could not connect to the database to get your students, you may not be teaching a section.")
 
-# database
-df = pd.DataFrame(
-    [
-        {"command": "st.selectbox", "rating": 4, "is_widget": True},
-        {"command": "st.balloons", "rating": 5, "is_widget": False},
-        {"command": "st.time_input", "rating": 3, "is_widget": True}, 
-    ]
-)
 
-st.dataframe(df, use_container_width = True)
-
-st.write('H!')

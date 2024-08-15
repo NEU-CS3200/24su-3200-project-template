@@ -25,10 +25,9 @@ def get_all_students():
     return the_response
 
 
-
-@students.route('/students', methods=['POST'])
-def post_customer():
-    current_app.logger.info('PUT /students route')
+'''' @students.route('/avail/<email>', methods=['POST'])
+def update_avail():
+    current_app.logger.info('POST /students route')
     student_info = request.json
     # current_app.logger.info(cust_info)
     f_name = student_info['f_name']
@@ -64,4 +63,5 @@ def update_customer():
     cursor = db.get_db().cursor()
     r = cursor.execute(query, data)
     db.get_db().commit()
-    return 'Student updated!'
+    return 'Student updated!' '''
+
