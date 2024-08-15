@@ -32,15 +32,15 @@ def get_restaurant(trip_id):
     return the_response
 
 #Get a restaurant given a rating 
-@restaurant.route('/restaurant_rating/<rating>', methods=['GET'])
-def get_restaurant_rating(rating): 
+@restaurant.route('/restaurant_rating/<rating>/<city_name>', methods=['GET'])
+def get_restaurant_rating(rating, city_name): 
     #current_app.logger.info('GET /customers/<userID> route')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT name, average_price, address, rating 
-           FROM restaurant 
-           WHERE rating = %s
+    the_query = '''SELECT r.name, r.average_price, r.address, r.rating 
+           FROM restaurant r join city c on r.city_id = c.id
+           WHERE r.rating = %s and c.name = %s
            ORDER BY average_price ASC'''
-    cursor.execute(the_query, (rating,))
+    cursor.execute(the_query, (rating, city_name))
 
     theData = cursor.fetchall()
     the_response = make_response(theData)
