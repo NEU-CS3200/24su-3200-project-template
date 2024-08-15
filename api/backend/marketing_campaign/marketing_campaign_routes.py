@@ -29,7 +29,6 @@ def add_new_campaign():
     employee_id = the_data['employee_id']
     discount_amount = the_data['discount_amount']
     code = the_data['code']
-    promotion_name = the_data['promotion_name']
     description = the_data['description']
     budget = the_data['budget']
     
@@ -39,10 +38,9 @@ def add_new_campaign():
     query += marketing_campaign_id + '", "'
     query += employee_id + ')'
     
-    query_2 = 'insert into promotions (discount_amount, code, name) values("'
+    query_2 = 'insert into promotions (discount_amount, code) values("'
     query_2 += discount_amount + '","'
-    query_2 += code + '","'
-    query_2 += promotion_name + ')'
+    query_2 += code +  ')'
 
     query_3 = 'insert into ads (description, budget) values("'
     query_3 += description + '","'
