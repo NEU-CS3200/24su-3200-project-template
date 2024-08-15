@@ -12,9 +12,6 @@ SideBarLinks()
 # Streamlit app title
 st.title("Hotel Email Finder")
 
-# Input field to enter the hotel destination
-destination = st.text_input("Enter the destination:")
-
 # Input field to enter the hotel name
 name = st.text_input("Enter the hotel name:")
 
