@@ -5,16 +5,17 @@ from backend.db_connection import db
 attractions = Blueprint("attractions", __name__)
 
 # Get recommended attractions based on price and ordered by rating
-@attractions.route('/rating/<max_price>', methods = ['GET'])
-def get_attractions(max_price):
+@attractions.route('/rating/<city_name>/<max_price>', methods = ['GET'])
+def get_attractions(city_name, max_price):
     cursor = db.get_db().cursor()
     the_query = '''
         SELECT attraction.price, attraction.address, attraction.name, attraction.rating
-        FROM attraction JOIN trip ON trip.city_id = attraction.city_id
+        FROM attraction JOIN city ON attraction.city_id = city.id
         WHERE attraction.price <= %s
+        AND city.name = %s
         ORDER BY rating DESC
     '''
-    cursor.execute(the_query, (max_price))
+    cursor.execute(the_query, (max_price), (city_name))
 
     theData = cursor.fetchall()
 

@@ -60,7 +60,8 @@ if st.button('Find your flight!', type='primary', use_container_width=True):
 if st.button('Find your hotel!', type='primary', use_container_width=True):
     if city_name:
         try:
-            result = requests.get(f'http://api:4000/h/hotel/{st.session_state["the_data"]["city_name"]}').json()
+            result = requests.get(f'http://api:4000/h/hotel/{st.session_state["the_data"]["city_name"]}/ \
+                                {st.session_state["the_data"]["hotel_budget"]}').json()
             st.dataframe(result)
             st.write('worked')
         except requests.exceptions.RequestException as e:
@@ -71,7 +72,8 @@ if st.button('Find your hotel!', type='primary', use_container_width=True):
 if st.button('Find your attraction!', type='primary', use_container_width=True):
     if city_name:
         try:
-            result = requests.get(f'http://api:4000/a/rating/{st.session_state["the_data"]["city_name"]}').json()
+            result = requests.get(f'http://api:4000/a/rating/{st.session_state["the_data"]["city_name"]}/ \
+                                {st.session_state["the_data"]["attraction_budget"]}').json()
             st.dataframe(result)
             st.write('worked')
         except requests.exceptions.RequestException as e:
