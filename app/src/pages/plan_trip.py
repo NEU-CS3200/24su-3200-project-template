@@ -31,8 +31,8 @@ with st.form("Create a trip"):
         data = {}
         data['city_name'] = city_name
         data['group_size'] = group_size
-        data['start_date'] = start_date
-        data['end_date'] = end_date
+        data['start_date'] = start_date.isoformat()
+        data['end_date'] = end_date.isoformat()
         data['name'] = name
         data['restaurant_budget'] = restaurant_budget
         data['attraction_budget'] = attraction_budget
@@ -42,7 +42,7 @@ with st.form("Create a trip"):
         st.write(data)
 
         try:
-            response = requests.post('http://api:4000/t/trip', json = data)
+            response = requests.post('http://api:4000/t/add_trip', json = data)
             st.success("Trip details submitted successfully!")
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
