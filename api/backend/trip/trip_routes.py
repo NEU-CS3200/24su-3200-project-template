@@ -7,15 +7,15 @@ from backend.ml_models.model01 import predict
 trip = Blueprint('trip', __name__)
 
 # Getting trips based on a user id
-@trip.route('/trip/<id>', methods =['GET']) #cat-works
-def get_trip(id):
+@trip.route('/trip/<user_id>', methods =['GET']) #cat-works
+def get_trip(user_id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
     the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_name
-        FROM trip JOIN user on trip.user_id = user.id
-        WHERE user.id like "{id}"
+        FROM trip
+        WHERE user_id = %s
     '''
-    cursor.execute(the_query)
+    cursor.execute(the_query, (user_id))
     theData = cursor.fetchall()
     
     the_response = make_response(theData)

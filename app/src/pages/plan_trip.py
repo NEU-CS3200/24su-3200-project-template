@@ -13,8 +13,6 @@ st.title("Time to plan your next trip!")
 st.write('')
 st.write('')
 
-# should have a statement for adding a new trip
-
 with st.form("Create a trip"):
     city_name = st.text_input("Input the city you would like to travel to.")
     group_size = st.number_input("List group size.", min_value=1, step=1, format="%d")
@@ -49,15 +47,32 @@ with st.form("Create a trip"):
         except requests.exceptions.RequestException as e:
             st.error(f"An error occurred: {e}")
 
-st.write('Based on your preferences, here are our recommendations!')
-if st.button('Find your flight!',
-              type = 'primary',
-              use_container_width = True):
-    result = requests.get('http://api:4000/f/get_flight').json()
-    st.dataframe(results)
+if submitted:
+    st.write('Based on your preferences, here are our recommendations!')
 
-if st.button('Find your hotel!',
-              type = 'primary',
-              use_container_width = True):
-    result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
-    st.dataframe(results)
+    if st.button('Find your flight!', type='primary', use_container_width=True):
+        try:
+            result = requests.get('http://api:4000/f/get_flight').json()
+            st.dataframe(result)
+        except requests.exceptions.RequestException as e:
+            st.error(f"An error occurred: {e}")
+
+    if st.button('Find your hotel!', type='primary', use_container_width=True):
+        if city_name:
+            try:
+                result = requests.get(f'http://api:4000/h/hotel/{city_name}').json()
+                st.dataframe(result)
+            except requests.exceptions.RequestException as e:
+                st.error(f"An error occurred: {e}")
+        else:
+            st.warning("Please input a city name to find a hotel.")
+
+    if st.button('Find your attraction!', type='primary', use_container_width=True):
+        if city_name:
+            try:
+                result = requests.get(f'http://api:4000/a/rating/{city_name}').json()
+                st.dataframe(result)
+            except requests.exceptions.RequestException as e:
+                st.error(f"An error occurred: {e}")
+        else:
+            st.warning("Please input a city name to find an attraction.")
