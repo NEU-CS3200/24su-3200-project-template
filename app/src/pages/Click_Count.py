@@ -24,6 +24,7 @@ if 'name' in data.columns and 'total_clicks' in data.columns:
     data_sorted = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
+    data_sorted = pd.DataFrame()  # Initialize with empty DataFrame if error
 
 # Fetch and process Restaurant Clicks data
 url = "http://api:4000/rc/restaurant_clicks"
@@ -36,6 +37,7 @@ if 'name' in data.columns and 'total_clicks' in data.columns:
     data_sorted_restaurants = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
+    data_sorted_restaurants = pd.DataFrame()  # Initialize with empty DataFrame if error
 
 # Fetch and process Attraction Clicks data
 url = "http://api:4000/ac/attraction_clicks"
@@ -48,6 +50,7 @@ if 'name' in data.columns and 'total_clicks' in data.columns:
     data_sorted_attractions = data.sort_values(by='total_clicks', ascending=False)
 else:
     st.error("Expected columns 'name' and 'total_clicks' not found in the data.")
+    data_sorted_attractions = pd.DataFrame()  # Initialize with empty DataFrame if error
 
 # Creating tabs for each bar graph
 tab1, tab2, tab3 = st.tabs(["Hotels", "Restaurants", "Attractions"])
