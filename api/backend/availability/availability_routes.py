@@ -7,40 +7,96 @@ from backend.db_connection import db
 #from app.src.pages.prediction_11 import submit_taForm
 #from backend.ml_models.model01 import predict
 
-availability = Blueprint('availability/<email>', __name__)
+availability = Blueprint('availability/', __name__)
 
-@availability.route('/availability/<email>', methods=['GET', 'POST'])
-def add_new_avail(email):
-    email = the_data['email']
+@availability.route('/avail', methods = ['GET'])
 
-    # query to get ta_id
-    # Use parameterized query to prevent SQL injection
-    query_id = '''SELECT ta_id
-                FROM TA
-                WHERE email=%s;'''
-    cursor.execute(query_id, (email))
+def get_all_avail():
+    current_app.logger.info('availability_routes.py: GET /avail')
+    cursor = db.get_db().cursor()
+    the_query = '''
+    SELECT *
+    FROM Availability;
+    '''
+    cursor.execute(the_query)
+    theData = cursor.fetchall()
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+@availability.route('/TA/avail/<email>', methods = ['GET'])
+# Showing the TA user their current availabilities 
+def get_ta_avail(email):
+    current_app.logger.info('availability_routes.py: GET /TA/avail')
+    cursor = db.get_db().cursor()
+    query_ta_id = '''SELECT ta_id
+                     FROM TA
+                     WHERE email=%s;'''
+    cursor.execute(query_ta_id, (email,))
     theData = cursor.fetchone()
-    
-    if theData:
-        ta_id = theData["ta_id"]
-    
-    # collecting data from the request object 
+    current_app.logger.info(f"ta_id fetched: {theData}")
+
+    if not theData:
+        return 'TA not found!', 404
+
+    ta_id = theData["ta_id"]
+    # Query to get availabilities given a ta's id 
+    the_query = '''SELECT day, time
+                FROM TAAvailability ta JOIN Availability a ON ta.availability_id=a.availability_id
+                JOIN Days d ON a.day_id = d.day_id
+                JOIN Time t ON a.time_id = t.time_id
+                WHERE ta_id=%s;'''
+    cursor.execute(the_query, (ta_id))
+    availData = cursor.fetchall()
+    the_response = make_response(availData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# add to ta availability 
+@availability.route('/<email>', methods=['POST'])
+def add_ta_availability(email):
+    # Collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
-    time = the_data['time_id']
-    day = the_data['day_id']
-    
-    # Constructing the query
-    query = 'INSERT INTO Availability(day_id, time_id) VALUES ("'
-    query += day + '", "' + time + '")'
-    current_app.logger.info(query)
+    # Extracting variables
+    time = the_data['time']
+    day = the_data['day']
 
-
-    # executing and committing the insert statement 
+    # Query to get ta_id using the inputted email
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    query_ta_id = '''SELECT ta_id
+                     FROM TA
+                     WHERE email=%s;'''
+    cursor.execute(query_ta_id, (email,))
+    theData = cursor.fetchone()
+    current_app.logger.info(f"ta_id fetched: {theData}")
+
+    if not theData:
+        return 'TA not found!', 404
+
+    ta_id = theData["ta_id"]
+
+    # Query to get availability_id using the inputted day and time
+    query_availability_id = '''SELECT availability_id
+                            FROM Availability a
+                            WHERE day_id = (SELECT day_id FROM Days WHERE day=%s)
+                            AND time_id = (SELECT time_id FROM Time WHERE time=%s);'''
+    cursor.execute(query_availability_id, (day, time))
+    availabilityData = cursor.fetchone()
+    current_app.logger.info(f"availability_id fetched: {availabilityData}")
+
+    if not availabilityData:
+        return 'Availability not found!', 404
+
+    availability_id = availabilityData["availability_id"]
+
+    # Add the TA availability entry
+    insert_ta_availability_query = '''INSERT INTO TAAvailability(ta_id, availability_id) 
+                                      VALUES (%s, %s);'''
+    cursor.execute(insert_ta_availability_query, (ta_id, availability_id))
     db.get_db().commit()
-    
-    return 'Success!'
+    return 'TA availability added successfully!', 201
+

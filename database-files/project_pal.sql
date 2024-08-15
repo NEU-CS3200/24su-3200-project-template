@@ -423,7 +423,6 @@ VALUES (1, 1),
        (1, 4),
        (2, 4),
        (2, 5),
-       # need to keep this availability!
        (5, 1);
 
 -- TAAvailability Data

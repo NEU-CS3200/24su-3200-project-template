@@ -13,23 +13,43 @@ SideBarLinks()
 st.title('Update your information')
 
 st.subheader('Availability')
-with st.form("Add new availability time slot"):
-  ta_email = st.text_input('Email: ')
-  avail_day = st.text_input('Day: ')
-  # ----- eventually hopefully this is a dropdown
-  avail_time = st.text_input('Time (Morning, Afternoon, or Night): ')
 
-  submitted = st.form_submit_button('Submit')
+# Create a form for adding or deleting a TA availability time slot
+with st.form("Manage TA availability time slot"):
+    ta_email = st.text_input('Email: ')
+    avail_day = st.text_input('Day (Monday - Sunday): ')
+    # ----- eventually, this could be a dropdown
+    avail_time = st.text_input('Time (Morning, Afternoon, or Night): ')
 
-if submitted:
+    # Two submit buttons: one for adding and one for deleting
+    add_submitted = st.form_submit_button('Add Availability')
+    delete_submitted = st.form_submit_button('Delete Availability')
+
+if add_submitted:
     data = {}
-    data['time_id'] = avail_time
-    data['day_id'] = avail_day
-    st.write(data)
+    data['time'] = avail_time     
+    data['day'] = avail_day   
+    st.write("Adding the following data:", data)
 
-    requests.post('http://api:4000/a/availability', json=data)
+    # Send the POST request with the TA's email included in the URL
+    response = requests.post(f'http://api:4000/a/{ta_email}', json=data)
 
+    # Check the response from the server
+    if response.status_code == 201:
+        st.success('TA availability added successfully!')
+    elif response.status_code == 404:
+        st.error('TA or Availability not found!')
+    else:
+        st.error(f'Failed to add TA availability: {response.status_code}')
 
+if delete_submitted:
+    data = {}
+    data['time'] = avail_time      
+    data['day'] = avail_day   
+    st.write("Deleting the following data:", data)
+    # ----- need to add in DELETE call
+
+# ------------- BREAK
 
 st.subheader('Specialty')
 with st.form("Update specialty"):
