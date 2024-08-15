@@ -14,6 +14,20 @@ try:
 except:
   st.write("Could not connect to database to get hotel clicks.")
 
+restaurant_clicks = requests.get('http://api:4000/rc/restaurant_clicks').json()
+
+try:
+  st.dataframe(restaurant_clicks)
+except:
+  st.write("Could not connect to database to get restaurant clicks.")
+
+attraction_clicks = requests.get('http://api:4000/ac/attraction_clicks').json()
+
+try:
+  st.dataframe(attraction_clicks)
+except:
+  st.write("Could not connect to database to get attraction clicks.")
+
 # st.write("# Accessing a REST API from Within Streamlit")
 # products = requests.get('http:appi:4000/p/products').json()
 
@@ -33,6 +47,7 @@ try:
   st.dataframe(hey)
 except:
   st.write("Error!")
+
 
 """
 Simply retrieving data from a REST api running in a separate Docker Container.
