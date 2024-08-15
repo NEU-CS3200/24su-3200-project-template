@@ -5,16 +5,19 @@ from backend.db_connection import db
 hotel_clicks = Blueprint('hotel_clicks', __name__)
 
 # Route to retrieve all clicks for hotels
-@hotel_clicks.route('/hotel_clicks/alldata', methods=['GET'])
-def get_all_hotel_clicks():
-    cursor = db.get_db().cursor()
+@hotel_clicks.route('/hotel_clicks/<hotel_id>', methods=['GET'])
+def get_all_hotel_clicks(hotel_id):
+    current_app.logger.info(f'hotel_clicks.py: GET /hotel_clicks/{hotel_id}')
+    cursor = db.get_db().cursor() 
 
-    # Execute a SQL query to fetch all records from the hotel_clicks table
-    cursor.execute('SELECT hotel_id, SUM(click_counter) AS total_clicks FROM hotel_clicks GROUP BY hotel_id')
+    # Execute a SQL query to fetch the sum of clicks for the specified hotel_id
+    the_query = '''SELECT SUM(click_counter) FROM hotel_clicks WHERE hotel_id = %s'''
+    cursor.execute(the_query, (hotel_id,))
     
-    clicks_data = cursor.fetchall()
+    theData = cursor.fetchone()  # Fetch the result, which should be a single value
 
-    the_response = make_response(jsonify(clicks_data))
-    the_response.status_code = 200  
-    the_response.mimetype = 'application/json'  
-    return the_response 
+    # Prepare the response
+    the_response = make_response(jsonify({'hotel_id': hotel_id, 'total_clicks': theData[0] if theData else 0}))
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
