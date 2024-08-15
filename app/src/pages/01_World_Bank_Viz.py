@@ -21,84 +21,84 @@ st.header('Input Your Data Below')
 # You can access the session state to make a more customized/personalized app experience
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
-# create a text entry field
-with st.form("Input Your Student Data"):
-    f_name = st.text_input("What's your First name?")
-    l_name = st.text_input("What's your Last name?")
-    email = st.text_input("Enter your NU Email?")
-    major = st.text_input("Enter your Major")
-    interests = st.text_input("What are you interested in?")
-    year = st.selectbox("What year are you",options=(1,2,3,4,5))
-    dorm = st.selectbox("Do you live on or Off Campus?",options=('True','False'))
+# # create a text entry field
+# with st.form("Input Your Student Data"):
+#     f_name = st.text_input("What's your First name?")
+#     l_name = st.text_input("What's your Last name?")
+#     email = st.text_input("Enter your NU Email?")
+#     major = st.text_input("Enter your Major")
+#     interests = st.text_input("What are you interested in?")
+#     year = st.selectbox("What year are you",options=(1,2,3,4,5))
+#     dorm = st.selectbox("Do you live on or Off Campus?",options=('True','False'))
 
-    # insert into availiblity table
-    time = st.selectbox(label = 'What Time Of Day?',options=('Morning','Afternoon','Night'))
-    days = st.multiselect("What Days Can you Meet?",
-                          options=('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
+#     # insert into availiblity table
+#     time = st.selectbox(label = 'What Time Of Day?',options=('Morning','Afternoon','Night'))
+#     days = st.multiselect("What Days Can you Meet?",
+#                           options=('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'))
 
-    submitted = st.form_submit_button("Submit")
-    updated = st.form_submit_button("Update")
-# Upon submission Update the Database with the information by using a put request
-    if submitted:
-        data = {}
-        data['f_name'] = f_name
-        data['l_name'] = l_name
-        data['email'] = email
-        data['day'] = major
-        data['interests'] = interests
-        data['year'] = year
-        data['dorm'] = dorm
+#     submitted = st.form_submit_button("Submit")
+#     updated = st.form_submit_button("Update")
+# # Upon submission Update the Database with the information by using a put request
+#     if submitted:
+#         data = {}
+#         data['f_name'] = f_name
+#         data['l_name'] = l_name
+#         data['email'] = email
+#         data['day'] = major
+#         data['interests'] = interests
+#         data['year'] = year
+#         data['dorm'] = dorm
 
-        response = requests.post('',json=data)
+#         response = requests.post('',json=data)
 
-        if response.status_code == 200:
-            st.write("Form Submitted Sucessfully")
-        else:
-            st.write("Failed to Submit")
+#         if response.status_code == 200:
+#             st.write("Form Submitted Sucessfully")
+#         else:
+#             st.write("Failed to Submit")
 
-        if submitted:
-            aval_data ={}
-            aval_data['time'] = time
-            aval_data['days'] = days
+#         if submitted:
+#             aval_data ={}
+#             aval_data['time'] = time
+#             aval_data['days'] = days
 
-            response = requests.post('http://api:4000/sa/stuAvailability',json=data)
+#             response = requests.post('http://api:4000/sa/stuAvailability',json=data)
 
-    if updated:
-        data_u = {}
-        data['f_name'] = f_name
-        data['l_name'] = l_name
-        data['email'] = email
-        data['major'] = major
-        data['interests'] = interests
-        data['year'] = year
-        data['dorm'] = dorm
+#     if updated:
+#         data_u = {}
+#         data['f_name'] = f_name
+#         data['l_name'] = l_name
+#         data['email'] = email
+#         data['major'] = major
+#         data['interests'] = interests
+#         data['year'] = year
+#         data['dorm'] = dorm
 
-        response = requests.put('http://api:4000/s/students',json=data_u)
+#         response = requests.put('http://api:4000/s/students',json=data_u)
 
-        if response.status_code == 200:
-            st.write("Form Updated Sucessfully")
-        else:
-            st.write("Failed Update Submit")
+#         if response.status_code == 200:
+#             st.write("Form Updated Sucessfully")
+#         else:
+#             st.write("Failed Update Submit")
 
-        if updated:
-            aval_data_u ={}
-            aval_data['time'] = time
-            aval_data['days'] = days
+#         if updated:
+#             aval_data_u ={}
+#             aval_data['time'] = time
+#             aval_data['days'] = days
 
-            response = requests.put('http://api:4000/sa/stuAvailability',json=aval_data_u)
+#             response = requests.put('http://api:4000/sa/stuAvailability',json=aval_data_u)
 
 st.title('Manage your availability')
 
 st.write('**Check your current availability**')
 with st.form("Current availability time slots"):
-    ta_email = st.text_input('Email: ')
+    email = st.text_input('Email: ')
 
     submitted = st.form_submit_button('Check')
     if submitted:
         try:
         # ---- turn this into a header 
             st.write("Here is your current availability:")
-            avail_data = requests.get(f'http://api:4000/a/avail/{ta_email}').json()
+            avail_data = requests.get(f'http://api:4000/a/avail/{email}').json()
             st.dataframe(avail_data)
         except:
             st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")
