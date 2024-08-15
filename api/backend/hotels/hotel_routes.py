@@ -34,7 +34,6 @@ def get_hotel(city_name, max_price):
     the_response.mimetype = 'application/json'
     return the_response
 
-<<<<<<< HEAD
 @hotel.route('/get_email/<name>', methods =['GET'])
 def get_hotel_email(name):
     current_app.logger.info('hotel_routes.py: GET /hotel')
@@ -69,8 +68,6 @@ def get_hotel_rating(rating, city_name):
    the_response = make_response(theData)
    the_response.status_code = 200
    the_response.mimetype = 'application/json'
-=======
->>>>>>> 441af941831746b382fb8cce17d0f86769963cdd
 
 @hotel.route('/add_review', methods=['POST'])
 def add_new_hotel_review():
