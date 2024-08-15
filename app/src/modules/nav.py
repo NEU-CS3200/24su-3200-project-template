@@ -20,7 +20,7 @@ def UpdateAccount():
     st.sidebar.page_link("pages/users.py", label = "Update Account", icon = "🌟")
 
 def Ratings():
-    st.sidebar.page_link("pages/ratings_page.py", label = "Ratings", icon = "🗒️")
+    st.sidebar.page_link("pages/ratings_page.py", label = "Ratings", icon = "💯")
 
 
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
@@ -86,9 +86,8 @@ def SideBarLinks(show_home=False):
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state['role'] == 'intern':
             PlanTrip()
-            SelectTrip()
-            UpdateAccount()
             Ratings()
+            UpdateAccount()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':

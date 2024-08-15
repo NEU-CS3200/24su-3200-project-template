@@ -11,7 +11,8 @@ trip = Blueprint('trip', __name__)
 def get_trip(user_id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_name
+    the_query = '''SELECT name, start_date, end_date, num_of_nights, city_name \
+        group_size
         FROM trip
         WHERE user_id = %s
     '''
