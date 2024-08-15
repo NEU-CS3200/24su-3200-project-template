@@ -14,7 +14,7 @@ def StudentHomeNav():
     st.sidebar.page_link("pages/00_student_Home.py", label="Student Home", icon='👤')
 
 def FormNav():
-    st.sidebar.page_link("pages/01_prefrence_form.py", label="Fill Out Preference Form", icon='📋')
+    st.sidebar.page_link("pages/01_prefrence_form.py", label="Update your major", icon='📋')
 
 def GroupNav():
     st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👨‍👨‍👦‍👦')

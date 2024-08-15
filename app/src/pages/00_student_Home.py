@@ -17,7 +17,7 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('Fill Out A Form',
+if st.button('Update your major',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/01_prefrence_form.py')
