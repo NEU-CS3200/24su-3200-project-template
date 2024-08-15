@@ -402,15 +402,14 @@ VALUES ('Morning'),
        ('Night');
 
 -- Availability Data
-INSERT INTO Availability(day_id, time_id)
-VALUES (1, 1), -- monday morning
-       (5, 3), -- friday night
-       (2, 2),
-       (3, 1),
-       (6, 2),
-       (2, 1),
-       (3, 2),
-       (5, 1);
+INSERT INTO Availability (time_id, day_id)
+VALUES (1, 1), (2, 2), (3, 3),
+       (1, 4), (2, 5),(3, 6),
+       (1, 7), (2, 1),(3, 2),
+       (1, 3), (2, 4), (3, 5),
+       (1, 6), (2, 7), (3, 1),
+       (1, 2),(2, 3), (3, 4),
+       (1, 5),(2, 6),(3, 7);
 
 -- StudentAvailability Data
 INSERT INTO StudentAvailability(availability_id, student_id)
