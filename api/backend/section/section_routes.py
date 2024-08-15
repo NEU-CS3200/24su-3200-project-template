@@ -42,19 +42,20 @@ def get_prof_students(prof_id):
     sections = cursor.fetchall()
     return jsonify(sections)
 
-# Get all students in a specific section
-@sections.route('/sections/<int:section_num>/<string:semester_year>/students', methods=['GET'])
-def get_students_in_section(section_num, semester_year):
+# Updated route for fetching students in a specific section
+@sections.route('/sections/<int:section_num>/students', methods=['GET'])
+def get_students_in_section(section_num):
     cursor = db.get_db().cursor()
     query = '''
         SELECT s.student_id, s.first_name, s.last_name, s.email
         FROM Student s
         JOIN StudentSection ss ON s.student_id = ss.student_id
-        WHERE ss.section_num = %s AND ss.semester_year = %s
+        WHERE ss.section_num = %s
     '''
-    cursor.execute(query, (section_num, semester_year))
+    cursor.execute(query, (section_num,))
     students = cursor.fetchall()
     return jsonify(students)
+
 
 # Add a new section (for admin purposes)
 @sections.route('/sections', methods=['POST'])
