@@ -50,7 +50,7 @@ st.write('')
 
 with st.form("Create Marketing Campaign"):
     name = st.text_input("Input the name of the Marketing Campaign you would like to create.")
-    description = st.text.input("Ad description")
+    description = st.text_input("Ad description")
     budget = st.number_input("What is the budget for this Ad?", min_value=0.0, format="%.2f")
     code = st.number_input("Insert promotion code")
     name = st.text_input("Insert the name of the promotion")
