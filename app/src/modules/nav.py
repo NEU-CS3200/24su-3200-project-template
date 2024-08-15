@@ -17,13 +17,13 @@ def FormNav():
     st.sidebar.page_link("pages/01_prefrence_form.py", label="Fill Out Preference Form", icon='📋')
 
 def GroupNav():
-    st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👥')
+    st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👨‍👨‍👦‍👦')
 def SchedulingTaskNav():
     st.sidebar.page_link("pages/Scheduler_Tracker.py", label="Tasks + Scheduling", icon='🗓')
 
 ## ------------------------ Examples for Role of TA ------------------------
 def SpecialTaNav():
-    st.sidebar.page_link("pages/12_Special_Ta.py", label="Specialty", icon='🌟')
+    st.sidebar.page_link("pages/12_Special_Ta.py", label="Specialty", icon='💡')
 
 def AvailabilityTaNav():
     st.sidebar.page_link("pages/11_Availability_Ta.py", label="Availability", icon='🗓')
@@ -35,7 +35,7 @@ def UpdateTANav():
 def AdminPageNav():
     st.sidebar.page_link("pages/20_Professor_Home.py", label="Home", icon='🏠')
     st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='My Students', icon='📕')
-    st.sidebar.page_link("pages/22_Section_Data.py", label="My Sections", icon='🗳')
+    st.sidebar.page_link("pages/22_Section_Data.py", label="My Sections", icon='🔠')
     st.sidebar.page_link("pages/23_Submission_Data.py", label="Student Submissions", icon='📑')
 
 
@@ -82,7 +82,7 @@ def SideBarLinks(show_home=False):
 
     if st.session_state["authenticated"]:
         # Always show a logout button if there is a logged in user
-        if st.sidebar.button("Logout"):
+        if st.sidebar.button("Change User Type"):
             del st.session_state['role']
             del st.session_state['authenticated']
             st.switch_page('Home.py')

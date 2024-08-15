@@ -7,7 +7,7 @@ import pandas as pd
 import pydeck as pdk
 from urllib.error import URLError
 from modules.nav import SideBarLinks
-
+from st_aggrid import AgGrid
 SideBarLinks()
 
 # add the logo
@@ -17,10 +17,17 @@ add_logo("assets/logo.png", height=400)
 st.markdown("# Find Your Similar Students")
 st.sidebar.header("Find Students with similar interests")
 
-st.selectbox("what attributes should your teammates have",options=('C++','Java'))
 
-try: 
-    data = requests.get('http://api:4000/s/students').json()
+
+
+data_2 = requests.get(f'http://api:4000/sp/speciality/').json()
+df = pd.json_normalize(data_2)
+speciality = st.selectbox("what attributes should your teammates have",options=(df))
+
+try:
+    data = requests.get(f'http://api:4000/s/students/{speciality}').json()
     st.dataframe(data)
+
+
 except:
     st.write('ERROR')
