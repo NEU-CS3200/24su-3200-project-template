@@ -10,6 +10,9 @@ st.set_page_config(layout = 'wide')
 SideBarLinks()
 
 # ----------- this just gets the sections that a given professor is teaching 
+st.title('See My Students')
+st.write('')
+st.write('Feel free to sort by section in the data below')
 with st.form("Section Data "):
   prof_id = st.text_input('ID: ')
 
@@ -17,14 +20,14 @@ with st.form("Section Data "):
 
 st.write('')
 if submitted:
-    st.write(f"ID: {prof_id}")
+    st.write(f"Your ID: {prof_id}")
     try:
         # ---- turn this into a header 
         st.write("Here are the current sections:")
-        ta_data = requests.get(f'http://api:4000/sec/{prof_id}/sections').json()
-        st.dataframe(ta_data)
+        students_data = requests.get(f'http://api:4000/sec/{prof_id}/students').json()
+        st.dataframe(students_data)
     except:
-        st.write("Could not connect to the database to get sections, you may not be teaching a section.")
+        st.write("Could not connect to the database to get your students, you may not be teaching a section.")
 
 # # Fetch sections assigned to the professor using the API
 # def fetch_sections(professor_id):
