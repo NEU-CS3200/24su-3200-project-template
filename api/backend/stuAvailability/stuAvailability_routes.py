@@ -10,14 +10,14 @@ stuAvailability = Blueprint('stuAvailability', __name__)
 
 @stuAvailability.route('/stuAvailability', methods = ['GET'])
 
+# Get a list of all listed student availabilities 
 def get_all_stuAvailability():
     current_app.logger.info('stuAvailability_routes.py: GET /stuAvailability')
     cursor = db.get_db().cursor()
     the_query = '''
-    SELECT sa.availability_id, student_id, day, location, time
+    SELECT sa.availability_id, student_id, day, time
     FROM StudentAvailability sa JOIN Availability a ON sa.availability_id=a.availability_id
     JOIN Days d ON a.day_id=d.day_id
-    JOIN Location l ON a.location_id=l.location_id
     JOIN Time t on a.time_id=t.time_id;
     '''
     cursor.execute(the_query)
@@ -27,6 +27,7 @@ def get_all_stuAvailability():
     the_response.mimetype = 'application/json'
     return the_response
 
+# --------add in comment!
 @stuAvailability.route('/stuAvailability', methods=['PUT'])
 def update_customer():
     current_app.logger.info('PUT /students route')

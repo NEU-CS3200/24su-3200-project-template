@@ -30,9 +30,3 @@ if st.button('Join A Group and Schedule Meetings',
 if st.button('Scheduling and Task List',
              type='primary',use_container_width=True):
   st.switch_page('pages/Scheduler_Tracker.py')
-
-student_data = requests.get('http://api:4000/sa/stuAvailability').json()
-try:
-  st.dataframe(student_data)
-except:
-  st.write("Could not connect to db to retrive students!")
