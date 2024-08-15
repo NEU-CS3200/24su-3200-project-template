@@ -11,11 +11,12 @@ def get_attractions(city_name, max_price):
     the_query = '''
         SELECT attraction.price, attraction.address, attraction.name, attraction.rating
         FROM attraction JOIN city ON attraction.city_id = city.id
-        WHERE attraction.price <= %s
-        AND city.name = %s
+        WHERE city.name = %s 
+        AND attraction.price <= %s 
         ORDER BY rating DESC
     '''
-    cursor.execute(the_query, (max_price), (city_name))
+    data = (city_name, max_price)
+    cursor.execute(the_query, data)
 
     theData = cursor.fetchall()
 
