@@ -10,7 +10,6 @@ from backend.flights.flight_routes import flights
 from backend.hotels.hotel_routes import hotel
 from backend.attractions.attraction_routes import attractions
 from backend.hotel_clicks.hotel_clicks_routes import hotel_clicks
-from backend.location.location_routes import locations
 from backend.trip.trip_routes import trip
 from backend.attraction_clicks.attraction_clicks import attraction_clicks
 from backend.restaurant_clicks.restaurant_clicks_routes import restaurant_clicks
@@ -125,7 +124,6 @@ def create_app():
     app.register_blueprint(employees,    url_prefix='/e')
     app.register_blueprint(marketing_campaign,    url_prefix='/mc')
     app.register_blueprint(city_clicks, url_prefix='/cc')
-    app.register_blueprint(locations, url_prefix='/l')
     app.register_blueprint(city, url_prefix='/c')
     app.register_blueprint(restaurant, url_prefix='/r')
 
