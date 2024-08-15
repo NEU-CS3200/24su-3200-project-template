@@ -10,6 +10,7 @@ from backend.ta.ta_routes import ta
 from backend.professor.professor_routes import professors
 from backend.availability.availability_routes import availability
 from backend.section.section_routes import sections
+from backend.submissions.submission_routes import submissions
 import os
 from dotenv import load_dotenv
 
@@ -103,7 +104,7 @@ def create_app():
     app.register_blueprint(ta,   url_prefix='/t')
     app.register_blueprint(professors, url_prefix='/p')
     app.register_blueprint(availability, url_prefix='/a')
-    app.register_blueprint(sections, url_prefix='/sec')
+    # app.regsiter_blueprint(sections, url_prefix='/sec')
 
     # Don't forget to return the app object
     return app
