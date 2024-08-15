@@ -54,8 +54,6 @@ def update_account(id):
         UPDATE users SET email = "{email}", address = "{address}", username = "{username}"
         WHERE id = {id}
     '''
-    # query = 'UPDATE customers SET email = %s, address = %s, username = %s where id = %s'
-    # data = (email, address, username, user_id)
     cursor = db.get_db().cursor()
     r = cursor.execute(query)
     db.get_db().commit()
