@@ -36,7 +36,7 @@ if st.button("Get Hotel Email"):
         elif response.status_code == 404:
             st.error("Hotel not found! Please try again with a different hotel name.")
         else:
-            st.error("Failed to retrieve hotels. Please try again later.")
+            st.error("Failed to retrieve hotel. Please try again later.")
 
 # Creates a form to create a marketing campaign based off of the most clicked on
 st.title("Create a Hotel Marketing Campaign")
