@@ -36,3 +36,4 @@ if submitted:
         st.dataframe(help_data)
     except:
         st.write("Could not connect to the database to retrieve TA id! Make sure there are no typos in the form.")
+

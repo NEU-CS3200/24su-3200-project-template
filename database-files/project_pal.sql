@@ -314,7 +314,7 @@ VALUES ('Make a functional data-driven application and be original!', 1),
        ('See the linked instructions doc for the final risk management group project', 2);
 
 -- TA Data
-INSERT INTO TA (first_name, last_name, email, section_num, semester_year, course_id)
+INSERT INTO TA(first_name, last_name, email, section_num, semester_year, course_id)
 VALUES
     ('Timmy', 'Johnson', 'john.timmy@northeastern.edu', 2, 'Spring 2025', 29),
     ('Merle', 'Cheeld', 'mcheeld0@weather.com', 1, 'Spring 2025', 3),
