@@ -36,7 +36,7 @@ DB_Password = your_database_password
 docker-compose up -d
 
 ## Loading the dataaset: 
-Run the SQL file named Condensed Files(in order).sql in order to load all the data into the database. 
+Run the SQL file named consolidated_datasets.sql in order to load all the data into the database. 
 
 ## Accessing the application: 
 You can access the application by opening a web browser and navigating to http://localhost:8501/
