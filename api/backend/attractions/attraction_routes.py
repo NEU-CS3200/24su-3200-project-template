@@ -9,7 +9,7 @@ attractions = Blueprint("attractions", __name__)
 def get_attractions(city_name, max_price):
     cursor = db.get_db().cursor()
     the_query = '''
-        SELECT attraction.price, attraction.address, attraction.name, attraction.rating
+        SELECT attraction.price, attraction.address, attraction.name, attraction.rating, attraction.city_id
         FROM attraction JOIN city ON attraction.city_id = city.id
         WHERE city.name = %s 
         AND attraction.price <= %s 
