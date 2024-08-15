@@ -104,7 +104,7 @@ def create_app():
     app.register_blueprint(ta,   url_prefix='/t')
     app.register_blueprint(professors, url_prefix='/p')
     app.register_blueprint(availability, url_prefix='/a')
-    # app.regsiter_blueprint(sections, url_prefix='/sec')
+    app.regsiter_blueprint(sections, url_prefix='/sec')
 
     # Don't forget to return the app object
     return app
