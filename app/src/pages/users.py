@@ -9,20 +9,32 @@ st.set_page_config(layout = 'wide')
 # Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-st.title(f"Welcome, {st.session_state['first_name']}.")
+st.title(f"Hi, {st.session_state['first_name']}. Would you like to update your account information?")
 st.write('')
 st.write('')
 
-if st.button('Plan your next trip',
-              type = 'primary',
-              use_container_width = True):
-   st.switch_page('pages/plan_trip.py')
+address_col = st.columns(1)
+with address_col[0]:
+    address = st.text_input('New Origin Address:')
 
-if st.button('Look through your previous trips',
-                type = 'primary',
-                use_container_width = True):
-    st.switch_page('pages/select_trip.py')
+username_col = st.columns(1)
+with username_col[0]:
+    username = st.text_input('New Username:')
 
-address = st.columns(1)
-with address:
-    address = st.input('Address:')
+email_col = st.columns(1)
+with email_col[0]:
+    email = st.text_input('New Email:')
+
+logger.info(f'id = {st.session_state['id']}')
+logger.info(f'address = {address}')
+logger.info(f'username = {username}')
+logger.info(f'email = {email}')
+
+if st.button('Update!',
+             type='primary',
+             use_container_width=True):
+    try:
+        results = requests.get('http://api:4000/u/update_account').json()
+        st.dataframe(results)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
