@@ -13,7 +13,9 @@ SideBarLinks()
 st.title("Hotel Email Finder")
 
 # Input field to enter the hotel name
-name = st.text_input("Enter the hotel name:")
+name_col = st.columns(1)
+with name_col[0]:
+    name = st.text_input("Enter the hotel name:")
 
 # Button to find the email
 if st.button("Get Hotel Email"):
@@ -21,22 +23,23 @@ if st.button("Get Hotel Email"):
         st.error("Please enter the hotel name.")
     else:
         # Make a request to the API (assuming it requires destination and hotel name, but we will only use hotel name here)
-        response = requests.get(f'http://api:4000/h/hotel/{name}')
+        response = requests.get(f'http://api:4000/h/get_email/{name}')
+        st.dataframe(response)
 
-        if response.status_code == 200:
-            hotels = response.json()
+        # if response.status_code == 200:
+        #     hotels = response.json()
             
-            # Search for the hotel by name
-            hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
+        #     # Search for the hotel by name
+        #     hotel_email = next((hotel['email'] for hotel in hotels if hotel['name'].lower() == name.lower()), None)
             
-            if hotel_email:
-                st.success(f"The email for {name} is: {hotel_email}")
-            else:
-                st.error("Hotel not found! Please check the name and try again.")
-        elif response.status_code == 404:
-            st.error("Hotel not found! Please try again with a different hotel name.")
-        else:
-            st.error("Failed to retrieve hotel. Please try again later.")
+        #     if hotel_email:
+        #         st.success(f"The email for {name} is: {hotel_email}")
+        #     else:
+        #         st.error("Hotel not found! Please check the name and try again.")
+        # elif response.status_code == 404:
+        #     st.error("Hotel not found! Please try again with a different hotel name.")
+        # else:
+        #     st.error("Failed to retrieve hotel. Please try again later.")
 
 # Creates a form to create a marketing campaign based off of the most clicked on
 st.title("Create a Hotel Marketing Campaign")
