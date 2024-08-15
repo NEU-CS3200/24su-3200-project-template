@@ -7,6 +7,13 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
+hotel_clicks = requests.get('http://api:4000/hc/hotel_clicks').json()
+
+try:
+  st.dataframe(hotel_clicks)
+except:
+  st.write("Could not connect to database to get hotel clicks.")
+
 # st.write("# Accessing a REST API from Within Streamlit")
 # products = requests.get('http:appi:4000/p/products').json()
 

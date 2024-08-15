@@ -36,6 +36,9 @@ def PredictionNav():
 def ClassificationNav():
     st.sidebar.page_link("pages/13_Classification.py", label="Classification Demo", icon='🌺')
 
+def Click_Count():
+    st.sidebar.page_link("pages/Click_Count.py", label="Click Count Graphs")
+
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon='🖥️')
