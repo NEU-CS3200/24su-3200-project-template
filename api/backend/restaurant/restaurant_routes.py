@@ -31,6 +31,22 @@ def get_restaurant(trip_id):
     the_response.mimetype = 'application/json'
     return the_response
 
+#Get a restaurant given a rating 
+@restaurant.route('/restaurant_rating/<rating>', methods=['GET'])
+def get_restaurant_rating(rating): 
+    #current_app.logger.info('GET /customers/<userID> route')
+    cursor = db.get_db().cursor()
+    the_query = '''SELECT name, average_price, address, rating 
+           FROM restaurant 
+           WHERE rating = %s
+           ORDER BY average_price ASC'''
+    cursor.execute(the_query, (rating,))
+
+    theData = cursor.fetchall()
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
 #FROM restaurant
 @restaurant.route('/add_review', methods=['POST'])
 def add_new_restaurant_review():

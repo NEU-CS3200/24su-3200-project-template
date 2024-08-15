@@ -17,10 +17,12 @@ name = st.text_input("Enter the hotel name:")
 
 # Button to find the email
 if st.button("Get Hotel Email"):
-    if destination:
-        # Request hotels data from the Flask backend
+    if not name:
+        st.error("Please enter the hotel name.")
+    else:
+        # Make a request to the API (assuming it requires destination and hotel name, but we will only use hotel name here)
         response = requests.get(f'http://api:4000/h/hotel/{destination}')
-        
+
         if response.status_code == 200:
             hotels = response.json()
             
@@ -33,13 +35,10 @@ if st.button("Get Hotel Email"):
                 st.error("Hotel not found! Please check the name and try again.")
         else:
             st.error("Failed to retrieve hotels. Please try again later.")
-    else:
-        st.error("Please enter a destination.")
 
 
 
-
-
+# Creates a form to create a marketing campaign based off of the most clicked on
 st.title("Create a Hotel Marketing Campaign")
 st.write('')
 st.write('')

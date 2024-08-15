@@ -24,7 +24,7 @@ def get_trip(user_id):
     return the_response
 
 #FROM trip
-@trip.route('/update_trip', methods=['POST']) 
+@trip.route('/add_trip', methods=['POST']) 
 def add_new_trip():
     
     # collecting data from the request object 
@@ -39,28 +39,31 @@ def add_new_trip():
     restaurant_budget = the_data['restaurant_budget']
     attraction_budget = the_data['attraction_budget']
     hotel_budget = the_data['hotel_budget']
+    flight_budget = the_data['flight_budget']
     num_of_nights = the_data['num_of_nights']
     #city_id = the_data['city_id']
     city_name = the_data['city_name']
 
     # Constructing the query
-    query = 'insert into trip (start_date, end_date, group_size, name, restaurant_budget, attraction_budget, num_of_nights, city_name) values ("'
+    query = 'insert into trip (start_date, end_date, group_size, name, hotel_budget, city_name, \
+    restaurant_budget, attraction_budget, flight_budget, num_of_nights) values ("'
     query += start_date + '", "'
     query += end_date + '", "'
     query += group_size + '", '
     query += name + '", '
+    query += hotel_budget + ','
     query += city_name + '", '
-    query += str(restaurant_budget) + ')'
-    query += str(attraction_budget) + ')'
-    query += str(hotel_budget) + ')'
+    query += restaurant_budget + ','
+    query += attraction_budget + ','
+    query += flight_budget + ','
+    query += num_of_nights + ')'
     current_app.logger.info(query)
 
     # executing and committing the insert statement 
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    
-    return 'Success!'
+    return 'Success'
 
 @trip.route('/delete_trip/<trip_name>', methods=['DELETE'])
 def delete_trip(trip_name):
@@ -71,8 +74,4 @@ def delete_trip(trip_name):
         return jsonify({'message': 'Trip deleted successfully'}), 200
     else:
         return jsonify({'error': 'Trip not found'}), 404
-
-#ADD THIS TO rest_entry.py
-# app.register_blueprint(trip,    url_prefix='/t')
-
 

@@ -16,6 +16,9 @@ def PlanTrip():
 def SelectTrip():
     st.sidebar.page_link("pages/plan_trip.py", label = "Plan Trip", icon = "✈️")
 
+def UpdateAccount():
+    st.sidebar.page_link("pages/users.py", label = "Update Account", icon = "🌟")
+
 #### ------------------------ Examples for Role of pol_strat_advisor ------------------------
 def PolStratAdvHomeNav():
     st.sidebar.page_link("pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon='👤')
@@ -74,11 +77,13 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'student':
             PlanTrip()
             SelectTrip()
+            UpdateAccount()
 
         # If the user role is usaid worker, show the Api Testing page
         if st.session_state['role'] == 'intern':
             PlanTrip()
             SelectTrip()
+            UpdateAccount()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':

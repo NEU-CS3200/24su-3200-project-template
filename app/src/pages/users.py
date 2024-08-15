@@ -3,6 +3,7 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
 
 st.set_page_config(layout = 'wide')
 
@@ -25,16 +26,24 @@ email_col = st.columns(1)
 with email_col[0]:
     email = st.text_input('New Email:')
 
-logger.info(f'id = {st.session_state['id']}')
-logger.info(f'address = {address}')
-logger.info(f'username = {username}')
-logger.info(f'email = {email}')
+data = {
+    'id': st.session_state.get('id', ''),
+    'address': address,
+    'username': username,
+    'email': email
+}
+
+logger.info(f'id = {data["id"]}')
+logger.info(f'address = {data["address"]}')
+logger.info(f'username = {data["username"]}')
+logger.info(f'email = {data["email"]}')
 
 if st.button('Update!',
              type='primary',
              use_container_width=True):
+    st.write(data)
     try:
-        results = requests.get('http://api:4000/u/update_account').json()
-        st.dataframe(results)
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+        response = requests.put('http://api:4000/u/update_account', json = data)
+        st.success("Account information updated successfully!")
+    except requests.exceptions.RequestException as e:
+            st.error(f"An error occurred: {e}")
