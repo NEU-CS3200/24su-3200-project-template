@@ -12,10 +12,10 @@ def get_trip(id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
     the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_name
-        FROM trip 
-        WHERE id = %s
+        FROM trip JOIN user on trip.user_id = user.id
+        WHERE user.id like "{id}"
     '''
-    cursor.execute(the_query, id)
+    cursor.execute(the_query)
     theData = cursor.fetchall()
     
     the_response = make_response(theData)
