@@ -10,3 +10,5 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 st.title("Find students on campus")
+
+

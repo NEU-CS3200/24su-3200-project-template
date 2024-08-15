@@ -17,13 +17,13 @@ def FormNav():
     st.sidebar.page_link("pages/01_prefrence_form.py", label="Update your major", icon='📋')
 
 def GroupNav():
-    st.sidebar.page_link("pages/02_find_similar_students.py", label="Join A Group", icon='👨‍👨‍👦‍👦')
+    st.sidebar.page_link("pages/02_find_similar_students.py", label="Find by specialty", icon='👨‍👨‍👦‍👦')
 
 def SchedulingTaskNav():
     st.sidebar.page_link("pages/Scheduler_Tracker.py", label="Tasks + Scheduling", icon='🗓')
 
 def OnCampusNav():
-    st.sidebar.page_link("pages/03_find_oc.py", label="Find students on campus", icon='🏫')
+    st.sidebar.page_link("pages/03_find_oc.py", label="Find by on-campus", icon='🏫')
 
 ## ------------------------ Examples for Role of TA ------------------------
 def SpecialTaNav():

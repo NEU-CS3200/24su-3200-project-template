@@ -22,15 +22,16 @@ if st.button('Update your major',
              use_container_width=True):
   st.switch_page('pages/01_prefrence_form.py')
 
-if st.button('Join A Group and Schedule Meetings',
+if st.button('Find students based on specialty',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/02_find_similar_students.py')
+
+if st.button('Find students on campus',
+             type='primary', use_container_width=True):
+  st.switch_page('pages/03_find_oc.py')
 
 if st.button('Scheduling and Task List',
              type='primary',use_container_width=True):
   st.switch_page('pages/Scheduler_Tracker.py')
 
-  if st.button('Find students on campus',
-             type='primary',use_container_width=True):
-    st.switch_page('pages/03_find_oc.py')
