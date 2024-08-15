@@ -22,7 +22,7 @@ st.sidebar.header("Find Students with similar interests")
 
 data_2 = requests.get(f'http://api:4000/sp/speciality/').json()
 df = pd.json_normalize(data_2)
-speciality = st.selectbox("what attributes should your teammates have",options=(df))
+speciality = st.selectbox("What attributes are you looking for?",options=(df))
 
 try:
     data = requests.get(f'http://api:4000/s/students/{speciality}').json()
@@ -30,4 +30,4 @@ try:
 
 
 except:
-    st.write('ERROR')
+    st.write('There are no students that match this criteria')
