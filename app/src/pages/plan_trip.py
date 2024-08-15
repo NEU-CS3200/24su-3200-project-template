@@ -23,11 +23,10 @@ with st.form("Create a trip"):
     restaurant_budget = st.number_input("What is your budget for eating out at restaurants?")
     attraction_budget = st.number_input("What is your budget for attractions?")
     hotel_budget = st.number_input("What is your hotel budget?")
-    flight_budget = st.number_input("What is your flight?")
+    flight_budget = st.number_input("What is your flight budget?")
     num_of_nights = st.number_input("How many nights is your trip?")
     
-
-    submitted = st.fomr_submit_button("Submit")
+    submitted = st.form_submit_button("Submit")
 
     if submitted:
         data = {}

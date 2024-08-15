@@ -8,7 +8,7 @@ trip = Blueprint('trip', __name__)
 
 # Getting trips based on a user id
 @trip.route('/trip/<id>', methods =['GET']) #cat-works
-def get_trip():
+def get_trip(id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
     the_query = '''SELECT start_date, end_date, name, restaurant_budget, attraction_budget, num_of_nights, city_name
