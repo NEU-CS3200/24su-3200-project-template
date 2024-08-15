@@ -63,6 +63,7 @@ create table if not exists hotel (
     name varchar(255),
     rating integer,
     city_id integer,
+    city_name varchar(255) unique,
     constraint fk_5 foreign key (city_id) references city(id) on update cascade
 );
 
