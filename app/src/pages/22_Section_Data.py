@@ -1,5 +1,6 @@
 import logging
 import streamlit as st
+import pandas as pd
 import requests
 from modules.nav import SideBarLinks
 
@@ -29,3 +30,12 @@ if submitted:
     except:
         st.write("Could not connect to the database to get your students, you may not be teaching a section.")
 
+df = pd.DataFrame(
+    [
+        {"command": "st.selectbox", "rating": 4, "is_widget": True},
+        {"command": "st.balloons", "rating": 5, "is_widget": False},
+        {"command": "st.time_input", "rating": 3, "is_widget": True}, 
+    ]
+)
+
+st.dataframe(df, use_container_width = True)
