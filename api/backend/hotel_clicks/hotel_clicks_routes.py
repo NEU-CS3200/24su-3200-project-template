@@ -19,7 +19,7 @@ def get_hotel_clicks():
     cursor.execute(the_query)
 
     # Fetch the result, which should be a single value
-    clicks_data = cursor.fetchone()
+    clicks_data = cursor.fetchall()
 
     # Prepare the response
     the_response = make_response(clicks_data)

@@ -19,7 +19,7 @@ def get_restaurant_clicks():
     cursor.execute(the_query)
 
     # Fetch the data from the query result
-    clicks_data = cursor.fetchone()
+    clicks_data = cursor.fetchall()
 
     # Prepare the response
     the_response = make_response(jsonify(clicks_data))

@@ -18,7 +18,7 @@ def get_attraction_clicks():
     Limit 5'''
     cursor.execute(the_query)
 
-    clicks_data = cursor.fetchone()
+    clicks_data = cursor.fetchall()
 
     the_response = make_response(jsonify(clicks_data))
     the_response.status_code = 200
