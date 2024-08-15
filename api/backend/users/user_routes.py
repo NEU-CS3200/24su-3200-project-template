@@ -41,17 +41,17 @@ def create_account():
     return 'Success!'
 
 # Update the users account details
-@users.route('/update_account/id', methods = ['PUT'])
+@users.route('/update_account/<id>', methods = ['PUT'])
 def update_account(id):
     current_app.logger.info('PUT /users route')
     user_info = request.json
 
     email = user_info['email']
-    address = the_data['address']
-    username = the_data['username']
+    address = user_info['address']
+    username = user_info['username']
 
     query = '''
-        UPDATE customers SET email = "{email}", address = "{address}", username = "{username}"
+        UPDATE users SET email = "{email}", address = "{address}", username = "{username}"
         WHERE id = {id}
     '''
     # query = 'UPDATE customers SET email = %s, address = %s, username = %s where id = %s'
