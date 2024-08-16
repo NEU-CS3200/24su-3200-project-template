@@ -131,8 +131,8 @@ CREATE TABLE IF NOT EXISTS Student (
 CREATE TABLE IF NOT EXISTS StudentSpeciality (
     student_id INT,
     specialty_id INT,
-    FOREIGN KEY (student_id) REFERENCES Student(student_id) ON UPDATE restrict ON DELETE restrict,
-    FOREIGN KEY (specialty_id) REFERENCES Speciality(specialty_id) ON UPDATE restrict ON DELETE restrict
+    FOREIGN KEY (student_id) REFERENCES Student(student_id),
+    FOREIGN KEY (specialty_id) REFERENCES Speciality(specialty_id)
 );
 
 -- StudentSection Table (Bridge Table)
@@ -335,12 +335,13 @@ VALUES ('Python'),
        ('Object-Oriented Design'),
        ('Accounting'),
        ('Risk management'),
-       ('investments'),
-       ('wet lab experience'),
-       ('data analysis'),
-       ('organic chemistry'),
+       ('Investments'),
+       ('Wet Lab Experience'),
+       ('Data Dnalysis'),
+       ('Organic Chemistry'),
        ('Figma'),
-       ('illustrator');
+       ('Illustrator'),
+       ('C++');
 
 -- TA Specialty Data
 INSERT INTO TASpecialty(ta_id, specialty_id)
@@ -450,6 +451,11 @@ VALUES (1, 1),
        (2, 1),
        (3, 7),
        (3, 8);
+-- from mockaroo
+INSERT INTO StudentSpeciality (student_id, specialty_id)
+VALUES (1, 2), (32, 5), (2, 11), (24, 5), (25, 12), (39, 3),
+       (19, 8), (22, 5), (3, 9), (13, 1), (27, 12), (35, 11),
+       (36, 2), (29, 3), (22, 6);
 
 -- Student Section Data
 INSERT INTO StudentSection(student_id, section_num, semester_year, course_id)
@@ -471,10 +477,9 @@ VALUES (1, 2, 'Spring 2025', 29), -- keep this value!
        (40, 1, 'Fall 2024', 13),
        (1, 1, 'Fall 2024', 13),
        (18, 1, 'Fall 2024', 13);
-# ----- need to fix mockoroo data file
 
 -- Days Data
--- data exhaustive, can't insert anymore data bc there are only 7 days in a week
+-- data exhausted, can't insert anymore data bc there are only 7 days in a week
 INSERT INTO Days(day)
 VALUES ('Monday'),
        ('Tuesday'),
@@ -485,7 +490,7 @@ VALUES ('Monday'),
        ('Sunday');
 
 -- Time Data
--- data exhaustive, can't insert anymore data bc only 3 time options
+-- data exhausted, can't insert anymore data bc only 3 time options
 INSERT INTO Time(time)
 VALUES ('Morning'),
        ('Afternoon'),

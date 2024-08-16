@@ -24,7 +24,7 @@ if submitted:
     st.write(f"Your Email: {prof_email}")
     try:
         # ---- turn this into a header 
-        st.write("Here are the current sections:")
+        st.write("Here are the current students in your section(s):")
         students_data = requests.get(f'http://api:4000/sec/{prof_email}/students').json()
         st.dataframe(students_data)
 
