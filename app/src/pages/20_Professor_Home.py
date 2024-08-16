@@ -20,7 +20,7 @@ st.write('### What would you like to do today?')
 if st.button('Update student groups', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/21_Update_group.py')
 
 if st.button('See my students', 
              type='primary',
