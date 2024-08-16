@@ -22,3 +22,8 @@ if st.button('Go to Recommendations by Ratings Page',
               type = 'primary',
               use_container_width = True):
    st.switch_page('pages/ratings_page.py')
+
+if st.button('Go to Recommendations by Cuisine Page',
+              type = 'primary',
+              use_container_width = True):
+   st.switch_page('pages/restaurant_rec.py')

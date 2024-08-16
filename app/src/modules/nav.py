@@ -22,7 +22,8 @@ def UpdateAccount():
 def Ratings():
     st.sidebar.page_link("pages/ratings_page.py", label = "Ratings", icon = "💯")
 
-
+def Cuisine():
+    st.sidebar.page_link("pages/restaurant_rec.py", label = "Choose Cuisine", icon = "🍲")
 
 #### ------------------------ Marketing Analysis ------------------------
 def adminpagenav():
@@ -66,6 +67,7 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'intern':
             PlanTrip()
             Ratings()
+            Cuisine()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':

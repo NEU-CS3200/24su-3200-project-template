@@ -20,16 +20,43 @@ def get_restaurant(trip_id):
            WHERE t.id = %s
            ORDER BY r.average_price ASC'''
     cursor.execute(the_query, (trip_id,))
-    #row_headers = [x[0] for x in cursor.description]
-    #json_data = []
+
     theData = cursor.fetchall()
-    #for row in theData:
-       # json_data.append(dict(zip(row_headers, row)))
-    #the_response = make_response(jsonify(json_data))
     the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+# Get a restaurant given a cuisine type
+@restaurant.route('/restaurant_cuisine/<cuisine>/<city_name>', methods=['GET'])
+def get_restaurant_name(cuisine, city_name): 
+    cursor = db.get_db().cursor()
+    the_query = f'''SELECT r.name, r.average_price, r.address, r.rating 
+           FROM restaurant r join city c on r.city_id = c.id
+           WHERE r.cuisine_type = "{unquote(cuisine)}" and c.name = "{unquote(city_name)}"
+           ORDER BY average_price ASC'''
+    cursor.execute(the_query)
+
+    theData = cursor.fetchall()
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+@restaurant.route('/cuisine/<city_name>', methods =['GET'])
+def get_cuisine(city_name):
+    current_app.logger.info('trip_routes.py: GET /trip')
+    cursor = db.get_db().cursor()
+    the_query = f'''SELECT restaurant.id, restaurant.cuisine_type
+        FROM restaurant JOIN city on restaurant.city_id = city.id
+        WHERE city.name = "{unquote(city_name)}"
+    '''
+    cursor.execute(the_query)
+    theData = cursor.fetchall()
+
+    restaurants_dict = {restaurant['cuisine_type']: restaurant['id'] for restaurant in theData}
+
+    return jsonify(restaurants_dict)
 
 #Get a restaurant given a rating 
 @restaurant.route('/restaurant_rating/<rating>/<city_name>', methods=['GET'])
@@ -47,7 +74,6 @@ def get_restaurant_rating(rating, city_name):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-
 
 @restaurant.route('/restaurant', methods=['POST'])
 def add_new_restaurant_review():

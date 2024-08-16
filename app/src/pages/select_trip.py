@@ -18,7 +18,7 @@ st.write('')
 
 try:
     trip_info = requests.get(f"http://api:4000/t/trip/{st.session_state['id']}").json()
-    
+
     if not trip_info:
         st.write("You have no past trips.")
     else:
@@ -26,11 +26,7 @@ try:
 except:
     st.write("Error!")
 
-# trip_col = st.columns(1)
-# with trip_col[0]:
-#     trip = st.text_input('Trip name of trip to delete:')
-
-#delete trip based on trip name
+# delete trip based on trip name
 
 result = requests.get(f'http://api:4000/t/trip_name/{st.session_state["id"]}').json()
 option = st.selectbox(
