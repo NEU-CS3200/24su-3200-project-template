@@ -23,7 +23,7 @@ if st.button("Get Hotel Email"):
         st.error("Please enter the hotel name.")
     else:
         # Make a request to the API (assuming it requires destination and hotel name, but we will only use hotel name here)
-        response = requests.get(f'http://api:4000/h/get_email/{name}').json()
+        response = requests.get(f'http://api:4000/h/email/{name}').json()
         logger.info(f"response = {response}")
         st.dataframe(response)
 

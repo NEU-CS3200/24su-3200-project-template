@@ -4,27 +4,6 @@ from backend.db_connection import db
 
 flights = Blueprint("flights", __name__)
 
-#We can't have two gets for flight
-
-# @flights.route('/flight', methods=['GET'])
-# def get_flights():
-#     cursor = db.get_db().cursor()
-#     the_query = '''
-#         SELECT airline_name, duration, price
-#         FROM flights JOIN trip on flights.city_id = trip.city_id
-#         WHERE flights.price <= trip.flight_budget
-#         ORDER BY price ASC
-#     '''
-#     cursor.execute(the_query)
-
-#     theData = cursor.fetchall()
-    
-#     # Convert data to JSON response
-#     the_response = make_response(jsonify(theData))
-#     the_response.status_code = 200
-#     the_response.mimetype = 'application/json'
-#     return the_response
-
 @flights.route('/flight/<max_price>', methods=['GET'])
 def price_range(max_price):
     #current_app.logger.info('flight_routes.py: GET based on budget')

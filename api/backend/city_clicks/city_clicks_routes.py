@@ -22,7 +22,4 @@ def get_city_clicks(city):
     return the_response
 
 
-#ADD THIS TO rest_entry.py
-# app.register_blueprint(cityclicks,    url_prefix='/cc')
-
 

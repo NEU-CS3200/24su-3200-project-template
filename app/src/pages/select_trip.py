@@ -28,7 +28,7 @@ with trip_col[0]:
 
 if st.button('Delete old trip?', type='primary', use_container_width=True):
     try:
-        result = requests.delete(f'http://api:4000/t/delete_trip/{trip}')
+        result = requests.delete(f'http://api:4000/t/trip/{trip}')
         st.write("Successfully deleted!")
     except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")

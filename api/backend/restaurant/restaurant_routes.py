@@ -46,7 +46,8 @@ def get_restaurant_rating(rating, city_name):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
-#FROM restaurant
+
+
 @restaurant.route('/restaurant', methods=['POST'])
 def add_new_restaurant_review():
     

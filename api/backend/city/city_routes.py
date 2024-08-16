@@ -49,6 +49,3 @@ def add_new_city_rating(name):
     
     return 'Success!'
 
-#ADD THIS TO rest_entry.py
-# app.register_blueprint(city,    url_prefix='/c')
-#comment out other c for /customers since there will be two c's; also just an example

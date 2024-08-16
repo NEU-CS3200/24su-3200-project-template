@@ -34,7 +34,7 @@ def get_hotel(city_name, max_price):
     the_response.mimetype = 'application/json'
     return the_response
 
-@hotel.route('/get_email/<name>', methods =['GET'])
+@hotel.route('/email/<name>', methods =['GET'])
 def get_hotel_email(name):
     current_app.logger.info('hotel_routes.py: GET /hotel')
     cursor = db.get_db().cursor()
