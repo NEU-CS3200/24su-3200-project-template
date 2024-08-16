@@ -543,6 +543,6 @@ WHERE ta.ta_id=1;
 
 -- USE this query to check if the group_id was updated - PUT request
 -- PROFESSOR USER
-SELECT first_name, last_name, email, group_id
-FROM Student
+SELECT first_name, last_name, email, s.group_id, group_name
+FROM Student s JOIN `Group` G on G.group_id = s.group_id
 WHERE email='naronovitz0@state.tx.us';
