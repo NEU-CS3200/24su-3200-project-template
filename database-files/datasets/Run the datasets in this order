@@ -1,0 +1,16 @@
+users
+employee
+city
+marketing_campaign (depends on employee)
+trip (depends on users and city)
+hotel (depends on city)
+attraction (depends on city)
+restaurant (depends on city)
+flights (depends on city)
+promotions (depends on marketing_campaign)
+ads (depends on marketing_campaign)
+tracks (depends on users and employee)
+city_clicks (depends on city and users)
+hotel_clicks (depends on hotel and users)
+attraction_clicks (depends on attraction and users)
+restaurant_clicks (depends on restaurant and users)
