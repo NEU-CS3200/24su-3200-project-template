@@ -66,7 +66,6 @@ def SideBarLinks(show_home=False):
         if st.session_state['role'] == 'intern':
             PlanTrip()
             Ratings()
-            UpdateAccount()
         
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state['role'] == 'administrator':

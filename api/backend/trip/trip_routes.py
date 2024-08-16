@@ -5,24 +5,38 @@ from backend.db_connection import db
 trip = Blueprint('trip', __name__)
 
 # Getting trips based on a user id
-@trip.route('/trip/<user_id>', methods =['GET']) #cat-works
+@trip.route('/trip/<user_id>', methods =['GET'])
 def get_trip(user_id):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT name, start_date, end_date, num_of_nights, city_name \
+    the_query = '''SELECT name, start_date, end_date, num_of_nights, city_name, 
         group_size
         FROM trip
         WHERE user_id = %s
     '''
     cursor.execute(the_query, (user_id))
     theData = cursor.fetchall()
-    
+ 
     the_response = make_response(theData)
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
 
-#FROM trip
+@trip.route('/trip_name/<user_id>', methods =['GET'])
+def get_trip_name(user_id):
+    current_app.logger.info('trip_routes.py: GET /trip')
+    cursor = db.get_db().cursor()
+    the_query = f'''SELECT id, name
+        FROM trip
+        WHERE user_id = {user_id}
+    '''
+    cursor.execute(the_query)
+    theData = cursor.fetchall()
+
+    trips_dict = {trip['name']: trip['id'] for trip in theData}
+
+    return jsonify(trips_dict)
+
 @trip.route('/trip', methods=['POST']) 
 def add_new_trip():
     
@@ -62,14 +76,6 @@ def add_new_trip():
 def delete_trip(trip_name):
     current_app.logger.info('trip_routes.py: GET /trip')
     cursor = db.get_db().cursor()
-    # the_query = f'''
-    #     UPDATE trip SET
-    #     start_date = NULL, end_date = NULL, group_size = NULL, name = NULL,
-    #     restaurant_budget = NULL, flight_budget = NULL, user_id = NULL, 
-    #     city_id = NULL, city_name = NULL, attraction_budget = NULL, 
-    #     num_of_nights = NULL
-    #     WHERE name = {trip_name}
-    # '''
     query = f'''
         delete from trip where name = "{trip_name}"
     '''
