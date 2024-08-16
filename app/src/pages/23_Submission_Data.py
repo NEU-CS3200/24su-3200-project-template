@@ -52,3 +52,15 @@ if submitted:
 
     # Display the bar chart in Streamlit
     st.altair_chart(bar_chart, use_container_width=True)
+
+    # Timeline of submissions
+    timeline_chart = alt.Chart(df).mark_circle(size=60).encode(
+    x='submitted_at:T',
+    y=alt.Y('group_name:N', title='Group Name'),
+    color='group_name',
+    tooltip=['group_name', 'submitted_at', 'submission_link']
+    ).properties(
+    title='Timeline of Submissions'
+    ).interactive()
+
+    st.altair_chart(timeline_chart, use_container_width=True)
