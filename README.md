@@ -41,4 +41,5 @@ Run the SQL file named consolidated_datasets.sql in order to load all the data i
 ## Accessing the application: 
 You can access the application by opening a web browser and navigating to http://localhost:8501/
 
-
+## Video Link:
+https://drive.google.com/file/d/1SGQMYC08nzvxWj_x8QXJqAHlX5ynMSV6/view?usp=drive_link
