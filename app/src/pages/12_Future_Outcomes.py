@@ -11,7 +11,6 @@ def load_data():
     data['Date'] = pd.to_datetime(data['Date'])
     return data
 
-from sklearn.ensemble import GradientBoostingRegressor
 
 def predict_future_prices(data, state, months_ahead):
     # Filter and prepare data
@@ -19,7 +18,6 @@ def predict_future_prices(data, state, months_ahead):
     state_data.sort_values('Date', inplace=True)
     prices = state_data['Price'].values
 
-    # Fit ARIMA model
     model = auto_arima(prices, seasonal=True, m=12, suppress_warnings=True)
     
     # Predict future prices
