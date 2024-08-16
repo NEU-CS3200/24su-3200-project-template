@@ -31,9 +31,13 @@ st.write('**Add or delete your availability**')
 # Create a form for adding or deleting a TA availability time slot
 with st.form("Manage TA availability time slot"):
     ta_email = st.text_input('Email: ')
-    avail_day = st.text_input('Day (Monday - Sunday): ')
-    # ----- eventually, this could be a dropdown
-    avail_time = st.text_input('Time (Morning, Afternoon, or Night): ')
+    #avail_day = st.text_input('Day (Monday - Sunday): ')
+    avail_day = st.selectbox("Day:", ('Monday', 'Tuesday', 'Wednesday', 'Thursday', ' Friday', 'Saturday', 'Sunday'),
+                             index=None,
+                             placeholder= 'Select a day...')
+    avail_time = st.selectbox("Time:", ('Morning', 'Afternoon', 'Night'),
+                              index=None,
+                              placeholder='Slect a time...')
 
     # Two submit buttons: one for adding and one for deleting
     add_submitted = st.form_submit_button('Add Availability')
@@ -72,6 +76,3 @@ if delete_submitted:
         st.error('TA or Availability not found!')
     else:
         st.error(f'Failed to delete TA availability: {response.status_code}')
-    # ----- need to add in DELETE call
-
-# ------------- BREAK
