@@ -79,13 +79,63 @@ When a user logs in, they are presented with a choice of roles to assume. Depend
         - Professors can manage student groups, view students in their sections, and check submissions.
     - The RBAC implementation ensures that users only see and interact with the pages and functionalities relevant to their roles, promoting a secure and streamlined user experience.
 
+## API Documentation
+Below are examples of API documentation for each user persona:
+### Professor Routes
+- GET /sec/<professor_id>/sections: Fetch sections for a professor
+    - Parameters: 'professor_id' (int)
+### Student Routes
+- GET /p/student/<specialty>: Fetch student details by their specialty
+    - Response: JSON object containing the student's details
+- PUT /p/student/<group_name>/<email>: Update a student's group.
+    - Parameters: group_name (string), email (string)
+    - Request Body: JSON object with the new group details
+    - Response: Success message indicating the group update
+### TA Routes
+- GET /ta/<ta_id>/availability: Fetch the availability of a specific TA.
+    - Parameters: 'ta_id' (int)
+    - Response: JSON object with the TA's availability schedule
+- PUT /ta/<ta_id>/update_availability: Update the availability schedule for a TA
+    - Parameters: 'ta_id' (int)
+    - Request Body: JSON object with the new availability details
+    - Response: Success message indicating the update
 
 ## Endpoints 
 - Professor Endpoints:
+    GET /sec/<professor_id>/sections: Fetch sections for a professor
+    POST /professor/<professor_id>/add_section: Add a section for a professor
+    PUT /professor/<professor_id>/update_profile: Update professor's profile
+    DELETE /professor/<professor_id>/remove_section: Remove a section from a professor
 - Speciality Endpoints:
+    GET /specialty/<specialty_id>: Fetch details for a specific specialty
+    POST /specialty/add: Add a new specialty
+    PUT /specialty/<specialty_id>/update: Update a specialty
+    DELETE /specialty/<specialty_id>/remove: Remove a specialty
 - Section Endpoints:
+    GET /sections: Fetch all sections
+    GET /sections/<section_id>: Fetch details for a specific section
+    POST /sections/add: Add a new section
+    PUT /sections/<section_id>/update: Update a section
+    DELETE /sections/<section_id>/remove: Remove a section
 - Student Availability Endpoints:
+    GET /student/<student_id>/availability: Fetch availability for a specific student
+    POST /student/<student_id>/availability/add: Add availability for a student
+    PUT /student/<student_id>/availability/update: Update student availability
+    DELETE /student/<student_id>/availability/remove: Remove student availability
 - Submission Endpoints:
+    GET /submissions: Fetch all submissions
+    GET /submissions/<submission_id>: Fetch details for a specific submission
+    POST /submissions/add: Add a new submission
+    PUT /submissions/<submission_id>/update: Update a submission
+    DELETE /submissions/<submission_id>/remove: Remove a submission
 - Student Endpoints:
+    GET /student/<email>: Fetch student details
+    POST /student/add: Add a new student
+    PUT /student/<email>/update: Update a student's information
+    DELETE /student/<email>/remove: Remove a student
 - TA Endpoints:
+    GET /ta/<ta_id>/availability: Get TA availability
+    POST /ta/add: Add a new TA
+    PUT /ta/<ta_id>/update: Update a TA's profile
+    DELETE /ta/<ta_id>/remove: Remove a TA
 
