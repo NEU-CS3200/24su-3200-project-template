@@ -2,7 +2,6 @@
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
-import pandas as pd
 
 SideBarLinks()
 
@@ -33,11 +32,9 @@ st.write('**Update student group assignment**')
 st.write('Enter your information in the form below:')
 
 with st.form("Manage student groups"):
-    df = pd.json_normalize(group_data)
-    options = group_data['group_name']
 
     student_email = st.text_input('Student Email (email of the student you wish to update!): ')
-    new_group = st.selectbox('Name of New Group: ', options)
+    new_group = st.text_input('Name of New Group: ')
     updated = st.form_submit_button('Update')
 
 if updated:
@@ -56,12 +53,3 @@ if updated:
         st.error('Student not found!')
     else:
         st.error(f'Failed to update group: {response.status_code}')
-
-
-    try:
-        # ---- turn this into a header 
-        st.write("Here are the students groups in your sections:")
-        group_data = requests.get(f'http://api:4000/p/{prof_email}/groups').json()
-        st.dataframe(group_data)
-    except:
-        st.write("Could not connect to the database to get groups")
