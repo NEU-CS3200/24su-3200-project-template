@@ -15,17 +15,17 @@ st.title('See My Students')
 st.write('')
 st.write('Feel free to sort by section in the data below')
 with st.form("Section Data "):
-  prof_id = st.text_input('ID: ')
+  prof_email = st.text_input('Email: ')
 
   submitted = st.form_submit_button('Submit')
 
 st.write('')
 if submitted:
-    st.write(f"Your ID: {prof_id}")
+    st.write(f"Your Email: {prof_email}")
     try:
         # ---- turn this into a header 
         st.write("Here are the current sections:")
-        students_data = requests.get(f'http://api:4000/sec/{prof_id}/students').json()
+        students_data = requests.get(f'http://api:4000/sec/{prof_email}/students').json()
         st.dataframe(students_data)
 
     except:

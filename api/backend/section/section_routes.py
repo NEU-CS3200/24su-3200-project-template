@@ -22,13 +22,24 @@ def get_sections_by_professor(professor_id):
 
 # !!!!! just added this - this one should work! 
 # Get all students in prof's sections 
-@sections.route('/<prof_id>/students', methods=['GET'])
-def get_prof_students(prof_id):
+@sections.route('/<email>/students', methods=['GET'])
+def get_prof_students(email):
     cursor = db.get_db().cursor()
-    query = '''
-    SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num
-    FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
-    WHERE ss.section_num IN (SELECT s.section_num
+
+    # Use parameterized query to prevent SQL injection
+    query_id = '''SELECT professor_id
+                FROM Professor
+                WHERE email=%s;'''
+    cursor.execute(query_id, (email))
+    theData = cursor.fetchone()
+
+    if theData:
+        prof_id = theData["professor_id"]
+        
+        query = '''
+        SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num
+        FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
+        WHERE ss.section_num IN (SELECT s.section_num
         FROM Section s
         WHERE s.professor_id = %s)
         AND ss.semester_year IN (SELECT s.semester_year
@@ -38,9 +49,15 @@ def get_prof_students(prof_id):
             FROM Section s
             WHERE s.professor_id = %s)
     '''
-    cursor.execute(query, (prof_id, prof_id, prof_id))
-    sections = cursor.fetchall()
-    return jsonify(sections)
+        cursor.execute(query, (prof_id, prof_id, prof_id))
+        student_data = cursor.fetchall()
+        the_response = make_response(jsonify(student_data))
+    else:
+        # Return an error if the TA is not found
+        the_response = make_response(jsonify({'error': 'No available students'}), 404)
+    
+    the_response.mimetype = 'application/json'
+    return the_response
 
 # Updated route for fetching students in a specific section
 @sections.route('/sections/<int:section_num>/students', methods=['GET'])
