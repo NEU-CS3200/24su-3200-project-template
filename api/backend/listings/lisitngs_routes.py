@@ -357,7 +357,7 @@ def get_views_of_listing():
     for row in theData:
         json_data.append(row)
     
-    return jsonify(json_data)               
+    return jsonify(json_data)     
 
 
 
