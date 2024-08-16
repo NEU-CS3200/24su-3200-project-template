@@ -2,6 +2,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
+from urllib.parse import unquote
 
 restaurant = Blueprint('restaurant', __name__)
 
@@ -35,11 +36,11 @@ def get_restaurant(trip_id):
 def get_restaurant_rating(rating, city_name): 
     #current_app.logger.info('GET /customers/<userID> route')
     cursor = db.get_db().cursor()
-    the_query = '''SELECT r.name, r.average_price, r.address, r.rating 
+    the_query = f'''SELECT r.name, r.average_price, r.address, r.rating 
            FROM restaurant r join city c on r.city_id = c.id
-           WHERE r.rating = %s and c.name = %s
+           WHERE r.rating >= {rating} and c.name = "{unquote(city_name)}"
            ORDER BY average_price ASC'''
-    cursor.execute(the_query, (rating, city_name))
+    cursor.execute(the_query)
 
     theData = cursor.fetchall()
     the_response = make_response(theData)
