@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS TASpecialty(
 -- Group Table
 CREATE TABLE IF NOT EXISTS `Group` (
     group_id INT AUTO_INCREMENT,
-    group_name VARCHAR(100) NOT NULL,
+    group_name VARCHAR(100) NOT NULL UNIQUE,
     ta_id INT,
     section_num INT NOT NULL,
     semester_year varchar(25) NOT NULL,
@@ -365,7 +365,21 @@ VALUES ('Team Green', 1, 2, 'Spring 2025', 29),
        ('Group2', NULL, 1, 'Fall 2024', 13),
        ('Group3', 7, 1, 'Fall 2024', 13),
        ('Group4', 9, 1, 'Fall 2024', 13),
-       ('Group5', NULL, 1, 'Fall 2024', 13);
+       ('Group5', NULL, 1, 'Fall 2024', 13),
+       ('Team Blue', 3, 2, 'Spring 2025', 6),
+       ('Team Pink', 3, 2, 'Spring 2025', 6);
+-- from mockaroo data
+INSERT INTO `Group` (group_name, section_num, semester_year, course_id)
+VALUES
+    ('Tillman, MacGyver and Jones', 1, 'Spring 2025', 3),
+    ('Blick, Langworth and Upton', 2, 'Spring 2025', 6),
+    ('Dicki Group', 2, 'Fall 2024', 7),
+    ('Blick-Donnelly', 2, 'Spring 2025', 9),
+    ('King and Sons', 2, 'Fall 2024', 5),
+    ('Hintz, Bergnaum and Bosco', 3, 'Fall 2024', 17),
+    ('Luettgen Inc', 1, 'Spring 2025', 18),
+    ('Reynolds, Runolfsson and McKenzie', 3, 'Spring 2025', 26);
+
 
 -- Submission Data
 INSERT INTO Submission (group_id, submitted_at, submission_link, project_id)
@@ -508,6 +522,8 @@ VALUES (1, 2),
        (8, 2),
        (7, 1);
 
+
+
 -- DEMO QUERIES
 
 -- USE this query for UPDATE MAJOR - PUT request
@@ -524,3 +540,9 @@ JOIN Availability a on t.availability_id = a.availability_id
 JOIN Days d on a.day_id = d.day_id
 JOIN Time ti on a.time_id = ti.time_id
 WHERE ta.ta_id=1;
+
+-- USE this query to check if the group_id was updated - PUT request
+-- PROFESSOR USER
+SELECT first_name, last_name, email, group_id
+FROM Student
+WHERE email='naronovitz0@state.tx.us';

@@ -163,39 +163,112 @@ def update_professor():
 
 #     return jsonify({"message": "Group updated successfully"}), 200
 
-# New Route: Update student's group in a section
-@professors.route('/professors/<int:professor_id>/sections/<int:section_num>/<string:semester_year>/students/<int:student_id>', methods=['PUT'])
-def update_student_in_group(professor_id, section_num, semester_year, student_id):
+# # New Route: Update student's group in a section
+# @professors.route('/professors/<int:professor_id>/sections/<int:section_num>/<string:semester_year>/students/<int:student_id>', methods=['PUT'])
+# def update_student_in_group(professor_id, section_num, semester_year, student_id):
+#     cursor = db.get_db().cursor()
+#     data = request.json
+
+#     new_group_id = data.get('group_id')
+
+#     # Check if the professor is assigned to this section
+#     check_query = '''
+#     SELECT 1 FROM Section 
+#     WHERE section_num = %s AND semester_year = %s AND professor_id = %s
+#     '''
+#     cursor.execute(check_query, (section_num, semester_year, professor_id))
+#     if cursor.fetchone() is None:
+#         return jsonify({"error": "Unauthorized: You cannot update students in another professor's section."}), 403
+
+
+#     # Update query for the student's group
+#     query = '''
+#     UPDATE Student
+#     SET group_id = %s
+#     WHERE student_id = %s
+#     AND EXISTS (
+#         SELECT 1 FROM StudentSection ss
+#         JOIN Section sec ON ss.section_num = sec.section_num AND ss.semester_year = sec.semester_year
+#         WHERE ss.student_id = %s 
+#         AND sec.professor_id = %s 
+#         AND ss.section_num = %s 
+#         AND ss.semester_year = %s
+#     )
+#     '''
+#     cursor.execute(query, (new_group_id, student_id, student_id, professor_id, section_num, semester_year))
+#     db.get_db().commit()
+
+#     return jsonify({"message": "Student's group updated successfully"}), 200
+
+# this is a route to show the professor all the groups across its sections 
+@professors.route('/<email>/groups', methods=['POST', 'GET'])
+def get_groups(email):
+    current_app.logger.info('professor_routes.py: GET /<email>/groups')
+
+    # Establish database connection
+    connection = db.get_db()
+    cursor = connection.cursor()
+
+    # Use parameterized query to prevent SQL injection
+    query_id = '''SELECT professor_id
+                FROM Professor
+                WHERE email=%s;'''
+    cursor.execute(query_id, (email))
+    theData = cursor.fetchone()
+
+    if theData:
+        prof_id = theData["professor_id"]
+        
+        # long select query to find students in the same section and same availability
+        query_prof = '''SELECT DISTINCT g.section_num, course_name, g.semester_year, g.group_id, group_name
+                    FROM Professor p JOIN Section s ON p.professor_id=s.professor_id
+                    JOIN `Group` g ON g.course_id=s.course_id
+                    JOIN Class c ON g.course_id=c.course_id
+                    WHERE p.professor_id=%s;'''
+        
+        cursor.execute(query_prof, (prof_id))
+        group_data = cursor.fetchall()
+        the_response = make_response(jsonify(group_data))
+    else:
+        # Return an error if the TA is not found
+        the_response = make_response(jsonify({'error': 'No professor or groups found'}), 404)
+    the_response.mimetype = 'application/json'
+    return the_response
+
+# this is a route that updates a student's group_id given group name 
+@professors.route('/student/<group_name>/<email>', methods=['PUT'])
+def update_studentGroup(email, group_name):
+    # Establish database connection
     cursor = db.get_db().cursor()
-    data = request.json
 
-    new_group_id = data.get('group_id')
+    # Handle adding TA availability
+    the_data = request.json
+    current_app.logger.info(the_data)
 
-    # Check if the professor is assigned to this section
-    check_query = '''
-    SELECT 1 FROM Section 
-    WHERE section_num = %s AND semester_year = %s AND professor_id = %s
-    '''
-    cursor.execute(check_query, (section_num, semester_year, professor_id))
-    if cursor.fetchone() is None:
-        return jsonify({"error": "Unauthorized: You cannot update students in another professor's section."}), 403
+    # Extract variables
+    stu_email = the_data.get('email')
+    group_name = the_data.get('group_name')
 
+    # Query to get student_id 
+    query_id = '''SELECT student_id
+                     FROM Student
+                     WHERE email=%s;'''
+    cursor.execute(query_id, (stu_email,))
+    stuData = cursor.fetchone()
+    current_app.logger.info(f"stu_id fetched: {stuData}")
 
-    # Update query for the student's group
-    query = '''
-    UPDATE Student
-    SET group_id = %s
-    WHERE student_id = %s
-    AND EXISTS (
-        SELECT 1 FROM StudentSection ss
-        JOIN Section sec ON ss.section_num = sec.section_num AND ss.semester_year = sec.semester_year
-        WHERE ss.student_id = %s 
-        AND sec.professor_id = %s 
-        AND ss.section_num = %s 
-        AND ss.semester_year = %s
-    )
-    '''
-    cursor.execute(query, (new_group_id, student_id, student_id, professor_id, section_num, semester_year))
+    if not stuData:
+        return 'Student not found!', 404
+
+    stu_id = stuData["student_id"]
+
+    # Update the student group_id 
+    update_group_query = '''UPDATE Student
+                        SET group_id=(SELECT group_id
+                        FROM `Group`
+                        WHERE group_name=%s)
+                        WHERE student_id=%s;;'''
+    cursor.execute(update_group_query, (group_name, stu_id))
     db.get_db().commit()
+    return 'TA availability added successfully!', 201
 
-    return jsonify({"message": "Student's group updated successfully"}), 200

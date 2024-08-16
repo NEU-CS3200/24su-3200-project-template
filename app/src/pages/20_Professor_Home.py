@@ -17,7 +17,7 @@ st.write('### What would you like to do today?')
 
 # connect to project pal database
 
-if st.button('Update groups', 
+if st.button('Update student groups', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/21_ML_Model_Mgmt.py')

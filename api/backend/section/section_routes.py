@@ -26,7 +26,7 @@ def get_sections_by_professor(professor_id):
 def get_prof_students(prof_id):
     cursor = db.get_db().cursor()
     query = '''
-    SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num
+    SELECT ss.student_id, first_name, last_name, email, ss.course_id, ss.semester_year, ss.section_num, group_id
     FROM StudentSection ss JOIN Student s ON ss.student_id = s.student_id
     WHERE ss.section_num IN (SELECT s.section_num
         FROM Section s
