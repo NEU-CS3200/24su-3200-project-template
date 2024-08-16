@@ -9,7 +9,8 @@ from modules.nav import SideBarLinks
 SideBarLinks()
 
 st.title("Find students on campus")
-
+st.write('')
+st.write('**Let us help you find classmates in your section who are on-campus!**')
 st.write('Enter your information in the form below:')
 with st.form("ON CAMPUS"):
   email = st.text_input('Email: ')

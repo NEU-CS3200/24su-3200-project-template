@@ -18,7 +18,6 @@ SideBarLinks()
 # set the header of the page
 st.title('Update your major')
 
-
 st.write('Enter your information in the form below:')
 with st.form("Update Major"):
     fname = st.text_input('First Name: ')
