@@ -12,7 +12,7 @@
 
 ## Project Links
 - [GitHub Repository](https://github.com/NathanielYee/24su-3200-project-pal)
-- INSERT DEMO VIDEO LINK HERE!!!!!!!!!
+- [Demo Video Link] (https://www.dropbox.com/scl/fi/1owrym7ptodpgjrxktkkm/Project-Pal-Demo.mp4?rlkey=vg6dzll68mqt2s8r7n1ita6sg&st=0guudbmy&dl=0)
 
 ## About
 
