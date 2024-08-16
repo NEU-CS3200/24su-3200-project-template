@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS Submission (
     submission_id INT AUTO_INCREMENT,
     group_id INT,
     submitted_at DATETIME,
-    submission_link VARCHAR(100),
+    submission_link VARCHAR(100) NOT NULL,
     project_id INT NOT NULL,
     FOREIGN KEY (project_id) REFERENCES Project(project_id)
         ON UPDATE restrict ON DELETE restrict,
@@ -318,7 +318,16 @@ VALUES
     ('John', 'Cain', 'john.cain@northeastern.edu', 1, 'Fall 2024', 13),
     ('Grace', 'Martin', 'martin.grace@northeastern.edu', 1, 'Fall 2024', 13),
     ('Kate', 'Harold', 'harold.ka@northeastern.edu', 1, 'Fall 2024', 13);
-# ----- need to fix this mockaroo data!
+# ----- data from mockaroo
+INSERT INTO TA (first_name, last_name, email, section_num, semester_year, course_id)
+VALUES
+    ('Opalina', 'La Grange', 'olagrange0@nasa.gov', 1, 'Spring 2025', 3),
+    ('Phil', 'Tirrey', 'ptirrey1@sun.com', 2, 'Spring 2025', 6),
+    ('Lynnell', 'Bourke', 'lbourke2@upenn.edu', 2, 'Fall 2024', 7),
+    ('Elisabetta', 'Rimes', 'erimes3@google.com.br', 2, 'Spring 2025', 9),
+    ('Hadlee', 'Levet', 'hlevet4@nba.com', 2, 'Fall 2024', 5),
+    ('Thornton', 'Verlinde', 'tverlinde5@vinaora.com', 3, 'Fall 2024', 17),
+    ('Hedy', 'Reeday', 'hreeday6@ucla.edu', 1, 'Spring 2025', 18);
 
 INSERT INTO Speciality(speciality)
 VALUES ('Python'),
@@ -362,9 +371,12 @@ VALUES ('Team Green', 1, 2, 'Spring 2025', 29),
 INSERT INTO Submission (group_id, submitted_at, submission_link, project_id)
 VALUES (1, '2024-08-16 10:45:28', 'projecturl1.com', 1),
        (2, '2024-08-12 09:18:57', 'finaproject.com', 2);
-INSERT INTO Submission (group_id, submitted_at, project_id)
-VALUES (3, '2024-09-30 06:22:30', 3);
--- need to add in submissions from professor mark's section
+INSERT INTO Submission (group_id, submitted_at, submission_link, project_id)
+VALUES (3, '2024-09-30 06:22:30', 'https://example.com/submit4',  3),
+-- submissions from professor mark's section
+       (4, '2024-08-12 09:18:57', 'https://example.com/submit5', 1),
+       (5, '2024-08-08 10:30:45', 'https://example.com/submit4', 1),
+       (6, '2024-08-10 08:15:22', 'https://example.com/submit7', 1);
 
 -- Student Data
 INSERT INTO Student(first_name, last_name, email, major, year, on_campus, group_id)
@@ -498,15 +510,15 @@ VALUES (1, 2),
 
 -- DEMO QUERIES
 
--- STUDENT USER
 -- USE this query for UPDATE MAJOR - PUT request
-SELECT *
+-- STUDENT USER
+SELECT first_name, last_name, email, major AS Student_John
 FROM Student
 WHERE student_id=1;
 
--- TA USER
 -- USE this query for UPDATE & DELETE TA AVAILABILITY - POST & DELETE request
-SELECT ta.ta_id, first_name, last_name, day, time
+-- TA USER
+SELECT ta.ta_id, first_name, last_name, day, time AS TA_Timmy
 FROM TA ta JOIN TAAvailability t on ta.ta_id = t.ta_id
 JOIN Availability a on t.availability_id = a.availability_id
 JOIN Days d on a.day_id = d.day_id

@@ -10,8 +10,10 @@ st.set_page_config(layout = 'wide')
 
 SideBarLinks()
 
-st.title('Professor Home Page')
-st.write(f"Welcome, {st.session_state.get('first_name', 'Professor')}!")
+st.title(f"Welcome Professor, {st.session_state['first_name']}.")
+st.write('')
+st.write('')
+st.write('### What would you like to do today?')
 
 # connect to project pal database
 
@@ -24,3 +26,8 @@ if st.button('See my students',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/22_Section_Data.py')
+
+if st.button('See student submissions', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/23_Submission_Data.py')

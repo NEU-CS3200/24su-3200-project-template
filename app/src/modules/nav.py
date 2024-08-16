@@ -38,7 +38,7 @@ def UpdateTANav():
 #### ------------------------ Professor (ADMIN) Role ------------------------
 def AdminPageNav():
     st.sidebar.page_link("pages/20_Professor_Home.py", label="Home", icon='🏠')
-    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='My Students', icon='📕')
+    st.sidebar.page_link("pages/21_ML_Model_Mgmt.py", label='Update Groups', icon='📕')
     st.sidebar.page_link("pages/22_Section_Data.py", label="My Sections", icon='🔠')
     st.sidebar.page_link("pages/23_Submission_Data.py", label="Student Submissions", icon='📑')
 
