@@ -114,9 +114,9 @@ def manage_ta_availability(email):
         # Delete the TA availability entry
         delete_ta_availability_query = '''DELETE FROM TAAvailability
                                           WHERE ta_id = %s AND availability_id = %s;'''
+        
         cursor.execute(delete_ta_availability_query, (ta_id, availability_id))
         db.get_db().commit()
-
         # Check if any rows were affected
         if cursor.rowcount > 0:
             return 'TA availability deleted successfully!', 200
