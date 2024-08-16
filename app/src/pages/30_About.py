@@ -25,7 +25,6 @@ st.markdown (
     **There are three user types (Student, TA, & Professor), so feel free to play around!** 
 
 
-    Designed by Spring Yan, Nathaniel Yee, Blythe Berlinger, Corey Wang, David Ku
-    Made in August 2024
+    Made by Spring Yan, Nathaniel Yee, Blythe Berlinger, Corey Wang, David Ku | August 2024.
     """
-        )
+)

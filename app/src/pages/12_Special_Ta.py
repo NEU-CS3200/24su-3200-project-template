@@ -24,8 +24,7 @@ if submitted:
     st.write(f"Email: {ta_email}")
     # --- need to get this to return the specfic TA's availability 
     try:
-        # ----- eventually want to add a button to go to update information page 
-        st.write("These are your listed specialties:")
+        st.write("Here are your listed specialties:")
         ta_data = requests.get(f'http://api:4000/t/ta/{ta_fname}/{ta_lname}/{ta_email}/special').json()
         st.dataframe(ta_data)
     except:
