@@ -1,11 +1,14 @@
 # Project Pal- Summer 2024 CS3200 Project
 
-## Team Members
-- Spring Yan - yan.sp@northeastern.edu
-- Blythe Berlinger - berlinger.b@northeastern.edu
-- Nathaniel Yee - yee.n@northeastern.edu
-- Corey Wang - wang.cor@northeastern.edu
-- David Ku - ku.d@northeastern.edu
+## Introduction
+- Project Name: Project Pal
+- Team Name: Goon Squad
+- Team Members:
+    - Spring Yan - yan.sp@northeastern.edu
+    - Blythe Berlinger - berlinger.b@northeastern.edu
+    - Nathaniel Yee - yee.n@northeastern.edu
+    - Corey Wang - wang.cor@northeastern.edu
+    - David Ku - ku.d@northeastern.edu
 
 ## Project Links
 - [GitHub Repository](https://github.com/NathanielYee/24su-3200-project-pal)
@@ -25,6 +28,7 @@ In large lecture-based classes, finding the right group mates for a project can 
 Before running this project, ensure you have the following installed
 1. Docker
 2. Docker Compose
+3. Visual Studio Code
 
 ## Setting Up The Project
 1. Log in to GitHub or Create an Account if you do not have yet. 
@@ -40,7 +44,7 @@ Before running this project, ensure you have the following installed
         - DB_HOST=db
         - DB_PORT=3306
         - DB_NAME=Project_pal
-        - MYSQL_ROOT_PASSWORD=YourPasswordHere  # Replace with your own password
+        - MYSQL_ROOT_PASSWORD=YourPasswordHere  #Replace with your own password
 
 4. Build and Start Docker Containers
     - Return to root directory of project and run in the console:docker-compose up -d --build
@@ -76,4 +80,12 @@ When a user logs in, they are presented with a choice of roles to assume. Depend
     - The RBAC implementation ensures that users only see and interact with the pages and functionalities relevant to their roles, promoting a secure and streamlined user experience.
 
 
+## Endpoints 
+- Professor Endpoints:
+- Speciality Endpoints:
+- Section Endpoints:
+- Student Availability Endpoints:
+- Submission Endpoints:
+- Student Endpoints:
+- TA Endpoints:
 
