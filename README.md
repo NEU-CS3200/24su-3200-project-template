@@ -52,31 +52,28 @@ Before running this project, ensure you have the following installed
 
 ## Role-Based Access Control (RBAC) System
 Our application served three primary personas:
-    1. Student (Sam)
-    2. Teaching Assistant (Timmy)
-    3. Professor (Mark)
+1. Student (Sam)
+2. Teaching Assistant (Timmy)
+3. Professor (Mark)
 
 ### How It Works
 When a user logs in, they are presented with a choice of roles to assume. Depending on the role selected, the application will display customized sidebar links and pages to match the functionality required for that specific role. 
 
+1. Custom Sidebar Links
+    - A custom module, nav.py, located in the app/src/modules/ directory, defines the sidebar links for each role. Functions within this module, such as SideBarLinks(), are responsible for dynamically generating the appropriate navigation options when a user logs in.
+2. Role Selection and Session Management
+    - The application's home page, app/src/Home.py, presents users with buttons to log in as Sam (Student), Timmy (TA), or Mark (Professor). Upon selection, the system sets various session state variables like role, first_name, and authenticated to track the user's session.
+3. Role Specific Pages
+    - The pages within the application are organized by role:
+        - Student (Sam): Pages are found in app/src/pages/00_student_Home.py and other associated files, providing features like finding groupmates, updating majors, and managing tasks.
+        - Teaching Assistant (Timmy): Pages are under app/src/pages/10_Ta_Home.py and other associated files, offering tools to find students by availability, specialty, and updating availability.
+        - Professor (Mark): Pages are within app/src/pages/20_Professor_Home.py and related files, enabling functionalities such as updating student groups, monitoring sections, and viewing student submissions.
+4. RBAC in Action
+    - Each page is tailored to display the correct options and functionalities based on the role of the logged-in user. For instance:
+        - Students can find peers based on specific criteria and update their profiles.
+        - TAs can find students that match their availability or specialty and update their availability.
+        - Professors can manage student groups, view students in their sections, and check submissions.
+    - The RBAC implementation ensures that users only see and interact with the pages and functionalities relevant to their roles, promoting a secure and streamlined user experience.
 
 
-### Getting Started with the RBAC 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file.  So check that out. We are turning it off so we can control directly what links are shown. 
-1. Then I created a new python module in `app/src/modules/nav.py`.  When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role. 
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`.  But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.  
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module.  This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar. 
-1. The pages are organized by Role.  Pages that start with a `0` are related to the *Political Strategist* role.  Pages that start with a `1` are related to the *USAID worker* role.  And, pages that start with a `2` are related to The *System Administrator* role. 
 
-
-## Deploying An ML Model (Totally Optional for CS3200 Project)
-
-*Note*: This project only contains the infrastructure for a hypothetical ML model. 
-
-1. Build, train, and test your ML model in a Jupyter Notebook. 
-1. Once you're happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure python script.  You can include the `training` and `testing` functionality as well as the `prediction` functionality.  You may or may not need to include data cleaning, though. 
-1. Check out the  `api/backend/ml_models` module.  In this folder, I've put a sample (read *fake*) ML model in `model01.py`.  The `predict` function will be called by the Flask REST API to perform '*real-time*' prediction based on model parameter values that are stored in the database.  **Important**: you would never want to hard code the model parameter weights directly in the prediction function.  tl;dr - take some time to look over the code in `model01.py`.  
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON. 
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`.  Here, I create two numeric input fields.  When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters.  It gets back the results from the route and displays them. Nothing fancy here. 
-
- 
