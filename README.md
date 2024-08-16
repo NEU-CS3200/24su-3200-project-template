@@ -35,12 +35,12 @@ Before running this project, ensure you have the following installed
     - Navigate to the api directory: cd api
     - Create a .env file based on the .env.template file provided in the 'api' folder. The .env should contain your database connection details and password that you set. 
     - The fields shoudl appear like this:
-        SECRET_KEY=someCrazyS3cR3T!Key.!
-        DB_USER=rost
-        DB_HOST=db
-        DB_PORT=3306
-        DB_NAME=Project_pal
-        MYSQL_ROOT_PASSWORD=YourPasswordHere  # Replace with your own password
+        - SECRET_KEY=someCrazyS3cR3T!Key.!
+        - DB_USER=rost
+        - DB_HOST=db
+        - DB_PORT=3306
+        - DB_NAME=Project_pal
+        - MYSQL_ROOT_PASSWORD=YourPasswordHere  # Replace with your own password
 
 4. Build and Start Docker Containers
     - Return to root directory of project and run in the console:docker-compose up -d --build
