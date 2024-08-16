@@ -1,8 +1,10 @@
 import logging
 import streamlit as st
 import pandas as pd
+import numpy as np
 import requests
 from modules.nav import SideBarLinks
+import altair as alt
 
 logger = logging.getLogger(__name__)
 
@@ -31,5 +33,22 @@ if submitted:
 
     except Exception as e:
         st.write(f"Could not connect to the database to get student submissions. Error: {str(e)}")
+    df = pd.DataFrame(submissions_data)
 
+    st.write('')
+    # Count the number of submissions per project_id
+    submission_counts = df['project_id'].value_counts().reset_index()
+    submission_counts.columns = ['project_id', 'submission_count']
 
+    # Bar chart: Project ID vs Number of Submissions
+    color_scale = alt.Scale(scheme='pastel1')
+
+    bar_chart = alt.Chart(submission_counts).mark_bar().encode(
+    x=alt.X('project_id:O', title='Project ID'),
+    y=alt.Y('submission_count:Q', title='Number of Submissions'),
+    color=alt.Color('project_id:O', scale=color_scale, legend=None)
+    ).properties(
+    title='Submission Count by Project')
+
+    # Display the bar chart in Streamlit
+    st.altair_chart(bar_chart, use_container_width=True)
