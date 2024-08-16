@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from backend.db_connection import db
+from urllib.parse import unquote
 
 attractions = Blueprint("attractions", __name__)
 
@@ -13,10 +14,29 @@ def get_attractions(city_name, max_price):
         FROM attraction JOIN city ON attraction.city_id = city.id
         WHERE city.name = %s 
         AND attraction.price <= %s 
-        ORDER BY rating DESC
+        ORDER BY attraction.rating DESC
     '''
     data = (city_name, max_price)
     cursor.execute(the_query, data)
+
+    theData = cursor.fetchall()
+
+    the_response = make_response(theData)
+    the_response.status_code = 200
+    the_response.mimetype = 'application/json'
+    return the_response
+
+@attractions.route('/rating/<city_name>/<rating>', methods = ['GET'])
+def get_rating(city_name, rating):
+    cursor = db.get_db().cursor()
+    the_query = f'''
+        SELECT attraction.price, attraction.address, attraction.name, attraction.rating, attraction.city_id
+        FROM attraction JOIN city on attraction.city_id = city.id
+        WHERE city.name = "{unquote(city_name)}" 
+        AND attraction.rating >= {rating}
+        ORDER BY attraction.rating DESC
+    '''
+    cursor.execute(the_query)
 
     theData = cursor.fetchall()
 

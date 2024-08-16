@@ -18,7 +18,7 @@ if st.button('Plan your next trip',
               use_container_width = True):
    st.switch_page('pages/plan_trip.py')
 
-if st.button('Go to Restaurant Ratings Page',
+if st.button('Go to Recommendations by Ratings Page',
               type = 'primary',
               use_container_width = True):
    st.switch_page('pages/ratings_page.py')
