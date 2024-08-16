@@ -13,19 +13,20 @@ SideBarLinks()
 # ----------- this just gets the sections that a given professor is teaching 
 st.title('See Student Submissions')
 st.write('')
-st.write('View Student Submissions Below')
+st.write('**View Student Submissions Below**')
+st.write('Enter your email in the form below:')
 with st.form("Submission Data "):
-  prof_id = st.text_input('ID: ')
+  prof_email = st.text_input('Email: ')
 
   submitted = st.form_submit_button('Submit')
 
 st.write('')
 if submitted:
-    st.write(f"Your ID: {prof_id}")
+    st.write(f"Your Email: {prof_email}")
     try:
         # Fetch student submissions from the API
         st.write("Here are the current submissions:")
-        submissions_data = requests.get(f'http://api:4000/sub/professors/{prof_id}/submissions').json()
+        submissions_data = requests.get(f'http://api:4000/sub/submissions/{prof_email}').json()
         st.dataframe(pd.DataFrame(submissions_data))
 
     except Exception as e:
