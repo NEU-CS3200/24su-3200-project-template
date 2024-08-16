@@ -1,8 +1,18 @@
-# Summer 2024 CS 3200 Project Template Repository
+# Project Pal- Summer 2024 CS3200 Project
+
+## Team Members
+- Spring Yan - yan.sp@northeastern.edu
+- Blythe Berlinger - berlinger.b@northeastern.edu
+- Nathaniel Yee - yee.n@northeastern.edu
+- Corey Wang - wang.cor@northeastern.edu
+- David Ku - ku.d@northeastern.edu
+
 
 ## About
 
-This example project explores some features of Streamlit & Flask to build a comprehensive web app for your project.  You won't necessarily have to use all of the features in this example in your course project 
+Project Pal is a web-based application designed to aid in group formation and management for students, professors and TAs in various class sizes. It connects students with like-minded peers based on their schedules, skills and past experiences, ensuring they are matched with and ideal team for class projects. Professors can monitor groups, submissions and update groups as needed. TA's are assigned to student groups based on their specialities and availability and monitor them so the projects run smoothly. 
+
+This project was constructed using Streamlit for the frontend, Flask for the REST API backend, and MySQL for the database. The project implements a Role-Based Access Control (RBAC) system, allowing different features to be shown depending on the user's role (Student, TA, or Professor)
 
 ## Current Project Components
 
