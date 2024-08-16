@@ -2,11 +2,16 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 from flask import Flask
-
-from backend.db_connection import db
-from backend.customers.customer_routes import customers
-from backend.products.products_routes import products
 import os
+from backend.db_connection import db
+from backend.student.student_routes import students
+from backend.stuAvailability.stuAvailability_routes import stuAvailability
+from backend.ta.ta_routes import ta
+from backend.professor.professor_routes import professors
+from backend.availability.availability_routes import availability
+from backend.section.section_routes import sections
+from backend.submissions.submission_routes import submissions
+from backend.speciality.speciality_routes import speciality
 from dotenv import load_dotenv
 
 def create_app():
@@ -93,8 +98,17 @@ def create_app():
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
-    app.register_blueprint(customers,   url_prefix='/c')
-    app.register_blueprint(products,    url_prefix='/p')
+
+    app.register_blueprint(students,   url_prefix='/s')
+    app.register_blueprint(stuAvailability,   url_prefix='/sa')
+    app.register_blueprint(ta,   url_prefix='/t')
+    app.register_blueprint(professors, url_prefix='/p')
+    app.register_blueprint(availability, url_prefix='/a')
+    app.register_blueprint(sections, url_prefix='/sec')
+    app.register_blueprint(speciality, url_prefix='/sp')
+    app.register_blueprint(submissions, url_prefix='/sub')
+
+
 
     # Don't forget to return the app object
     return app

@@ -13,3 +13,6 @@ plotly
 seaborn
 scikit-learn
 shap
+streamlit_calendar
+streamlit_awesome_table
+streamlit-aggrid
