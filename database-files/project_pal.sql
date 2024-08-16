@@ -495,3 +495,20 @@ VALUES (1, 2),
        (5, 1),
        (8, 2),
        (7, 1);
+
+-- DEMO QUERIES
+
+-- STUDENT USER
+-- USE this query for UPDATE MAJOR - PUT request
+SELECT *
+FROM Student
+WHERE student_id=1;
+
+-- TA USER
+-- USE this query for UPDATE & DELETE TA AVAILABILITY - POST & DELETE request
+SELECT ta.ta_id, first_name, last_name, day, time
+FROM TA ta JOIN TAAvailability t on ta.ta_id = t.ta_id
+JOIN Availability a on t.availability_id = a.availability_id
+JOIN Days d on a.day_id = d.day_id
+JOIN Time ti on a.time_id = ti.time_id
+WHERE ta.ta_id=1;

@@ -67,9 +67,9 @@ def SideBarLinks(show_home=False):
         # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
         if st.session_state['role'] == 'student':
             StudentHomeNav()
-            FormNav()
             GroupNav()
             OnCampusNav()
+            FormNav()
             SchedulingTaskNav()
 
         # If the user role is usaid worker, show the Api Testing page

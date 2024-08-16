@@ -28,6 +28,8 @@ def get_all_ta():
     the_response.mimetype = 'application/json'
     return the_response
 
+# this route gets the ta's current availability and
+# finds students in the same section with the same avaiability
 @ta.route('/ta/<first_name>/<last_name>/<email>', methods=['POST', 'GET'])
 def get_taAvail(first_name, last_name, email):
     current_app.logger.info('ta_routes.py: GET /ta/<first_name>/<last_name>/<email>')
@@ -100,7 +102,7 @@ def get_taSpecial(first_name, last_name, email):
     return the_response
 
 # this a route for ta subpage 2: Specialty [DIFFERENT FROM get TA special ]
-# want to return a list of students who need help with a given ta's specialty 
+# want to return a list of students who may need help with a given ta's specialty 
 # aka they do not have a least on of the TA's specialty 
 @ta.route('/ta/<first_name>/<last_name>/<email>/students', methods=['POST', 'GET'])
 def get_taStudents(first_name, last_name, email):
