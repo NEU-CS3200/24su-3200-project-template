@@ -7,6 +7,9 @@
 - Corey Wang - wang.cor@northeastern.edu
 - David Ku - ku.d@northeastern.edu
 
+## Project Links
+- [GitHub Repository](https://github.com/NathanielYee/24su-3200-project-pal)
+- INSERT DEMO VIDEO LINK HERE!!!!!!!!!
 
 ## About
 
@@ -14,32 +17,49 @@ Project Pal is a web-based application designed to aid in group formation and ma
 
 This project was constructed using Streamlit for the frontend, Flask for the REST API backend, and MySQL for the database. The project implements a Role-Based Access Control (RBAC) system, allowing different features to be shown depending on the user's role (Student, TA, or Professor)
 
-## Current Project Components
+## Elevator Pitch
 
-Currently, there are three major components:
-- Streamlit App (in the `./app` directory)
-- Flask REST api (in the `./api` directory)
-- MySQL setup files (in the `./database-files` directory)
+In large lecture-based classes, finding the right group mates for a project can be a daunting task. Introducing Project Pal—your solution to this challenge. Project Pal connects students with like-minded peers based on their schedules, interests, and past experiences, ensuring they find the ideal team. Our app will recommend matches for students with profiles, and then pair them accordingly. Then, our app will alert the professor and recommend TAs to be assigned to groups based on their office hours and expertise. The professor will also be able to monitor groups’ progress and capacity as well as be able to assign TAs to groups or go directly to students to resolve any conflicts. Teaching assistants are equipped with features to manage multiple groups and provide immediate support to students. With skill matching, professors can assign TAs to groups that would benefit the most from their expertise, ensuring each team has the guidance it needs to succeed. 
 
-## Getting Started for Personal Exploration
-1. Clone the repo to your computer. 
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. Start the docker containers. 
+## Getting Started
+Before running this project, ensure you have the following installed
+1. Docker
+2. Docker Compose
 
-## Getting Started For Team Project
-1. Each team member should make a GitHub account if you don't already have one.  This should be for the public GitHub, not Khoury's enterprise server. 
-1. One team member should fork this repository. They will be the repo owner. 
-1. Add your team members as Collaborators on the repository.  You can find Collaborators under the Settings tab in the repository.
-1. Each team member needs to accept the invitation to collaborate
-1. Each team member (including the repo owner) needs to clone the repository to their laptops. 
+## Setting Up The Project
+1. Log in to GitHub or Create an Account if you do not have yet. 
+2. Clone the Repository:
+    - git clone https://github.com/NathanielYee/24su-3200-project-pal.git
+    - cd 24su-3200-project-pal
+3. Set up the Environment:
+    - Navigate to the api directory: cd api
+    - Create a .env file based on the .env.template file provided in the 'api' folder. The .env should contain your database connection details and password that you set. 
+    - The fields shoudl appear like this:
+        SECRET_KEY=someCrazyS3cR3T!Key.!
+        DB_USER=rost
+        DB_HOST=db
+        DB_PORT=3306
+        DB_NAME=Project_pal
+        MYSQL_ROOT_PASSWORD=YourPasswordHere  # Replace with your own password
 
-## Handling User Role Access and Control
+4. Build and Start Docker Containers
+    - Return to root directory of project and run in the console:docker-compose up -d --build
+    - This will start the MySQL database, Flask API, and Streamlit frontend in detached mode. The MySQL schema and sample data will be automatically populated using the SQL files in teh 'database-files' directory. 
 
-In most applications, when a user logs in, they assume a particular role.  For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company).  Each of those *roles* will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit?  This is sometimes called Role-based Access Control, or **RBAC** for short. 
+5. Accessing the Application
+    - Once all containers are running in Docker (green), you c an access the Streamlit app by searching 'http://localhost:8501' in your web browser.
+ 
 
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords).  The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model. 
+## Role-Based Access Control (RBAC) System
+Our application served three primary personas:
+    1. Student (Sam)
+    2. Teaching Assistant (Timmy)
+    3. Professor (Mark)
 
-Wrapping your head around this will take a little time and exploration of this code base.  Some highlights are below. 
+### How It Works
+When a user logs in, they are presented with a choice of roles to assume. Depending on the role selected, the application will display customized sidebar links and pages to match the functionality required for that specific role. 
+
+
 
 ### Getting Started with the RBAC 
 1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file.  So check that out. We are turning it off so we can control directly what links are shown. 
