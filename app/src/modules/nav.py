@@ -10,10 +10,10 @@ def AboutPageNav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 ### -------------------------Sidebar for Regular User -------------------------------------
-def PlanTrip():
+def SelectTrip():
     st.sidebar.page_link("pages/select_trip.py", label = "Select Trip", icon = "🗒️")
 
-def SelectTrip():
+def PlanTrip():
     st.sidebar.page_link("pages/plan_trip.py", label = "Plan Trip", icon = "✈️")
 
 def UpdateAccount():
