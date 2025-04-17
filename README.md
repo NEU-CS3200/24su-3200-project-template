@@ -1,52 +1,194 @@
-# Summer 2024 CS 3200 Project Template Repository
+# SwapSphere – Smart Bartering Marketplace
 
-## About
+> **Semester Project – CS3200 Spring 2025**  
+> Team **SKAAM**
+> **Made by: Suleman Sheikh, Kenny Chen, Ayaan Noorulamin Patel, Aidan Allajbej, Mitchell McNew**
+> **The secret key: someCrazyS3cR3T!Key.!**
+> **Link to video: https://drive.google.com/file/d/1K6GC1016xu5L2X2qYwsYHic7eEu3COb2/view?usp=sharing**
+---
 
-This example project explores some features of Streamlit & Flask to build a comprehensive web app for your project.  You won't necessarily have to use all of the features in this example in your course project 
+## Table of Contents
+1. [Project Vision](#project-vision)
+2. [Key Features](#key-features)
+3. [User Personas & UX Flows](#user-personas--ux-flows)
+4. [System Architecture](#system-architecture)
+5. [Tech Stack](#tech-stack)
+6. [Local Development Setup](#local-development-setup)
+7. [Running with Docker Compose](#running-with-docker-compose)
+8. [Database Schema & ER Diagram](#database-schema--er-diagram)
+9. [REST API Quick Reference](#rest-api-quick-reference)
+10. [Streamlit UI Pages](#streamlit-ui-pages)
+11. [Testing & Linting](#testing--linting)
+12. [Contributing](#contributing)
+13. [License](#license)
 
-## Current Project Components
+---
 
-Currently, there are three major components:
-- Streamlit App (in the `./app` directory)
-- Flask REST api (in the `./api` directory)
-- MySQL setup files (in the `./database-files` directory)
+## Project Vision
+**SwapSphere** re‑imagines Facebook Marketplace as a *barter‑first* platform where buyers and sellers trade items (and optional cash top‑ups) through AI‑assisted matching, real‑time price data, and built‑in fraud protection.
 
-## Getting Started for Personal Exploration
-1. Clone the repo to your computer. 
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. Start the docker containers. 
+*Pain points addressed*
+* ✔️ Uncertain pricing – we scrape market prices & compute fairness scores.
+* ✔️ Unsafe meet‑ups – escrow & user‑level trust scores reduce risk.
+* ✔️ Tedious haggling – structured negotiations + cash adjustment logic.
 
-## Getting Started For Team Project
-1. Each team member should make a GitHub account if you don't already have one.  This should be for the public GitHub, not Khoury's enterprise server. 
-1. One team member should fork this repository. They will be the repo owner. 
-1. Add your team members as Collaborators on the repository.  You can find Collaborators under the Settings tab in the repository.
-1. Each team member needs to accept the invitation to collaborate
-1. Each team member (including the repo owner) needs to clone the repository to their laptops. 
+> “Your stuff *is* your money.”
 
-## Handling User Role Access and Control
+---
 
-In most applications, when a user logs in, they assume a particular role.  For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company).  Each of those *roles* will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit?  This is sometimes called Role-based Access Control, or **RBAC** for short. 
+## Key Features
+| Area | Highlight |
+|------|-----------|
+| **AI Trade Matching** | Recommends swaps that balance total value; exposed via `/trades/suggestions`. |
+| **Real‑Time Valuations** | `/market_valuations` aggregates e‑commerce price feeds. |
+| **Negotiation Console** | Streamlit chat UI (\*pages/04_Buyer_Negotiation.py\*) with live counter‑offers. |
+| **Fraud Monitoring** | Admin dashboard flagging suspicious trades, user trust scores. |
+| **Analytics** | Data‑analyst pages chart trade frequency, top categories, heat‑maps. |
+| **Bulk Seller Tools** | Upload CSV of items, manage inventory, view KPI dashboards. |
 
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords).  The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model. 
+---
 
-Wrapping your head around this will take a little time and exploration of this code base.  Some highlights are below. 
+## User Personas & UX Flows
+* **Jake – Buyer** – seeks fair sneaker trades.
+* **Emma – Seller** – power user managing dozens of listings.
+* **Lisa – System Admin** – monitors fraud & platform health.
+* **Raj – Data Analyst** – mines trends to tune AI models.
 
-### Getting Started with the RBAC 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file.  So check that out. We are turning it off so we can control directly what links are shown. 
-1. Then I created a new python module in `app/src/modules/nav.py`.  When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role. 
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`.  But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.  
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module.  This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar. 
-1. The pages are organized by Role.  Pages that start with a `0` are related to the *Political Strategist* role.  Pages that start with a `1` are related to the *USAID worker* role.  And, pages that start with a `2` are related to The *System Administrator* role. 
+Wireframes and numbered user stories live in **docs/Phase‑2‑Submission.pdf**.
 
+---
 
-## Deploying An ML Model (Totally Optional for CS3200 Project)
+## System Architecture
+```
+┌───────────────┐        REST/JSON        ┌───────────────┐
+│  Streamlit UI │  ◀──────────────────▶  │  Flask API    │
+│  (frontend)   │                         │  (backend)    │
+└───────────────┘                         └───────┬───────┘
+                                                │SQLAlchemy
+                                        ┌────────▼────────┐
+                                        │   MySQL 8.0     │
+                                        └─────────────────┘
+```
+* **Docker Compose** orchestrates the three services.
+* **ML micro‑service hooks** (`backend/ml_models/`) can be scaled separately.
 
-*Note*: This project only contains the infrastructure for a hypothetical ML model. 
+---
 
-1. Build, train, and test your ML model in a Jupyter Notebook. 
-1. Once you're happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure python script.  You can include the `training` and `testing` functionality as well as the `prediction` functionality.  You may or may not need to include data cleaning, though. 
-1. Check out the  `api/backend/ml_models` module.  In this folder, I've put a sample (read *fake*) ML model in `model01.py`.  The `predict` function will be called by the Flask REST API to perform '*real-time*' prediction based on model parameter values that are stored in the database.  **Important**: you would never want to hard code the model parameter weights directly in the prediction function.  tl;dr - take some time to look over the code in `model01.py`.  
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON. 
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`.  Here, I create two numeric input fields.  When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters.  It gets back the results from the route and displays them. Nothing fancy here. 
+## Tech Stack
+| Layer | Technology |
+|-------|------------|
+| Front‑end | **Streamlit 1.33**, Plotly Express |
+| Back‑end | **Flask 2.3** with Blueprints (buyer, seller, admin) |
+| ORM / DB | **MySQL 8.0**, SQLAlchemy (light use) |
+| Auth & Security | Flask‑Login, JWT (road‑map), HTTPS via reverse proxy |
+| Data Science | scikit‑learn (pricing model v1), pandas |
+| DevOps | Docker 24, Docker Compose v2, GitHub Actions (unit tests & lints) |
 
- 
+---
+
+## Local Development Setup
+1. **Clone repo**
+   ```bash
+   git clone https://github.com/your‑org/swapsphere.git
+   cd swapsphere
+   ```
+2. **Python environment**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate # Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. **MySQL** – either start the provided Docker DB or set `MYSQL_*` env vars to an existing instance.
+4. **Environment variables** – copy `.env.example` → `.env` and fill in secrets.
+5. **Run services**
+   ```bash
+   # terminal 1 – backend API
+   cd backend
+   flask --app rest_entry run -h 0.0.0.0 -p 4000
+
+   # terminal 2 – Streamlit
+   cd frontend
+   streamlit run Home.py --server.port 8501
+   ```
+
+---
+
+## Running with Docker Compose
+Simplest path – build everything in one shot:
+```bash
+docker compose up --build
+```
+* Streamlit ➜ http://localhost:8501  
+* Flask API ➜ http://localhost:4000  
+* MySQL ➜ localhost:3306 (user/pass in `.env`)
+
+Stop & remove containers:
+```bash
+docker compose down -v
+```
+
+---
+
+## Database Schema & ER Diagram
+Diagrams are in `/docs/diagrams/`:
+* **global_er.svg** – high‑level entities & relationships.
+* **relational_schema.png** – physical design generated from DataGrip.
+
+> Key tables: **Users**, **Items**, **Trades**, **Trade_Items**, **Fraud_Reports**, **Messages**, **Logs**.
+
+SQL DDL is auto‑generated into `database/schema.sql` and executed on container start.
+
+---
+
+## REST API Quick Reference
+| Resource | GET | POST | PUT | DELETE |
+|----------|-----|------|-----|--------|
+| **/users** | profile, list | register | edit profile, trust score (admin) | ban / deactivate |
+| **/items** | browse, seller inventory | upload item(s) | update item | delete item |
+| **/trades** | view history, one trade | create offer | update status / counteroffer | cancel trade |
+| **/trades/suggestions** | *AI matching* | — | — | — |
+| **/reviews** | read reviews | leave review | edit | delete |
+| **/messages** | chat history | send message | — | — |
+| **/fraud_reports** | view flags | report fraud | update status (admin) | delete false flag |
+| **/analytics/** | trends, categories, heat‑map, export | — | — | — |
+
+> See `backend/*_routes.py` for implementation details.
+
+---
+
+## Streamlit UI Pages
+```
+frontend/
+├── 00_Buyer_Home.py          # hero dashboard for buyers
+├── 01_Trade_Matching.py      # AI swap recommender
+├── 02_Market_Valuations.py   # price feed table
+├── 03_Negotiate_Deal.py      # quick cash‑top‑up proposals
+├── 04_Buyer_Negotiation.py   # real‑time chat
+├── …
+└── 15_Manage_Listings.py     # seller inventory CRUD
+```
+All pages share a dynamic sidebar (`modules/nav.py`) that adapts links based on `st.session_state['role']`.
+
+---
+
+## Testing & Linting
+* **Backend** – pytest + coverage, run `pytest -q`.
+* **Frontend** – Streamlit pages use lightweight mocks; key logic functions are unit tested.
+* **Style** – black, isort, flake8 (`make lint`).
+* **CI** – GitHub Actions executes tests on every push & PR.
+
+---
+
+## Contributing
+1. Fork & create a feature branch (`feat/<topic>`).
+2. Write tests & docs.
+3. Open a PR – one of the maintainers will review.
+
+### Commit Guidelines
+* Conventional Commits (`feat:`, `fix:`, `docs:` …).
+* Reference related Persona Story in the body (e.g. `[#Jake‑2]`).
+
+---
+
+## License
+SwapSphere is released under the **MIT License** – see `LICENSE` for full text.

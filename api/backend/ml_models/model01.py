@@ -46,14 +46,3 @@ def predict(var01, var02):
 
   return prediction
 
-  ##############################################################
-  
-  # # retreive the parameters from the appropriate table
-  # cursor.execute('select beta_0, beta_1, beta_2 from model1_param_vals')
-  # # fetch the first row from the cursor
-  # data = cursor.fetchone()
-  # # calculate the predicted result using this functions arguments as well as the model parameter values
-  # result = data[0] + int(var01) * data[1] + int(var02) * data[2]
-
-  # # return the result 
-  # return result
