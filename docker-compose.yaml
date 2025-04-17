@@ -1,10 +1,9 @@
 services:
-
   app:
     build: ./app
-    container_name: front-end 
-    volumes: ['./app/src:/appcode']
-      #    restart: unless-stopped
+    container_name: front-end
+    volumes:
+      - ./app/src:/appcode
     ports:
       - 8501:8501
 
@@ -12,8 +11,10 @@ services:
     build: ./api
     container_name: web-api
     hostname: web-api
-    volumes: ['./api:/apicode']
-      
+    volumes:
+      - ./api:/apicode
+    working_dir: /apicode/backend
+    command: python -m rest_entry
     ports:
       - 4000:4000
 
@@ -24,10 +25,6 @@ services:
     container_name: mysql_db
     volumes:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
-
     ports:
       - 3200:3306
-
     restart: unless-stopped
-
-
