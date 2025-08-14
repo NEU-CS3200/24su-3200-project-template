@@ -4,3 +4,5 @@ __pycache__
 secrets/
 .env
 .env.local
+*/logs/*
+.vscode/

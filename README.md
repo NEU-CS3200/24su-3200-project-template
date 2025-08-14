@@ -1,52 +1,33 @@
-# Summer 2024 CS 3200 Project Template Repository
+# Spoiler Alert
 
-## About
+We are building ‘Spoiler Alert’, an app dedicated to appreciating content such as TV shows and onstage performances. Unlike platforms like Letterboxd, which cater primarily to film enthusiasts, ‘Spoiler Alert’ is designed for a broader community. From theatregoers and casual fans to performance artists and professionals in the field, this app offers a dedicated space for users to rate, review, and discuss television, plays, and musicals: mediums that are often overlooked on mainstream review platforms and relegated to non-dedicated forums such as Twitter or Reddit. 
 
-This example project explores some features of Streamlit & Flask to build a comprehensive web app for your project.  You won't necessarily have to use all of the features in this example in your course project 
+Through collecting such user data, we hope to create personalized platforms for discussion and analysis, as well as tailored recommendations for users. Now, lovers of episodic storytelling and live performance no longer have to struggle to find personalized recommendations or to share their niche interests with others. Key features include the ability to log live performances, create watchlists, and connect with others through a built-in forum. ‘Spoiler Alert’ builds upon the best aspects of Letterboxd, further building community.
 
-## Current Project Components
-
-Currently, there are three major components:
-- Streamlit App (in the `./app` directory)
-- Flask REST api (in the `./api` directory)
-- MySQL setup files (in the `./database-files` directory)
-
-## Getting Started for Personal Exploration
-1. Clone the repo to your computer. 
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. Start the docker containers. 
-
-## Getting Started For Team Project
-1. Each team member should make a GitHub account if you don't already have one.  This should be for the public GitHub, not Khoury's enterprise server. 
-1. One team member should fork this repository. They will be the repo owner. 
-1. Add your team members as Collaborators on the repository.  You can find Collaborators under the Settings tab in the repository.
-1. Each team member needs to accept the invitation to collaborate
-1. Each team member (including the repo owner) needs to clone the repository to their laptops. 
-
-## Handling User Role Access and Control
-
-In most applications, when a user logs in, they assume a particular role.  For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company).  Each of those *roles* will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit?  This is sometimes called Role-based Access Control, or **RBAC** for short. 
-
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords).  The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model. 
-
-Wrapping your head around this will take a little time and exploration of this code base.  Some highlights are below. 
-
-### Getting Started with the RBAC 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file.  So check that out. We are turning it off so we can control directly what links are shown. 
-1. Then I created a new python module in `app/src/modules/nav.py`.  When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role. 
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`.  But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.  
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module.  This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar. 
-1. The pages are organized by Role.  Pages that start with a `0` are related to the *Political Strategist* role.  Pages that start with a `1` are related to the *USAID worker* role.  And, pages that start with a `2` are related to The *System Administrator* role. 
+The database is built in MySQL with the application built using python, streamlit, and flask. 
 
 
-## Deploying An ML Model (Totally Optional for CS3200 Project)
+## How to run the app
+The app is run using app, api, and database containers in docker desktop. To start the app, use `docker compose up -d`, and shut off the containers using `docker compose down -v`. In order to run everything properly, you need to make a copy of the `.env.template` file, change the password and set the database so that it says `DB_NAME=spoileralert`, and save as just `.env`. 
 
-*Note*: This project only contains the infrastructure for a hypothetical ML model. 
 
-1. Build, train, and test your ML model in a Jupyter Notebook. 
-1. Once you're happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure python script.  You can include the `training` and `testing` functionality as well as the `prediction` functionality.  You may or may not need to include data cleaning, though. 
-1. Check out the  `api/backend/ml_models` module.  In this folder, I've put a sample (read *fake*) ML model in `model01.py`.  The `predict` function will be called by the Flask REST API to perform '*real-time*' prediction based on model parameter values that are stored in the database.  **Important**: you would never want to hard code the model parameter weights directly in the prediction function.  tl;dr - take some time to look over the code in `model01.py`.  
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON. 
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`.  Here, I create two numeric input fields.  When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters.  It gets back the results from the route and displays them. Nothing fancy here. 
+## Users
+The users are accessed by buttons on the home page, and each user profile has access to different features based on their hypothetical role in the apps userbase. We have Amanda, who is a system administrator, Sally, an aspiring filmmaker, John, a (not very) casual binger (roll credits), and Alex, who is a data analyst. 
+### Amanda
+As a system administrator, Amanda wants to know what and who is trending on the app. As such, her routes pertain to seeing the most popular shows (by which one has the most reviews), filtering by recent articles and their genres, as well as being able to create lists of favorites for shows, directors, and actors.
+### Sally
+Sally, as an aspiring filmmaker, wants to take inspiration from other shows to know what to emulate in her own work. As such, her pages include watchlists, which allow the user to create, update, and delete watchlists of shows. She alwo wants to follow other users, as well as write, edit, and delete her reviews. 
+### John
+As a TV enthusiast, John always wants something new to watch. As such, he wants to be able to filter shows by parameters such as genre or release date. He also can be more specific and search for specific shows by certain keywords. He also has access to write, edit, and delete comments on other peoples reviews.
+### Alex
+Alex, as a data analyst, wants to be able to filter shows by parameters as well. His home page has a slider that displays shows based on a min and max amount of seasons. He also wants to filter shows by star rating, in order to see what is trending. He can also filter comments on shows by most recent to see current opinion.
 
- 
+## Navigating the app
+The buttons controlling the login direct to each users home page, as well as granting the role's dedicated sessionstate, which grants different functionalities. Most basically, it changes what each user sees based on their user stories, but also gives each user access to different nav bars on the left side, which would be most practical for an admin who would have greater permissions than an ordinary user. 
+
+## The Database
+The routes in the backend are all SQL commands, which make it easy for keywords to narrow down the list of shows as in the search by keywords or as in adding data in the form of reviews or comments on those reviews. The SQL database, `spoileralert.sql` automatically runs with the db container, and contains data viewed and updated using the commands in each users routes.
+
+Project by: Saumya Palakodety, Constanza Perusquia Ruiz, Jahnavi Bulusu, and Hannah Chapman
+
+Link to pitch/demo: https://drive.google.com/file/d/1Iv0rxnEZ5VwsFq7teIGGoPTi8p7O3kaE/view?usp=sharing
