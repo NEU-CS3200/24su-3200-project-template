@@ -1,6 +1,6 @@
 altair
 pandas
-streamlit
+streamlit==1.39.0
 streamlit-extras
 world-bank-data
 matplotlib
