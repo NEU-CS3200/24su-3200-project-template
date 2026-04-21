@@ -1,0 +1,15 @@
+# Ensure consistent line endings for files running inside Linux containers.
+# Without this, Windows git clients may convert LF to CRLF on checkout,
+# which causes Python and shell scripts to fail inside the container.
+
+* text=auto
+
+*.py    text eol=lf
+*.sql   text eol=lf
+*.sh    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+*.env*  text eol=lf

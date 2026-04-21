@@ -4,8 +4,9 @@ import streamlit as st
 import pandas as pd
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
-from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+
+st.set_page_config(layout='wide')
 
 SideBarLinks()
 
@@ -19,6 +20,8 @@ This app predicts the **Iris flower** type!
 
 st.sidebar.header('User Input Parameters')
 
+# Below, different user inputs are defined.  When you view the UI, 
+# notice that they are in the sidebar. 
 def user_input_features():
     sepal_length = st.sidebar.slider('Sepal length', 4.3, 7.9, 5.4)
     sepal_width = st.sidebar.slider('Sepal width', 2.0, 4.4, 3.4)
@@ -31,18 +34,24 @@ def user_input_features():
     features = pd.DataFrame(data, index=[0])
     return features
 
+# get a data frame with the input features from the user
 df = user_input_features()
 
+# show the exact values the user entered in a table.
 st.subheader('User Input parameters')
 st.write(df)
 
+# load the standard iris dataset and generate a 
+# random forest classifier 
 iris = datasets.load_iris()
 X = iris.data
 Y = iris.target
-
 clf = RandomForestClassifier()
+
+# fit the model
 clf.fit(X, Y)
 
+# use the values entered by the user for prediction
 prediction = clf.predict(df)
 prediction_proba = clf.predict_proba(df)
 
@@ -51,7 +60,6 @@ st.write(iris.target_names)
 
 st.subheader('Prediction')
 st.write(iris.target_names[prediction])
-#st.write(prediction)
 
 st.subheader('Prediction Probability')
 st.write(prediction_proba)

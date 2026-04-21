@@ -1,0 +1,37 @@
+name: project-app-personal-sandbox
+
+services:
+  app:
+    build: ./app
+    # container_name: web-app-sandbox
+    hostname: web-app
+    volumes: ["./app/src:/appcode"]
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - 8502:8501
+
+  api:
+    build: ./api
+    # container_name: web-api-sandbox
+    hostname: web-api
+    volumes: ["./api:/apicode"]
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - 4001:4000
+
+  db:
+    env_file:
+      - ./api/.env
+    image: mysql:9
+    # container_name: mysql_db-sandbox
+    hostname: db
+    volumes:
+      - "./database-files:/docker-entrypoint-initdb.d/:ro"
+      - "mysql_data:/var/lib/mysql"
+    ports:
+      - 3201:3306
+
+volumes:
+  mysql_data:

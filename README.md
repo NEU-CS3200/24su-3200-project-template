@@ -1,52 +1,194 @@
-# Summer 2024 CS 3200 Project Template Repository
+# Audiovate
 
-## About
+**Audiovate** is a music distribution and analytics platform built for artists, label executives, data analysts, and system administrators. It centralizes the relationship between tracks, streaming data, royalty splits, and financial reporting into a single source of truth, eliminating the opacity and inefficiency of traditional music distribution.
 
-This example project explores some features of Streamlit & Flask to build a comprehensive web app for your project.  You won't necessarily have to use all of the features in this example in your course project 
+> Built for CS 3200 — Database Design, Spring 2026 @ Northeastern University
 
-## Current Project Components
+---
 
-Currently, there are three major components:
-- Streamlit App (in the `./app` directory)
-- Flask REST api (in the `./api` directory)
-- MySQL setup files (in the `./database-files` directory)
+## Team
 
-## Getting Started for Personal Exploration
-1. Clone the repo to your computer. 
-1. Set up the `.env` file in the `api` folder based on the `.env.template` file.
-1. Start the docker containers. 
+| Name | Specialty |
+|------|------|
+| **Bridget Minogue** | Artist Persona |
+| **Massimo Mastromattei** | Data Analyst Persona |
+| **Shamar Aitcheson** | Label Head Persona |
+| **Charles Sherer** | System Admin Persona |
 
-## Getting Started For Team Project
-1. Each team member should make a GitHub account if you don't already have one.  This should be for the public GitHub, not Khoury's enterprise server. 
-1. One team member should fork this repository. They will be the repo owner. 
-1. Add your team members as Collaborators on the repository.  You can find Collaborators under the Settings tab in the repository.
-1. Each team member needs to accept the invitation to collaborate
-1. Each team member (including the repo owner) needs to clone the repository to their laptops. 
+---
 
-## Handling User Role Access and Control
+## Features by User Role
 
-In most applications, when a user logs in, they assume a particular role.  For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company).  Each of those *roles* will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit?  This is sometimes called Role-based Access Control, or **RBAC** for short. 
+- **Artists** — Upload and manage releases, edit metadata, set release dates, view streaming stats and earnings per platform
+- **Data Analysts** — Roster performance dashboards, geographic listener maps, platform revenue breakdowns, track engagement and skip-rate analysis
+- **Label Heads** — Royalty split management, artist roster oversight, asset and deadline tracking
+- **System Administrators** — System log monitoring, help request management, workload balancing across admins
 
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords).  The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model. 
+---
 
-Wrapping your head around this will take a little time and exploration of this code base.  Some highlights are below. 
+## Tech Stack
 
-### Getting Started with the RBAC 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file.  So check that out. We are turning it off so we can control directly what links are shown. 
-1. Then I created a new python module in `app/src/modules/nav.py`.  When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role. 
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`.  But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.  
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module.  This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar. 
-1. The pages are organized by Role.  Pages that start with a `0` are related to the *Political Strategist* role.  Pages that start with a `1` are related to the *USAID worker* role.  And, pages that start with a `2` are related to The *System Administrator* role. 
+| Layer | Technology |
+|-------|-----------|
+| Frontend | [Streamlit](https://streamlit.io/) |
+| Backend API | [Flask](https://flask.palletsprojects.com/) (REST) |
+| Database | MySQL 9 |
+| Infrastructure | Docker + Docker Compose |
 
+---
 
-## Deploying An ML Model (Totally Optional for CS3200 Project)
+## Prerequisites
 
-*Note*: This project only contains the infrastructure for a hypothetical ML model. 
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+- [Git](https://git-scm.com/) for cloning the repository
+- *(Optional — for IDE support only)* [Anaconda](https://www.anaconda.com/download) or [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install) with Python 3.11
 
-1. Build, train, and test your ML model in a Jupyter Notebook. 
-1. Once you're happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure python script.  You can include the `training` and `testing` functionality as well as the `prediction` functionality.  You may or may not need to include data cleaning, though. 
-1. Check out the  `api/backend/ml_models` module.  In this folder, I've put a sample (read *fake*) ML model in `model01.py`.  The `predict` function will be called by the Flask REST API to perform '*real-time*' prediction based on model parameter values that are stored in the database.  **Important**: you would never want to hard code the model parameter weights directly in the prediction function.  tl;dr - take some time to look over the code in `model01.py`.  
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON. 
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`.  Here, I create two numeric input fields.  When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters.  It gets back the results from the route and displays them. Nothing fancy here. 
+---
 
- 
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/bridget-minogue/Audiovate.git
+cd Audiovate
+```
+
+### 2. Create the Environment File
+
+The API and database both require a `.env.audiovate` file inside the `api/` directory. This file is **not committed to the repository** (it contains secrets).
+
+Create the file at `api/.env.audiovate` with the following contents:
+
+```env
+SECRET_KEY=<your-secret-key>
+DB_USER=root
+DB_HOST=db
+DB_PORT=3306
+DB_NAME=Audiovate
+MYSQL_ROOT_PASSWORD=<your-mysql-root-password>
+```
+
+Replace `<your-secret-key>` with any random string and `<your-mysql-root-password>` with a password of your choice. These values must match across the file — do not change the `DB_USER`, `DB_HOST`, `DB_PORT`, or `DB_NAME` fields.
+
+> ⚠️ **Never commit this file to GitHub.** It is listed in `.gitignore` for this reason.
+
+### 3. Start the Containers
+
+```bash
+docker compose up -d
+```
+
+This will build and start three containers:
+
+| Container | Description | Port |
+|-----------|-------------|------|
+| `web-app` | Streamlit frontend | `http://localhost:8501` |
+| `web-api` | Flask REST API | `http://localhost:4000` |
+| `mysql_db` | MySQL database | `localhost:3200` |
+
+On first run, the database will be automatically initialized from the SQL files in `dataset/`. This may take 30–60 seconds for the seed data to fully load.
+
+### 4. Open the App
+
+Navigate to **[http://localhost:8501](http://localhost:8501)** in your browser and select a user persona to log in.
+
+---
+
+## Useful Docker Commands
+
+```bash
+# Start all containers in the background
+docker compose up -d
+
+# Stop and remove all containers
+docker compose down
+
+# Stop containers without removing them
+docker compose stop
+
+# Restart containers (e.g. after a code change that crashed a container)
+docker compose restart
+
+# View logs for a specific container
+docker compose logs web-api
+docker compose logs mysql_db
+
+# Rebuild and restart after changes to Dockerfile or dependencies
+docker compose up -d --build
+```
+
+### Resetting the Database
+
+If you modify any SQL files in `dataset/`, you must fully recreate the database container for changes to take effect:
+
+```bash
+docker compose down && docker volume prune -f && docker compose up -d
+```
+
+> **Note:** `docker volume prune -f` removes all unused Docker volumes, which causes the database to be re-seeded from scratch on the next `up`.
+
+---
+
+## Project Structure
+
+```
+Audiovate/
+├── app/                    # Streamlit frontend
+│   └── src/
+│       ├── Home.py         # Login / persona selection page
+│       ├── pages/          # One file per app page, organized by role prefix
+│       └── modules/
+│           └── nav.py      # Sidebar navigation and RBAC logic
+├── api/                    # Flask REST API
+│   ├── backend_app.py      # App entry point
+│   ├── backend/
+│   │   └── audiovate_routes/   # Route blueprints organized by resource
+│   ├── requirements.txt
+│   └── .env.audiovate      # ⚠️ Secret config — create this manually (see above)
+├── dataset/                # SQL seed data (loaded into MySQL on container creation)
+├── database-files/         # Schema definition SQL
+├── docker-compose.yaml     # Container orchestration
+└── README.md
+```
+
+### Page Naming Convention
+
+Streamlit pages are prefixed by role number:
+
+| Prefix | Role |
+|--------|------|
+| `00_` | Artist |
+| `10_` | Data Analyst |
+| `20_` | System Administrator |
+| `30_` | Label Head |
+
+---
+
+## Development Notes
+
+- **Hot reloading** — Changes to `app/src/` and `api/` are reflected immediately without restarting containers. In Streamlit, click **Always Rerun** in the browser for live updates.
+- **Database changes** — Modifying `.sql` files requires a full container + volume teardown (see *Resetting the Database* above).
+- **Local Python install (optional)** — Installing dependencies locally gives your IDE autocomplete and linting, but the app always runs inside Docker:
+
+```bash
+cd api && pip install -r requirements.txt
+cd ../app/src && pip install -r requirements.txt
+```
+
+---
+
+## API Overview
+
+The REST API is available at `http://localhost:4000`. Key endpoint groups:
+
+| Prefix | Resource |
+|--------|----------|
+| `/artists` | Artist profiles, performance, platform metrics, track engagement, listener locations |
+| `/users` | User roster performance |
+| `/releases` | Release management |
+| `/helpRequests` | Support ticket system |
+| `/systemLogs` | System event logs |
+| `/payoutProfiles` | Royalty split configuration |
+
+---
